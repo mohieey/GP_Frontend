@@ -5,11 +5,11 @@ import { LoginService } from 'src/app/services/login/login.service';
 import { usernamePatternValidation } from 'src/app/validations/patternMatcher';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-start',
+  templateUrl: './start.component.html',
+  styleUrls: ['./start.component.css']
 })
-export class LoginComponent implements OnInit {
+export class StartComponent implements OnInit {
 
   constructor(private loginService:LoginService,private fb:FormBuilder,private router: Router) { }
 
@@ -52,6 +52,5 @@ invalidEmailOrPassword:boolean = false;
       this.invalidEmailOrPassword = true;
     })
   }
-
 
 }
