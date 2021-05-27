@@ -40,9 +40,7 @@ invalidEmailOrPassword:boolean = false;
   {
     this.loginService.login(this.loginForm.value).subscribe(
       response=>{
-        console.log(response.headers.get('x-auth-token'));
-        console.log(response.body);
-        localStorage.setItem('x-auth-token',response.headers.get('x-auth-token'))
+        localStorage.setItem('token',response.body['token'])
         localStorage.setItem('currentUser',JSON.stringify(response.body))
       this.invalidEmailOrPassword = false;
         this.router.navigate(['/home'])

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,9 @@ export class LoginService {
   login(user:any)
   {
     const u:any = {email:user.email, password:user.password};
-    console.log(u);
 
     /** POST: add a new hero to the database */
-    return this.http.post('https://localhost:44322/api/Account/login', u,{ observe: 'response' })
+    return this.http.post(`${environment.apiUrl}/api/Account/login`, u,{ observe: 'response' })
     // .pipe(catchError((err)=>{
     //   return throwError(err.message || "Internal Server Error Please contact site adminstarator")
     // })
