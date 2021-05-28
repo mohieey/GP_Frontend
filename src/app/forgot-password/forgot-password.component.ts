@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { PatternValidation } from 'src/app/validations/patternMatcher';
-import { ForgotPasswordDto } from 'src/app/_interfaces/forgotPasswordDTO.model';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { ForgotPasswordDto } from '../shared/_interfaces/forgotPasswordDTO.model';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.sass']
+  styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
+
 
   public forgotPasswordForm: FormGroup
   public successMessage: string;

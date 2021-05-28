@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { PasswordConfirmationValidatorService } from 'src/app/validations/password-confirmation-validator.service';
-import { ResetPasswordDto } from 'src/app/_interfaces/resetPasswordDTO.model';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { PasswordConfirmationValidatorService } from '../shared/validations/password-confirmation-validator.service';
+import { ResetPasswordDto } from '../shared/_interfaces/resetPasswordDTO.model';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.sass']
+  styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
+
   public resetPasswordForm: FormGroup;
   public showSuccess: boolean;
   public showError: boolean;

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { PatternValidation } from 'src/app/validations/patternMatcher';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { PatternValidation } from '../shared/validations/patternMatcher';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -48,6 +48,5 @@ export class LoginComponent implements OnInit {
         this.invalidEmailOrPassword = true;
       })
   }
-
 
 }

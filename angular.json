@@ -6,11 +6,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TwitterCloneFront": {
+    "GPFrontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
+          "style": "scss"
         }
       },
       "root": "",
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/TwitterCloneFront",
+            "outputPath": "dist/GPFrontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -31,7 +31,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "TwitterCloneFront:build"
+            "browserTarget": "GPFrontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "TwitterCloneFront:build:production"
+              "browserTarget": "GPFrontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "TwitterCloneFront:build"
+            "browserTarget": "GPFrontend:build"
           }
         },
         "test": {
@@ -94,7 +94,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -116,16 +116,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "TwitterCloneFront:serve"
+            "devServerTarget": "GPFrontend:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "TwitterCloneFront:serve:production"
+              "devServerTarget": "GPFrontend:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "TwitterCloneFront"
+  "defaultProject": "GPFrontend"
 }

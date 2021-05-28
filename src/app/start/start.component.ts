@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { PatternValidation } from 'src/app/validations/patternMatcher';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { PatternValidation } from '../shared/validations/patternMatcher';
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
-  styleUrls: ['./start.component.css']
+  styleUrls: ['./start.component.scss']
 })
 export class StartComponent implements OnInit {
 
@@ -15,7 +15,6 @@ export class StartComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 
   get email() {
     return this.loginForm.get('email');

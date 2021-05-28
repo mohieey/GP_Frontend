@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { PatternValidation } from 'src/app/validations/patternMatcher';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { PatternValidation } from '../shared/validations/patternMatcher';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
 
@@ -20,17 +20,19 @@ export class SignUpComponent implements OnInit {
   get firstname()
   {
     return this.signupform.get('firstname');
-  } get lastname()
+  } 
+  get lastname()
   {
     return this.signupform.get('lastname');
-  } get username()
+  } 
+  get username()
   {
     return this.signupform.get('username');
-  } get email()
+  } 
+  get email()
   {
     return this.signupform.get('email');
   }
-
   get password()
   {
     return this.signupform.get('password');
@@ -46,7 +48,7 @@ export class SignUpComponent implements OnInit {
   });
 
 
-invalidEmailOrPassword:boolean = false;
+  invalidEmailOrPassword:boolean = false;
 
   onSubmit()
   {
@@ -63,4 +65,5 @@ invalidEmailOrPassword:boolean = false;
       this.invalidEmailOrPassword = true;
     })
   }
+
 }
