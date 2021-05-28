@@ -1,5 +1,5 @@
 import { AbstractControl, FormControl, FormGroup } from "@angular/forms";
-export function usernamePatternValidation(regxp:RegExp)
+export function PatternValidation(regxp:RegExp)
 {
     return (control:AbstractControl)=>
     {

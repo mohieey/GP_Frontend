@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { usernamePatternValidation } from 'src/app/validations/patternMatcher';
+import { PatternValidation } from 'src/app/validations/patternMatcher';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   loginForm = this.fb.group({
     password: ['', [Validators.required, Validators.minLength(5)]],
-    email: ['', [Validators.required, usernamePatternValidation(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
+    email: ['', [Validators.required, PatternValidation(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
   });
 
 

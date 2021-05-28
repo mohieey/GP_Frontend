@@ -21,7 +21,12 @@ export class AuthenticationService {
     return this.http.post(AUTH_API + 'login', u, { observe: 'response' })
   }
 
-
+  signup(user:any)
+  {
+    console.log('dfdfdfe')
+    const u:any = {firstname:user.firstname, lastname:user.lastname, username:user.username,email:user.email, password:user.password};
+    return this.http.post(`${environment.apiUrl}/api/Account/register`, u,{ observe: 'response' })
+  }
   public forgotPassword = (body: ForgotPasswordDto) => {
     return this.http.post(AUTH_API + 'ForgetPassword', body);
   }

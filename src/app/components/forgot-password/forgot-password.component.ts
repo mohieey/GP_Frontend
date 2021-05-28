@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { usernamePatternValidation } from 'src/app/validations/patternMatcher';
+import { PatternValidation } from 'src/app/validations/patternMatcher';
 import { ForgotPasswordDto } from 'src/app/_interfaces/forgotPasswordDTO.model';
 
 @Component({
