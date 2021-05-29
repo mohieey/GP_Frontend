@@ -12,9 +12,9 @@
     </nav>
     <!-- end of login page nav -->
     <!-- login -->
-    <div class="login container">
+    <div class="login">
       <div class="login-content">
-        <h2>Log in to Twirrer</h2>
+        <h2>Register to Twirrer</h2>
         <form class="login-form" [formGroup]="signupform" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Firstname</label>
@@ -25,8 +25,7 @@
               class="form-control login-user-info"
             />
             <div
-              *ngIf="firstname.errors && firstname.invalid && firstname.touched"
-            >
+              *ngIf="firstname.errors && firstname.invalid && firstname.touched">
               <small class="text-danger" *ngIf="firstname.errors?.required"
                 >Firstname is required</small
               >
@@ -41,9 +40,9 @@
               class="form-control login-user-info"
             />
             <div *ngIf="lastname.errors && lastname.invalid && lastname.touched">
-              <small class="text-danger" *ngIf="lastname.errors?.required"
-                >Lastname is required</small
-              >
+              <small class="text-danger" *ngIf="lastname.errors?.required">
+                Lastname is required
+              </small>
             </div>
           </div>
           <div class="form-group">
@@ -52,12 +51,11 @@
               type="text"
               [class.is-invalid]="username.invalid && username.touched"
               formControlName="username"
-              class="form-control login-user-info"
-            />
+              class="form-control login-user-info"/>
             <div *ngIf="username.errors && username.invalid && username.touched">
-              <small class="text-danger" *ngIf="email.errors?.required"
-                >Username is required</small
-              >
+              <small class="text-danger" *ngIf="email.errors?.required">
+                Username is required
+              </small>
             </div>
           </div>
           <div class="form-group">
@@ -66,17 +64,16 @@
               type="email"
               [class.is-invalid]="email.invalid && email.touched"
               formControlName="email"
-              class="form-control login-user-info"
-            />
+              class="form-control login-user-info"/>
             <div *ngIf="email.errors && email.invalid && email.touched">
-              <small class="text-danger" *ngIf="email.errors?.required"
-                >email is required</small
-              >
+              <small class="text-danger" *ngIf="email.errors?.required">
+                email is required
+              </small>
               <small
                 class="text-danger"
-                *ngIf="!email.errors?.required && email.errors?.badPattern"
-                >email is not valid</small
-              >
+                *ngIf="!email.errors?.required && email.errors?.badPattern">
+                email is not valid
+                </small>
             </div>
           </div>
           <div class="form-group">
@@ -102,9 +99,7 @@
             type="submit"
             class="btn-top"
             value="Submit Form"
-            [disabled]="signupform.invalid"
-            style="width: 200px"
-          >
+            [disabled]="signupform.invalid">
             Sign up
           </button>
         </form>
