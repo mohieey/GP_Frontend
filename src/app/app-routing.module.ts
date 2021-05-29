@@ -4,6 +4,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SettingsComponent } from './settings/settings.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { StartComponent } from './start/start.component';
 
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'setting', component: SettingsComponent },
 ];
 
 @NgModule({
