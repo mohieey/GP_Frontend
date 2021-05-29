@@ -28,7 +28,7 @@ export class SearchResultComponent implements OnInit {
   }
 
   private getUsersCount(){
-    this._searchService.getUsersCount().subscribe(
+    this._searchService.getUsersCount("ge").subscribe(
       data => {
         this.usersCount = data
         this.numberOfPages = Math.ceil(this.usersCount / this.pageSize)
@@ -51,7 +51,6 @@ export class SearchResultComponent implements OnInit {
     }
     this._searchService.getUsersByPage(searchDto).subscribe(
       data => {
-        console.log(data);
         this.allUsers = data
         this.currentPageNumber = currentPageNumber;
         if(data.length != 0)

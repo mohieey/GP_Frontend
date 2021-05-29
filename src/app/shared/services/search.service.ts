@@ -12,8 +12,8 @@ import { SearchDTO } from '../_interfaces/searchDTO.model';
 export class SearchService {
   constructor(private _http: HttpClient) {}
 
-  getUsersCount(): Observable<number> {
-    let url = `${environment.apiUrl}/api/Search/count`;
+  getUsersCount(keyword:string): Observable<number> {
+    let url = `${environment.apiUrl}/api/Search/count/${keyword}`;
     return this._http.get<number>(url).pipe(
       catchError((err) => {
         return throwError(
