@@ -13,6 +13,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
+import { TweetComponent } from './tweet/tweet.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { SettingsComponent } from './settings/settings.component';
     ForgotPasswordComponent,
     HomeComponent,
     FooterComponent,
-    SettingsComponent
+    SettingsComponent,
+    TweetComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
