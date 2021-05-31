@@ -15,6 +15,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TweetComponent } from './tweet/tweet.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { authInterceptorProviders } from './shared/_helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

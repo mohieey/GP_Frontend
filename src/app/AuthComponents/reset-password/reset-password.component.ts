@@ -56,9 +56,11 @@ export class ResetPasswordComponent implements OnInit {
 
     this._authService.resetPassword(resetPassDto)
       .subscribe(res => {
+        console.log(res)
         this.showSuccess = true;
       },
         err => {
+          console.log(err)
           this.showError = true;
           this.errorMessage = err.error;
         })
