@@ -12,7 +12,9 @@ import { ResetPasswordComponent } from './AuthComponents/reset-password/reset-pa
 import { ForgotPasswordComponent } from './AuthComponents/forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { SettingsComponent } from './settings/settings.component';
 import { TweetComponent } from './tweet/tweet.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { TweetComponent } from './tweet/tweet.component';
     ForgotPasswordComponent,
     HomeComponent,
     FooterComponent,
-    TweetComponent
+    SettingsComponent,
+    TweetComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
