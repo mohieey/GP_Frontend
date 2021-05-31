@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './AuthComponents/forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { LoginComponent } from './AuthComponents/login/login.component';
+import { ResetPasswordComponent } from './AuthComponents/reset-password/reset-password.component';
+import { SignUpComponent } from './AuthComponents/sign-up/sign-up.component';
 import { StartComponent } from './start/start.component';
 
 const routes: Routes = [
@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'home', component: HomeComponent },
+  { path: '**', component: StartComponent },
 ];
 
 @NgModule({

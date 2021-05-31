@@ -1,189 +1,181 @@
 <section class="feeds-page">
-      <!-- feeds nav -->
-      <nav class="feeds-nav dark-mode-1">
+    <!-- feeds nav -->
+    <nav class="feeds-nav dark-mode-1">
         <div class="icons">
-          <a href="#" class="active"><i class="fas fa-home"></i></a>
-          <a href="#"><i class="fas fa-hashtag"></i></a>
-          <a href="#"><i class="far fa-bell"></i></a>
-          <a href="#"><i class="far fa-envelope"></i></a>
+            <a href="#" class="active"><i class="fas fa-home"></i></a>
+            <a href="#"><i class="fas fa-hashtag"></i></a>
+            <a href="#"><i class="far fa-bell"></i></a>
+            <a href="#"><i class="far fa-envelope"></i></a>
         </div>
         <div class="search-bar">
-          <i class="fas fa-search"></i>
-          <input
-            type="text"
-            placeholder="Search Twirrer"
-            class="search-bar-input dark-mode-2 light-text border"
-          />
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search Twirrer" class="search-bar-input dark-mode-2 light-text border" />
         </div>
         <div class="user">
-          <div class="user-img-wrapper">
-            <img src="../../assets/images/user1.jpg" />
-          </div>
-          <a href="#" class="user-link light-text">Jane Smith</a>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-      </nav>
-      <!-- end of feeds nav -->
-
-      <!-- feeds content -->
-      <div class="feeds-content dark-mode-2">
-        <div class="feeds-header dark-mode-1">
-          <div class="header-top border">
-            <h4 class="light-text">Home</h4>
-            <i class="far fa-star"></i>
-          </div>
-          <div class="header-post dark-mode-1 border">
-            <div class="header-img-wrapper">
-              <img src="../../assets/images/user1.jpg" />
+            <div class="user-img-wrapper">
+                <img src="../../assets/images/user1.jpg" />
             </div>
-            <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border" />
-            <i class="far fa-image"></i>
-            <i class="fas fa-camera"></i>
-            <i class="far fa-chart-bar"></i>
-          </div>
+            <a href="#" class="user-link light-text">Jane Smith</a>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </nav>
+    <!-- end of feeds nav -->
+
+    <!-- feeds content -->
+    <div class="feeds-content dark-mode-2">
+        <div class="feeds-header dark-mode-1">
+            <div class="header-top border">
+                <h4 class="light-text">Home</h4>
+                <i class="far fa-star"></i>
+            </div>
+            <div class="header-post dark-mode-1 border">
+                <div class="header-img-wrapper">
+                    <img src="../../assets/images/user1.jpg" />
+                </div>
+                <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border" />
+                <i class="far fa-image"></i>
+                <i class="fas fa-camera"></i>
+                <i class="far fa-chart-bar"></i>
+            </div>
         </div>
 
-        <app-tweet class="posts dark-mode-1"></app-tweet>
+        <app-tweet class="posts dark-mode-1" [tweetList]='homePageTweets'></app-tweet>
 
         <div class="follow dark-mode-1">
-          <h3 class="follow-heading light-text border">Who to follow</h3>
-          <div class="follow-user border">
-            <div class="follow-user-img">
-              <img src="../../assets/images/user3.jpg" />
+            <h3 class="follow-heading light-text border">Who to follow</h3>
+            <div class="follow-user border">
+                <div class="follow-user-img">
+                    <img src="../../assets/images/user3.jpg" />
+                </div>
+                <div class="follow-user-info light-text">
+                    <h4>Ann Smith</h4>
+                    <p>@annsmith</p>
+                </div>
+                <button type="button" class="follow-btn dark-mode-2">Follow</button>
             </div>
-            <div class="follow-user-info light-text">
-              <h4>Ann Smith</h4>
-              <p>@annsmith</p>
+            <div class="follow-user border">
+                <div class="follow-user-img">
+                    <img src="../../assets/images/user4.jpg" />
+                </div>
+                <div class="follow-user-info light-text">
+                    <h4>Nick Doe</h4>
+                    <p>@nickdoe</p>
+                </div>
+                <button type="button" class="follow-btn dark-mode-2">Follow</button>
             </div>
-            <button type="button" class="follow-btn dark-mode-2">Follow</button>
-          </div>
-          <div class="follow-user border">
-            <div class="follow-user-img">
-              <img src="../../assets/images/user4.jpg" />
+            <div class="follow-user border">
+                <div class="follow-user-img">
+                    <img src="../../assets/images/user5.jpg" />
+                </div>
+                <div class="follow-user-info light-text">
+                    <h4>James Black</h4>
+                    <p>@jamesblack</p>
+                </div>
+                <button type="button" class="follow-btn dark-mode-2">Follow</button>
             </div>
-            <div class="follow-user-info light-text">
-              <h4>Nick Doe</h4>
-              <p>@nickdoe</p>
+            <div class="follow-link">
+                <a href="#">Show more</a>
             </div>
-            <button type="button" class="follow-btn dark-mode-2">Follow</button>
-          </div>
-          <div class="follow-user border">
-            <div class="follow-user-img">
-              <img src="../../assets/images/user5.jpg" />
-            </div>
-            <div class="follow-user-info light-text">
-              <h4>James Black</h4>
-              <p>@jamesblack</p>
-            </div>
-            <button type="button" class="follow-btn dark-mode-2">Follow</button>
-          </div>
-          <div class="follow-link">
-            <a href="#">Show more</a>
-          </div>
-          <footer class="follow-footer dark-mode-2">
-            <ul>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy policy</a></li>
-              <li><a href="#">Cookies</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">More</a></li>
-            </ul>
-          </footer>
+            <footer class="follow-footer dark-mode-2">
+                <ul>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Cookies</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">More</a></li>
+                </ul>
+            </footer>
         </div>
-      </div>
-      <!-- end of feeds content -->
+    </div>
+    <!-- end of feeds content -->
 
-      <button type="button" class="post-btn">
+    <button type="button" class="post-btn">
         +<i class="fas fa-feather-alt"></i> Post
       </button>
 
-      <!-- post modal -->
-      <div class="modal-wrapper">
+    <!-- post modal -->
+    <div class="modal-wrapper">
         <div class="modal dark-mode-1">
-          <div class="modal-header border">
-            <i class="fas fa-times"></i>
-            <button type="button">Post</button>
-          </div>
-          <div class="modal-body">
-            <div class="modal-img">
-              <img src="../../assets/images/user1.jpg" />
+            <div class="modal-header border">
+                <i class="fas fa-times"></i>
+                <button type="button">Post</button>
             </div>
-            <input
-              type="text"
-              placeholder="What's happening?"
-              class="modal-input dark-mode-2 light-text border"
-            />
-            <i class="far fa-smile"></i>
-          </div>
-          <div class="modal-footer">
-            <div class="modal-icons">
-              <i class="far fa-image"></i>
-              <i class="fas fa-camera"></i>
-              <i class="far fa-chart-bar"></i>
-              <span>+</span>
+            <div class="modal-body">
+                <div class="modal-img">
+                    <img src="../../assets/images/user1.jpg" />
+                </div>
+                <input type="text" placeholder="What's happening?" class="modal-input dark-mode-2 light-text border" />
+                <i class="far fa-smile"></i>
             </div>
-          </div>
+            <div class="modal-footer">
+                <div class="modal-icons">
+                    <i class="far fa-image"></i>
+                    <i class="fas fa-camera"></i>
+                    <i class="far fa-chart-bar"></i>
+                    <span>+</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- end of post modal -->
+    </div>
+    <!-- end of post modal -->
 
-      <!-- sidebar -->
-      <div class="sidebar-wrapper">
+    <!-- sidebar -->
+    <div class="sidebar-wrapper">
         <div class="sidebar dark-mode-1">
-          <div class="sidebar-header border">
-            <h2 class="light-text">Account info</h2>
-            <i class="fas fa-times"></i>
-          </div>
-          <div class="sidebar-user">
-            <div class="sidebar-user-img">
-              <img src="../../assets/images/user1.jpg" />
+            <div class="sidebar-header border">
+                <h2 class="light-text">Account info</h2>
+                <i class="fas fa-times"></i>
             </div>
-            <span>+</span>
-          </div>
-          <div class="sidebar-user-info light-text">
-            <h4>Jane Smith</h4>
-            <p>@janesmith</p>
-          </div>
-          <div class="following light-text">
-            <p class="following-paragraph"><span>711</span> Following</p>
-            <p class="following-paragraph"><span>7.5K</span> Followers</p>
-          </div>
-          <div class="sidebar-list-1 border">
-            <ul>
-              <li>
-                <a href="#"> <i class="fas fa-user"></i> Profile </a>
-              </li>
-              <li>
-                <a href="#"> <i class="far fa-list-alt"></i> Lists </a>
-              </li>
-              <li>
-                <a href="#"> <i class="far fa-bookmark"></i> Bookmarks </a>
-              </li>
-              <li>
-                <a href="#"> <i class="fab fa-adversal"></i> Ads </a>
-              </li>
-              <li>
-                <a href="#"> <i class="fas fa-chart-line"></i> Analytics </a>
-              </li>
-            </ul>
-          </div>
-          <div class="sidebar-list-2">
-            <ul>
-              <li><a href="#">Settings and Privacy</a></li>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">Log Out</a></li>
-            </ul>
-          </div>
+            <div class="sidebar-user">
+                <div class="sidebar-user-img">
+                    <img src="../../assets/images/user1.jpg" />
+                </div>
+                <span>+</span>
+            </div>
+            <div class="sidebar-user-info light-text">
+                <h4>Jane Smith</h4>
+                <p>@janesmith</p>
+            </div>
+            <div class="following light-text">
+                <p class="following-paragraph"><span>711</span> Following</p>
+                <p class="following-paragraph"><span>7.5K</span> Followers</p>
+            </div>
+            <div class="sidebar-list-1 border">
+                <ul>
+                    <li>
+                        <a href="#"> <i class="fas fa-user"></i> Profile </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="far fa-list-alt"></i> Lists </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="far fa-bookmark"></i> Bookmarks </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fab fa-adversal"></i> Ads </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fas fa-chart-line"></i> Analytics </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-list-2">
+                <ul>
+                    <li><a href="#">Settings and Privacy</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </div>
 
-          <!-- dark mode -->
-          <div class="dark-mode">
-            <p>Dark Mode</p>
-            <div class="toggle">
-              <div class="circle"></div>
+            <!-- dark mode -->
+            <div class="dark-mode">
+                <p>Dark Mode</p>
+                <div class="toggle">
+                    <div class="circle"></div>
+                </div>
             </div>
-          </div>
-          <!-- end of dark mode -->
+            <!-- end of dark mode -->
         </div>
-      </div>
-      <!-- end of sidebar -->
-    </section>
+    </div>
+    <!-- end of sidebar -->
+</section>

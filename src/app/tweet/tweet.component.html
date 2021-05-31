@@ -1,20 +1,18 @@
-<div class="post border">
+<div class="post border" *ngFor="let item of tweetList">
     <div class="user-avatar">
         <img src="../../assets/images/user2.jpg" />
     </div>
     <div class="post-content">
         <div class="post-user-info light-text">
-            <h4>Helen Brown</h4>
+            <h4>{{item.author.firstName + ' ' + item.author.lastName}}</h4>
             <i class="fas fa-check-circle"></i>
-            <span>@helenbrown 15m</span>
+            <span>{{item.author.email}} 15m</span>
         </div>
         <p class="post-text light-text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptates et voluptatibus vel tenetur quos, id omnis sed error
-            fuga necessitatibus.
+            {{item.body}}
         </p>
         <div class="post-img">
-            <img src="../../assets/images/post-img-1.jpg" />
+            <img [src]="item.image" />
         </div>
         <div class="post-icons">
             <i class="far fa-comment"></i>

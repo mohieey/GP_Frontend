@@ -4,16 +4,15 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TweetDTO } from '../_interfaces/tweetDTO';
 
+const tweetApi = environment.apiUrl + "/api/Tweets";
 @Injectable({
   providedIn: 'root'
 })
 export class TweetService {
 
-  tweetApi = environment.apiUrl+"/api/Tweets";
+  constructor(private httpClient: HttpClient) { }
 
-  constructor(private httpClient:HttpClient) { }
-
-  homePageTweets(id:string):Observable<TweetDTO[]> {
-    return this.httpClient.get<TweetDTO[]>(this.tweetApi+"/HomePageTweets/"+id)
+  getHomePageTweets(id: string): Observable<TweetDTO[]> {
+    return this.httpClient.get<TweetDTO[]>(tweetApi + "/HomePageTweets/" + id)
   }
 }

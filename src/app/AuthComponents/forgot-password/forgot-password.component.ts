@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { ForgotPasswordDto } from '../shared/_interfaces/forgotPasswordDTO.model';
+import { AuthenticationService } from '../../shared/services/authentication.service';
+import { ForgotPasswordDto } from '../../shared/_interfaces/forgotPasswordDTO.model';
 
 @Component({
   selector: 'app-forgot-password',
@@ -50,7 +50,7 @@ export class ForgotPasswordComponent implements OnInit {
       },
         err => {
           this.showError = true;
-          this.errorMessage = err.error.message;
+          this.errorMessage = err.error;
         })
   }
 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { PatternValidation } from '../shared/validations/patternMatcher';
+import { AuthenticationService } from '../../shared/services/authentication.service';
+import { TokenService } from '../../shared/services/token.service';
+import { PatternValidation } from '../../shared/validations/patternMatcher';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { PatternValidation } from '../shared/validations/patternMatcher';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _authService: AuthenticationService, private fb: FormBuilder, private router: Router) { }
+  constructor(private _authService: AuthenticationService, private tokenService: TokenService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -37,15 +38,17 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this._authService.login(this.loginForm.value).subscribe(
       response => {
-
-        localStorage.setItem('token', response.body['token'])
-        localStorage.setItem('currentUser', JSON.stringify(response.body))
+        this.tokenService.saveToken(response.body['token']);
+        console.log(response.body['token'])
+        this.tokenService.saveUser(response.body);
+        console.log(response.body)
         this.invalidEmailOrPassword = false;
         this.router.navigate(['/home'])
 
       }
       , err => {
         this.invalidEmailOrPassword = true;
+        console.log(err.error)
       })
   }
 

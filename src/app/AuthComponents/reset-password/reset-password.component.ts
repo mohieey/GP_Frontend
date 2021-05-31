@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { PasswordConfirmationValidatorService } from '../shared/validations/password-confirmation-validator.service';
-import { ResetPasswordDto } from '../shared/_interfaces/resetPasswordDTO.model';
+import { AuthenticationService } from '../../shared/services/authentication.service';
+import { PasswordConfirmationValidatorService } from '../../shared/validations/password-confirmation-validator.service';
+import { ResetPasswordDto } from '../../shared/_interfaces/resetPasswordDTO.model';
 
 @Component({
   selector: 'app-reset-password',
@@ -56,13 +56,11 @@ export class ResetPasswordComponent implements OnInit {
 
     this._authService.resetPassword(resetPassDto)
       .subscribe(res => {
-        console.log(res)
         this.showSuccess = true;
       },
         err => {
-          console.log(err)
           this.showError = true;
-          this.errorMessage = err;
+          this.errorMessage = err.error;
         })
   }
 
