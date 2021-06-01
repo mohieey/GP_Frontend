@@ -9,11 +9,10 @@ import { TweetService } from '../shared/services/tweet.service';
 })
 export class HomeComponent implements OnInit {
   homePageTweets: TweetDTO[];
-  currentUserId: string = '8af25f42-19ba-43f3-ba0f-f42588043e74';
   constructor(private tweetService: TweetService) { }
 
   ngOnInit(): void {
-    this.tweetService.getHomePageTweets(this.currentUserId).subscribe(res => { this.homePageTweets = res; console.log(res) })
+    this.tweetService.getHomePageTweets().subscribe(res => { this.homePageTweets = res; console.log(res) })
   }
 
 }

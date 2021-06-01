@@ -12,7 +12,7 @@ export class TweetService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getHomePageTweets(id: string): Observable<TweetDTO[]> {
-    return this.httpClient.get<TweetDTO[]>(tweetApi + "/HomePageTweets/" + id)
+  getHomePageTweets(): Observable<TweetDTO[]> {
+    return this.httpClient.get<TweetDTO[]>(tweetApi + "/HomePageTweets")
   }
 }
