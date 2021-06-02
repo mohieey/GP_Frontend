@@ -4,5 +4,7 @@ export interface TweetDTO {
   body: string;
   image: string;
   creationDate: Date;
+  likeCount: number;
+  ReplyCount: number;
   author: DetailsUserDTO;
 }
