@@ -95,39 +95,48 @@
 
     <!-- post modal -->
     <div class="modal-wrapper">
-        <div class="modal dark-mode-1" style="overflow: scroll;">
+        <div class="modal dark-mode-1" style="overflow: hidden;">
             <div class="modal-header border">
                 <i class="fas fa-times" (click)="closePostTweetWindow()"></i>
-                <button type="button">Post</button>
             </div>
-            <div style="overflow: scroll;">
+            <div style="overflow: hidden;">
                 <div class="modal-body">
                     <div class="modal-img">
                         <img src="../../assets/images/user1.jpg" />
                     </div>
-                    <textarea style="resize: none; clear: both;" type="text" placeholder="What's happening?"
-                        class="modal-input dark-mode-2 light-text border" maxlength="280" rows="6"></textarea>
+                    <textarea style="resize: none; clear: both;" type="text" placeholder="What's happening?" class="modal-input dark-mode-2 light-text border" maxlength="280" rows="6"></textarea>
                     <!-- <i class="far fa-smile"></i> -->
                 </div>
-                <div class="modal-body-image">
-                    <img src="../../assets/images/post-img-5.jpg" style="width: 100%; height: auto">
-                </div>
-                <div class="modal-body-image">
-                    <img src="../../assets/images/post-img-5.jpg" style="width: 100%; height: auto">
+                <div class="d-flex" style="margin-left: 6.7rem;">
+                    <div class="modal-image position-relative">
+                        <img src="../../assets/images/post-img-5.jpg">
+                        <button class="position-absolute" style="left: 5%; margin-top: 5px; border: none; background: none; border-radius: 50%;">
+                            <i class="fas fa-times-circle fa-2x text-dark bg-light" style="border-radius: 50%;"></i>
+                        </button>
+                    </div>
+                    <div class="modal-image position-relative">
+                        <img src="../../assets/images/post-img-5.jpg">
+                        <button class="position-absolute" style="left: 5%; margin-top: 5px; border: none; background: none; border-radius: 50%;">
+                            <i class="fas fa-times-circle fa-2x text-dark bg-light" style="border-radius: 50%;"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <div class="modal-icons">
-                    <div class="file-input">
-                        <input type="file" id="image-file" class="image-file" multiple
-                            accept="image/png, image/jpeg, image/jpg">
-                        <label for="image-file"><i class="far fa-image"></i></label>
+            <div class="modal-footer py-3">
+                <div class="mr-auto">
+                    <div class="modal-icons">
+                        <div class="file-input">
+                            <input type="file" id="image-file" class="image-file" multiple accept="image/png, image/jpeg, image/jpg">
+                            <label for="image-file"><i class="far fa-image"></i></label>
+                        </div>
+                        <div class="file-input">
+                            <input type="file" id="video-file" class="video-file" multiple accept="video/webm, video/mkv, video/flv, video/vob, video/gifv, video/mp4">
+                            <label for="video-file"><i class="fas fa-video"></i></label>
+                        </div>
                     </div>
-                    <div class="file-input">
-                        <input type="file" id="video-file" class="video-file" multiple
-                            accept="video/webm, video/mkv, video/flv, video/vob, video/gifv, video/mp4">
-                        <label for="video-file"><i class="fas fa-video"></i></label>
-                    </div>
+                </div>
+                <div>
+                    <button class="modal-button" type="button">Post</button>
                 </div>
             </div>
         </div>
