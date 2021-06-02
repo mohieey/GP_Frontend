@@ -89,30 +89,45 @@
     </div>
     <!-- end of feeds content -->
 
-    <button type="button" class="post-btn">
+    <button type="button" class="post-btn" (click)="openPostTweetWindow()">
         +<i class="fas fa-feather-alt"></i> Post
-      </button>
+    </button>
 
     <!-- post modal -->
     <div class="modal-wrapper">
-        <div class="modal dark-mode-1">
+        <div class="modal dark-mode-1" style="overflow: scroll;">
             <div class="modal-header border">
-                <i class="fas fa-times"></i>
+                <i class="fas fa-times" (click)="closePostTweetWindow()"></i>
                 <button type="button">Post</button>
             </div>
-            <div class="modal-body">
-                <div class="modal-img">
-                    <img src="../../assets/images/user1.jpg" />
+            <div style="overflow: scroll;">
+                <div class="modal-body">
+                    <div class="modal-img">
+                        <img src="../../assets/images/user1.jpg" />
+                    </div>
+                    <textarea style="resize: none; clear: both;" type="text" placeholder="What's happening?"
+                        class="modal-input dark-mode-2 light-text border" maxlength="280" rows="6"></textarea>
+                    <!-- <i class="far fa-smile"></i> -->
                 </div>
-                <input type="text" placeholder="What's happening?" class="modal-input dark-mode-2 light-text border" />
-                <i class="far fa-smile"></i>
+                <div class="modal-body-image">
+                    <img src="../../assets/images/post-img-5.jpg" style="width: 100%; height: auto">
+                </div>
+                <div class="modal-body-image">
+                    <img src="../../assets/images/post-img-5.jpg" style="width: 100%; height: auto">
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="modal-icons">
-                    <i class="far fa-image"></i>
-                    <i class="fas fa-camera"></i>
-                    <i class="far fa-chart-bar"></i>
-                    <span>+</span>
+                    <div class="file-input">
+                        <input type="file" id="image-file" class="image-file" multiple
+                            accept="image/png, image/jpeg, image/jpg">
+                        <label for="image-file"><i class="far fa-image"></i></label>
+                    </div>
+                    <div class="file-input">
+                        <input type="file" id="video-file" class="video-file" multiple
+                            accept="video/webm, video/mkv, video/flv, video/vob, video/gifv, video/mp4">
+                        <label for="video-file"><i class="fas fa-video"></i></label>
+                    </div>
                 </div>
             </div>
         </div>
