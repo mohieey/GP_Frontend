@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../shared/services/search.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 import { SearchDTO } from '../shared/_interfaces/searchDTO.model';
@@ -17,18 +17,25 @@ export class SearchResultComponent implements OnInit {
   numberOfPages: number;
   allUsers: DetailsUserDTO[];
   hasUsers: boolean = false;
+  searchKey: string;
 
-  constructor(private _searchService: SearchService,
-    private _router: Router) { }
+  constructor(
+    private _searchService: SearchService,
+    private _router: Router,
+    private _activatedRouter: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
+    this._activatedRouter.queryParamMap.subscribe( params=>{
+        this.searchKey = params.get('key');
+      }
+    )
     this.getUsersCount();
     this.getSelectedPage(1);
-    console.log(this.allUsers);
   }
 
   private getUsersCount() {
-    this._searchService.getUsersCount("keqo").subscribe(
+    this._searchService.getUsersCount(this.searchKey).subscribe(
       data => {
         this.usersCount = data
         this.numberOfPages = Math.ceil(this.usersCount / this.pageSize)
@@ -44,7 +51,7 @@ export class SearchResultComponent implements OnInit {
   }
   getSelectedPage(currentPageNumber: number) {
     let searchDto: SearchDTO = {
-      keyword: "keqo",
+      keyword: this.searchKey,
       pageSize: this.pageSize,
       pageNumber: currentPageNumber,
     }

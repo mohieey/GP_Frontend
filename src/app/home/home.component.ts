@@ -1,6 +1,7 @@
 import { TweetDTO } from './../shared/_interfaces/tweetDTO';
 import { Component, OnInit } from '@angular/core';
 import { TweetService } from '../shared/services/tweet.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +10,13 @@ import { TweetService } from '../shared/services/tweet.service';
 })
 export class HomeComponent implements OnInit {
   homePageTweets: TweetDTO[];
-  constructor(private tweetService: TweetService) { }
+  constructor(private _tweetService: TweetService, private _router: Router) { }
 
   ngOnInit(): void {
-    this.tweetService.getHomePageTweets().subscribe(res => { this.homePageTweets = res; console.log(res) })
+    this._tweetService.getHomePageTweets().subscribe(res => { this.homePageTweets = res; console.log(res) })
   }
 
+  search(event){
+    this._router.navigate(['/search'], { queryParams: { key: event.target.value } })
+  }
 }

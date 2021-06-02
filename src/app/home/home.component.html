@@ -9,7 +9,7 @@
         </div>
         <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search Twirrer" class="search-bar-input dark-mode-2 light-text border" />
+            <input type="text" placeholder="Search Twirrer" class="search-bar-input dark-mode-2 light-text border" (keydown.enter)="search($event)" />
         </div>
         <div class="user">
             <div class="user-img-wrapper">
