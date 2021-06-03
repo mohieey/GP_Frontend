@@ -13,12 +13,12 @@ export class HomeComponent implements OnInit {
 
   constructor(private _tweetService: TweetService, private _router: Router) { }
 
-  search(event){
+  search(event) {
     this._router.navigate(['/search'], { queryParams: { key: event.target.value } })
   }
-  modal:HTMLElement;
-  modalWrapper:HTMLElement;
-  modalInput:HTMLInputElement;
+  modal: HTMLElement;
+  modalWrapper: HTMLElement;
+  modalInput: HTMLInputElement;
 
   ngOnInit(): void {
     this._tweetService.getHomePageTweets().subscribe(res => { this.homePageTweets = res; console.log(res) })
@@ -27,18 +27,33 @@ export class HomeComponent implements OnInit {
     this.modalInput = document.querySelector('.modal-input');
   }
 
-  openPostTweetWindow(){
+  openPostTweetWindow() {
     this.modal.style.display = 'block';
-	  this.modalWrapper.classList.add('modal-wrapper-display');
+    this.modalWrapper.classList.add('modal-wrapper-display');
   }
 
-  closePostTweetWindow(){
+  closePostTweetWindow() {
     this.modal.style.display = 'none';
     this.modalWrapper.classList.remove('modal-wrapper-display');
 
     if (this.modalInput.value !== '') {
       this.modalInput.value = '';
     }
-    
+
+  }
+
+  urls = new Array<string>();
+  detectFiles(event) {
+    this.urls = [];
+    let files = event.target.files;
+    if (files) {
+      for (let file of files) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.urls.push(e.target.result);
+        }
+        reader.readAsDataURL(file);
+      }
+    }
   }
 }
