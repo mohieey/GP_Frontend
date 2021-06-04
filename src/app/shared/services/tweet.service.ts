@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AddTweetDTO } from '../_interfaces/addTweetDTO';
 import { TweetDTO } from '../_interfaces/tweetDTO';
 
 const tweetApi = environment.apiUrl + "/api/Tweets";
@@ -21,8 +22,23 @@ export class TweetService {
     }));
   }
 
-  uploadProductImage(formData:FormData): Observable<any>{
+  uploadTweetImage(formData:FormData): Observable<any>{
     return this.httpClient.post(uploadApi+"/Image", formData).pipe(catchError((err)=>
+    {
+      return throwError(err.message ||"Internal Server error contact site adminstarator");
+    }));
+  }
+
+  uploadTweetVideo(formData:FormData): Observable<any>{
+    return this.httpClient.post(uploadApi+"/Video", formData).pipe(catchError((err)=>
+    {
+      return throwError(err.message ||"Internal Server error contact site adminstarator");
+    }));
+  }
+
+  addTweet(tweet:AddTweetDTO):  Observable<any>
+  {
+    return this.httpClient.post<any>(tweetApi, tweet).pipe(catchError((err)=>
     {
       return throwError(err.message ||"Internal Server error contact site adminstarator");
     }));
