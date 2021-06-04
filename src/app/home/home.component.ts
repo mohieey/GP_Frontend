@@ -1,7 +1,7 @@
 import { TweetDTO } from './../shared/_interfaces/tweetDTO';
 import { Component, OnInit } from '@angular/core';
 import { TweetService } from '../shared/services/tweet.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   homePageTweets: TweetDTO[];
 
-  constructor(private _tweetService: TweetService, private _router: Router) { }
+  constructor(private _tweetService: TweetService, private _router: Router, private route: ActivatedRoute) { }
 
   search(event) {
     this._router.navigate(['/search'], { queryParams: { key: event.target.value } })
@@ -19,12 +19,18 @@ export class HomeComponent implements OnInit {
   modal: HTMLElement;
   modalWrapper: HTMLElement;
   modalInput: HTMLInputElement;
+  page: string;
+
 
   ngOnInit(): void {
     this._tweetService.getHomePageTweets().subscribe(res => { this.homePageTweets = res; console.log(res) })
     this.modal = document.querySelector('.modal');
     this.modalWrapper = document.querySelector('.modal-wrapper');
     this.modalInput = document.querySelector('.modal-input');
+    this.route.paramMap.subscribe(params => {
+      this.page = params.get('page');
+    })
+
   }
 
   openPostTweetWindow() {

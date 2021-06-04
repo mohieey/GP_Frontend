@@ -28,7 +28,7 @@
 
   <!-- feeds content -->
   <div class="feeds-content dark-mode-2">
-    <div class="feeds-header dark-mode-1">
+    <div class="feeds-header dark-mode-1" *ngIf="page == 'feed'">
       <div class="header-top border">
         <h4 class="light-text">Home</h4>
         <i class="far fa-star"></i>
@@ -47,11 +47,15 @@
         <i class="far fa-chart-bar"></i>
       </div>
     </div>
-
-    <app-tweet
-      class="posts dark-mode-1"
-      [tweetList]="homePageTweets"
-    ></app-tweet>
+    <ng-container *ngIf="page == 'feed'; else elseTemplate">
+      <app-tweet
+        class="posts dark-mode-1"
+        [tweetList]="homePageTweets"
+      ></app-tweet>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <app-tweet-details class="posts dark-mode-1"></app-tweet-details>
+    </ng-template>
 
     <div class="follow dark-mode-1">
       <h3 class="follow-heading light-text border">Who to follow</h3>

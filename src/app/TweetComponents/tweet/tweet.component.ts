@@ -1,4 +1,4 @@
-import { TweetDTO } from './../shared/_interfaces/tweetDTO';
+import { TweetDTO } from '../../shared/_interfaces/tweetDTO';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

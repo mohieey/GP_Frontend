@@ -5,6 +5,6 @@ export interface TweetDTO {
   image: string;
   creationDate: Date;
   likeCount: number;
-  ReplyCount: number;
+  replyCount: number;
   author: DetailsUserDTO;
 }

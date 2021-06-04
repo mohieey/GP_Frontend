@@ -13,10 +13,11 @@ import { ForgotPasswordComponent } from './AuthComponents/forgot-password/forgot
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
-import { TweetComponent } from './tweet/tweet.component';
+import { TweetComponent } from './TweetComponents/tweet/tweet.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { authInterceptorProviders } from './shared/_helpers/auth.interceptor';
 import { PostTweetComponent } from './post-tweet/post-tweet.component';
+import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PostTweetComponent } from './post-tweet/post-tweet.component';
     SettingsComponent,
     TweetComponent,
     SearchResultComponent,
-    PostTweetComponent
+    PostTweetComponent,
+    TweetDetailsComponent
   ],
   imports: [
     BrowserModule,
