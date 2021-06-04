@@ -1,7 +1,7 @@
+import { TweetWithRepliesDTO } from './../../shared/_interfaces/tweetWithRepliesDTO.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TweetService } from 'src/app/shared/services/tweet.service';
-import { TweetDTO } from 'src/app/shared/_interfaces/tweetDTO';
 
 @Component({
   selector: 'app-tweet-details',
@@ -10,7 +10,7 @@ import { TweetDTO } from 'src/app/shared/_interfaces/tweetDTO';
 })
 export class TweetDetailsComponent implements OnInit {
 
-  tweet: TweetDTO;
+  tweet: TweetWithRepliesDTO;
   id: number;
   constructor(private tweetService: TweetService, private route: ActivatedRoute) { }
 
