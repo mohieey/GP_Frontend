@@ -8,6 +8,7 @@ import { SignUpComponent } from './AuthComponents/sign-up/sign-up.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StartComponent } from './start/start.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: 'forgotpassword', component: ForgotPasswordComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'setting', component: SettingsComponent },
   { path: 'search', component: SearchResultComponent },
+  { path: 'profile', component: UserProfileComponent },
   { path: '**', component: StartComponent }
 ];
 
