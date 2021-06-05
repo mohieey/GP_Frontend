@@ -5,11 +5,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ImageDTO } from '../shared/_interfaces/imageDTO';
 import { VideoDTO } from '../shared/_interfaces/videoDTO';
 import { AddTweetDTO } from '../shared/_interfaces/addTweetDTO';
+import { ElementHelper } from 'protractor';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   homePageTweets: TweetDTO[];
@@ -31,7 +32,10 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this._tweetService.getHomePageTweets().subscribe(res => { this.homePageTweets = res; console.log(res) })
+    this._tweetService.getHomePageTweets().subscribe((res) => {
+      this.homePageTweets = res;
+      console.log(res);
+    });
     this.modal = document.querySelector('.modal');
     this.modalWrapper = document.querySelector('.modal-wrapper');
     this.modalInput = document.querySelector('.modal-input');
@@ -42,6 +46,14 @@ export class HomeComponent implements OnInit {
 
   search(event) {
     this._router.navigate(['/search'], { queryParams: { key: event.target.value } })
+    this.sidebar = document.querySelector('.sidebar');
+    this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
+
+    this.darkElements1 = document.querySelectorAll('.dark-mode-1');
+    this.darkElements2 = document.querySelectorAll('.dark-mode-2');
+    this.lighTexts = document.querySelectorAll('.light-text');
+    this.borders = document.querySelectorAll('.border');
+    this.circle = document.querySelector('.circle');
   }
 
   openPostTweetWindow() {
@@ -59,7 +71,7 @@ export class HomeComponent implements OnInit {
 
     console.log(this.videoUrls);
     this.imageUrls = [];
-    this.videoUrls = "";
+    this.videoUrls = '';
     this.imageFiles = [];
     this.videoFile = null;
     var videoList = document.querySelector('.video-list');
@@ -67,7 +79,6 @@ export class HomeComponent implements OnInit {
       videoList.firstChild.remove();
     }
   }
-
 
   detectImageFiles(event) {
     this.imageUrls = [];
@@ -81,7 +92,7 @@ export class HomeComponent implements OnInit {
         let reader = new FileReader();
         reader.onload = (e: any) => {
           this.imageUrls.push(e.target.result);
-        }
+        };
         this.imageFiles.push(file);
         reader.readAsDataURL(file);
       }
@@ -103,10 +114,10 @@ export class HomeComponent implements OnInit {
           this.videoUrls = e.target.result;
 
           var videoDiv = document.createElement('div');
-          videoDiv.setAttribute('class', "modal-image position-relative");
+          videoDiv.setAttribute('class', 'modal-image position-relative');
 
           var video = document.createElement('video');
-          video.setAttribute('style', "width: 400px; height: 200px;");
+          video.setAttribute('style', 'width: 400px; height: 200px;');
           var videoSource = document.createElement('source');
           var container = document.querySelector('.video-list');
 
@@ -117,16 +128,22 @@ export class HomeComponent implements OnInit {
           video.load();
 
           var button = document.createElement('button');
-          button.setAttribute('class', "position-absolute");
-          button.setAttribute('style', "left: 5%; margin-top: 5px; border: none; background: none; border-radius: 50%;");
-          button.addEventListener("click", this.deletVideoFromTweet)
+          button.setAttribute('class', 'position-absolute');
+          button.setAttribute(
+            'style',
+            'left: 5%; margin-top: 5px; border: none; background: none; border-radius: 50%;'
+          );
+          button.addEventListener('click', this.deletVideoFromTweet);
           videoDiv.appendChild(button);
 
           var i = document.createElement('i');
-          i.setAttribute('class', "fas fa-times-circle fa-2x text-dark bg-light");
-          i.setAttribute('style', "border-radius: 50%");
+          i.setAttribute(
+            'class',
+            'fas fa-times-circle fa-2x text-dark bg-light'
+          );
+          i.setAttribute('style', 'border-radius: 50%');
           button.appendChild(i);
-        }
+        };
         this.videoFile = file;
         reader.readAsDataURL(file);
       }
@@ -170,15 +187,14 @@ export class HomeComponent implements OnInit {
       }
       this.videoName = {
         videoName: this.videoFile.name,
-      }
+      };
     }
-
 
     var tweet: AddTweetDTO = {
       body: postText.value,
       images: this.imagesNames,
-      video: this.videoName
-    }
+      video: this.videoName,
+    };
 
     console.log(tweet);
 
@@ -230,6 +246,45 @@ export class HomeComponent implements OnInit {
         return "error";
       }
     );
-    return "";
+    return '';
+  }
+
+  // Sidebar
+
+  sidebar: Element;
+  sidebarWrapper: Element;
+
+  Display() {
+    this.sidebar.classList.add('sidebar-display');
+    this.sidebarWrapper.classList.add('sidebar-wrapper-display');
+  }
+
+  Dismiss() {
+    this.sidebar.classList.remove('sidebar-display');
+    this.sidebarWrapper.classList.remove('sidebar-wrapper-display');
+  }
+
+  // dark mode
+
+  darkElements1: NodeListOf<Element>;
+  darkElements2: NodeListOf<Element>;
+  lighTexts: NodeListOf<Element>;
+  borders: NodeListOf<Element>;
+  circle: Element;
+
+  supportDarkMode() {
+    this.circle.classList.toggle('move');
+    Array.from(this.darkElements1).map((darkEl1) =>
+      darkEl1.classList.toggle('dark-1')
+    );
+    Array.from(this.darkElements2).map((darkEl2) =>
+      darkEl2.classList.toggle('dark-2')
+    );
+    Array.from(this.lighTexts).map((lighText) =>
+      lighText.classList.toggle('light')
+    );
+    Array.from(this.borders).map((border) =>
+      border.classList.toggle('border-color')
+    );
   }
 }
