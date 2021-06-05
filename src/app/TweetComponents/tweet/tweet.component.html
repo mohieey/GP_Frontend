@@ -15,8 +15,8 @@
       <p class="post-text light-text">
         {{ item.body }}
       </p>
-      <div class="post-img">
-        <img [src]="item.image" />
+      <div class="post-img" *ngFor="let img of item.images">
+        <img [src]="createImgPath('Resources/Images/' + img.imageName)" />
       </div>
       <div class="post-icons">
         <span><i class="far fa-comment"></i>{{ item.replyCount }}</span>
