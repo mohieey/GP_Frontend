@@ -1,13 +1,12 @@
 import { DetailsUserDTO } from './detailsUserDTO.model';
-import { ImageDTO } from './imageDTO';
-import { VideoDTO } from './videoDTO';
-export interface TweetDTO {
+import { TweetDTO } from './tweetDTO';
+export interface TweetWithRepliesDTO {
   id: number;
   body: string;
-  images: ImageDTO[];
-  video: VideoDTO
+  image: string;
   creationDate: Date;
   likeCount: number;
   replyCount: number;
+  replies: TweetDTO;
   author: DetailsUserDTO;
 }

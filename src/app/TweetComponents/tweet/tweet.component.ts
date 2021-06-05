@@ -1,4 +1,5 @@
-import { TweetDTO } from './../shared/_interfaces/tweetDTO';
+import { environment } from './../../../environments/environment';
+import { TweetDTO } from '../../shared/_interfaces/tweetDTO';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -14,4 +15,9 @@ export class TweetComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public createImgPath = (serverPath: string) => {
+
+    return `${environment.apiUrl}/${serverPath}`;
+
+  }
 }

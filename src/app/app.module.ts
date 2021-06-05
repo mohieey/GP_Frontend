@@ -13,11 +13,15 @@ import { ForgotPasswordComponent } from './AuthComponents/forgot-password/forgot
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
-import { TweetComponent } from './tweet/tweet.component';
+import { TweetComponent } from './TweetComponents/tweet/tweet.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { authInterceptorProviders } from './shared/_helpers/auth.interceptor';
 import { PostTweetComponent } from './post-tweet/post-tweet.component';
+<<<<<<< HEAD
 import { UserProfileComponent } from './user-profile/user-profile.component';
+=======
+import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
+>>>>>>> 348cb52b277742b8afd83af26e1266d9369623be
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     TweetComponent,
     SearchResultComponent,
     PostTweetComponent,
+<<<<<<< HEAD
     UserProfileComponent
+=======
+    TweetDetailsComponent
+>>>>>>> 348cb52b277742b8afd83af26e1266d9369623be
   ],
   imports: [
     BrowserModule,

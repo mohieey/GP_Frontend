@@ -1,0 +1,58 @@
+<div *ngIf="tweet">
+  <div class="post border">
+    <div class="user-avatar">
+      <img [src]="tweet.author.image" />
+    </div>
+    <div class="post-content">
+      <div class="post-user-info light-text">
+        <h4>{{ tweet.author.firstName + " " + tweet.author.lastName }}</h4>
+        <i class="fas fa-check-circle"></i>
+        <span
+          >@{{ tweet.author.userName }}
+          {{ tweet.creationDate | date: "shortTime" }}</span
+        >
+      </div>
+      <p class="post-text light-text">
+        {{ tweet.body }}
+      </p>
+      <div class="post-img">
+        <img [src]="tweet.image" />
+      </div>
+      <div class="post-icons">
+        <span><i class="far fa-comment"></i>{{ tweet.replyCount }}</span>
+        <span><i class="fas fa-retweet"></i></span>
+
+        <span><i class="far fa-heart"></i>{{ tweet.likeCount }}</span>
+        <span><i class="fas fa-share-alt"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="post border" *ngFor="let item of tweet.replies">
+    <div class="user-avatar">
+      <img [src]="item.author.image" />
+    </div>
+    <div class="post-content">
+      <div class="post-user-info light-text">
+        <h4>{{ item.author.firstName + " " + item.author.lastName }}</h4>
+        <i class="fas fa-check-circle"></i>
+        <span
+          >@{{ item.author.userName }}
+          {{ item.creationDate | date: "shortTime" }}</span
+        >
+      </div>
+      <p class="post-text light-text">
+        {{ item.body }}
+      </p>
+      <div class="post-img">
+        <img [src]="item.image" />
+      </div>
+      <div class="post-icons">
+        <span><i class="far fa-comment"></i>{{ item.replyCount }}</span>
+        <span><i class="fas fa-retweet"></i></span>
+
+        <span><i class="far fa-heart"></i>{{ item.likeCount }}</span>
+        <span><i class="fas fa-share-alt"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
