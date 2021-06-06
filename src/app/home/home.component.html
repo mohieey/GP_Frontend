@@ -1,216 +1,163 @@
 <section class="feeds-page">
-  <!-- feeds nav -->
-  <nav class="feeds-nav dark-mode-1">
-    <div class="icons">
-      <a href="#" class="active"><i class="fas fa-home"></i></a>
-      <a href="#"><i class="fas fa-hashtag"></i></a>
-      <a href="#"><i class="far fa-bell"></i></a>
-      <a href="#"><i class="far fa-envelope"></i></a>
-    </div>
-    <div class="search-bar">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search Twirrer" class="search-bar-input dark-mode-2 light-text border"
-        (keydown.enter)="search($event)" />
-    </div>
-    <div class="user" (click)="Display()">
-      <div class="user-img-wrapper">
-        <img src="../../assets/images/user1.jpg" />
-      </div>
-      <a class="user-link light-text">Jane Smith</a>
-      <i class="fas fa-chevron-down"></i>
-    </div>
-  </nav>
-  <!-- end of feeds nav -->
+    <!-- feeds nav -->
+    <nav class="feeds-nav dark-mode-1">
+        <div class="icons">
+            <a href="#" class="active"><i class="fas fa-home"></i></a>
+            <a href="#"><i class="fas fa-hashtag"></i></a>
+            <a href="#"><i class="far fa-bell"></i></a>
+            <a href="#"><i class="far fa-envelope"></i></a>
+        </div>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search Twirrer" class="search-bar-input dark-mode-2 light-text border" (keydown.enter)="search($event)" />
+        </div>
+        <div class="user" (click)="Display()">
+            <div class="user-img-wrapper">
+                <img src="../../assets/images/user1.jpg" />
+            </div>
+            <a class="user-link light-text">Jane Smith</a>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </nav>
+    <!-- end of feeds nav -->
 
-  <!-- feeds content -->
-  <div class="feeds-content dark-mode-2">
-    <div class="feeds-header dark-mode-1" *ngIf="page == 'feed'">
-      <div class="header-top border">
-        <h4 class="light-text">Home</h4>
-        <i class="far fa-star"></i>
-      </div>
-      <div class="header-post dark-mode-1 border">
-        <div class="header-img-wrapper">
-          <img src="../../assets/images/user1.jpg" />
+    <!-- feeds content -->
+    <div class="feeds-content dark-mode-2">
+        <div class="feeds-header dark-mode-1" *ngIf="page == 'feed'">
+            <div class="header-top border">
+                <h4 class="light-text">Home</h4>
+                <i class="far fa-star"></i>
+            </div>
+            <div class="header-post dark-mode-1 border">
+                <div class="header-img-wrapper">
+                    <img src="../../assets/images/user1.jpg" />
+                </div>
+                <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border" />
+                <i class="far fa-image"></i>
+                <i class="fas fa-camera"></i>
+                <i class="far fa-chart-bar"></i>
+            </div>
         </div>
-        <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border" />
-        <i class="far fa-image"></i>
-        <i class="fas fa-camera"></i>
-        <i class="far fa-chart-bar"></i>
-      </div>
-    </div>
-    <ng-container *ngIf="page == 'feed'; else elseTemplate">
-      <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets"></app-tweet>
-    </ng-container>
-    <ng-template #elseTemplate>
-      <app-tweet-details class="posts dark-mode-1"></app-tweet-details>
-    </ng-template>
+        <ng-container *ngIf="page == 'feed'; else elseTemplate">
+            <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets"></app-tweet>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <app-tweet-details class="posts dark-mode-1"></app-tweet-details>
+        </ng-template>
 
-    <div class="follow dark-mode-1">
-      <h3 class="follow-heading light-text border">Who to follow</h3>
-      <div class="follow-user border">
-        <div class="follow-user-img">
-          <img src="../../assets/images/user3.jpg" />
+        <div class="follow dark-mode-1">
+            <h3 class="follow-heading light-text border">Who to follow</h3>
+            <div class="follow-user border">
+                <div class="follow-user-img">
+                    <img src="../../assets/images/user3.jpg" />
+                </div>
+                <div class="follow-user-info light-text">
+                    <h4>Ann Smith</h4>
+                    <p>@annsmith</p>
+                </div>
+                <button type="button" class="follow-btn dark-mode-2">Follow</button>
+            </div>
+            <div class="follow-user border">
+                <div class="follow-user-img">
+                    <img src="../../assets/images/user4.jpg" />
+                </div>
+                <div class="follow-user-info light-text">
+                    <h4>Nick Doe</h4>
+                    <p>@nickdoe</p>
+                </div>
+                <button type="button" class="follow-btn dark-mode-2">Follow</button>
+            </div>
+            <div class="follow-user border">
+                <div class="follow-user-img">
+                    <img src="../../assets/images/user5.jpg" />
+                </div>
+                <div class="follow-user-info light-text">
+                    <h4>James Black</h4>
+                    <p>@jamesblack</p>
+                </div>
+                <button type="button" class="follow-btn dark-mode-2">Follow</button>
+            </div>
+            <div class="follow-link">
+                <a href="#">Show more</a>
+            </div>
+            <footer class="follow-footer dark-mode-2">
+                <ul>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Cookies</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">More</a></li>
+                </ul>
+            </footer>
         </div>
-        <div class="follow-user-info light-text">
-          <h4>Ann Smith</h4>
-          <p>@annsmith</p>
-        </div>
-        <button type="button" class="follow-btn dark-mode-2">Follow</button>
-      </div>
-      <div class="follow-user border">
-        <div class="follow-user-img">
-          <img src="../../assets/images/user4.jpg" />
-        </div>
-        <div class="follow-user-info light-text">
-          <h4>Nick Doe</h4>
-          <p>@nickdoe</p>
-        </div>
-        <button type="button" class="follow-btn dark-mode-2">Follow</button>
-      </div>
-      <div class="follow-user border">
-        <div class="follow-user-img">
-          <img src="../../assets/images/user5.jpg" />
-        </div>
-        <div class="follow-user-info light-text">
-          <h4>James Black</h4>
-          <p>@jamesblack</p>
-        </div>
-        <button type="button" class="follow-btn dark-mode-2">Follow</button>
-      </div>
-      <div class="follow-link">
-        <a href="#">Show more</a>
-      </div>
-      <footer class="follow-footer dark-mode-2">
-        <ul>
-          <li><a href="#">Terms</a></li>
-          <li><a href="#">Privacy policy</a></li>
-          <li><a href="#">Cookies</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">More</a></li>
-        </ul>
-      </footer>
     </div>
-  </div>
-  <!-- end of feeds content -->
+    <!-- end of feeds content -->
 
-  <button type="button" class="post-btn" (click)="openPostTweetWindow()">
+    <button type="button" class="post-btn" (click)="openPostTweetWindow()">
     +<i class="fas fa-feather-alt"></i> Post
   </button>
 
-  <!-- post modal -->
-  <div class="modal-wrapper">
-    <div class="modal dark-mode-1" style="overflow: hidden">
-      <div class="modal-header border">
-        <i class="fas fa-times" (click)="closePostTweetWindow()"></i>
-      </div>
-      <div style="overflow: hidden">
-        <div class="modal-body">
-          <div class="modal-img">
-            <img src="../../assets/images/user1.jpg" />
-          </div>
-          <textarea style="resize: none; clear: both" type="text" placeholder="What's happening?"
-            class="modal-input dark-mode-2 light-text border tweet-text" maxlength="280" rows="6"></textarea>
-        </div>
-        <!-- style="margin-left: 6.7rem;" -->
-        <div class="d-flex flex-wrap justify-content-center ml-5 image-list">
-          <div class="modal-image position-relative" *ngFor="let url of imageUrls; let i = index">
-            <img [src]="url" data-index="{{i}}" />
-            <button class="position-absolute" style="
-                left: 5%;
-                margin-top: 5px;
-                border: none;
-                background: none;
-                border-radius: 50%;
-              " (click)="deletImageFromTweet($event)">
-              <i class="fas fa-times-circle fa-2x text-dark bg-light" style="border-radius: 50%"></i>
-            </button>
-          </div>
-        </div>
-        <div class="d-flex flex-wrap justify-content-center ml-5 video-list">
-        </div>
-      </div>
-      <div class="modal-footer py-3">
-        <div class="mr-auto">
-          <div class="modal-icons">
-            <div class="file-input">
-              <input type="file" id="image-file" class="image-file" multiple accept="image/png, image/jpeg, image/jpg"
-                multiple (change)="detectImageFiles($event)" />
-              <label for="image-file"><i class="far fa-image"></i></label>
-            </div>
-            <div class="file-input">
-              <input type="file" id="video-file" class="video-file" multiple
-                accept="video/webm, video/mkv, video/flv, video/vob, video/gifv, video/mp4, video/avi"
-                (change)="detectVideoFiles($event)" />
-              <label for="video-file"><i class="fas fa-video"></i></label>
-            </div>
-          </div>
-        </div>
-        <div>
-          <button class="modal-button post-button" (click)="postTweet()" type="button">Post</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end of post modal -->
+    <!-- post modal -->
+    <app-post-tweet class="modal-wrapper"></app-post-tweet>
+    <!-- end of post modal -->
 
-  <!-- sidebar -->
-  <div class="sidebar-wrapper">
-    <div class="sidebar dark-mode-1">
-      <div class="sidebar-header border">
-        <h2 class="light-text">Account info</h2>
-        <i class="fas fa-times" (click)="Dismiss()"></i>
-      </div>
-      <div class="sidebar-user">
-        <div class="sidebar-user-img">
-          <img src="../../assets/images/user1.jpg" />
-        </div>
-        <span>+</span>
-      </div>
-      <div class="sidebar-user-info light-text">
-        <h4>Jane Smith</h4>
-        <p>@janesmith</p>
-      </div>
-      <div class="following light-text">
-        <p class="following-paragraph"><span>711</span> Following</p>
-        <p class="following-paragraph"><span>7.5K</span> Followers</p>
-      </div>
-      <div class="sidebar-list-1 border">
-        <ul>
-          <li>
-            <a href="#"> <i class="fas fa-user"></i> Profile </a>
-          </li>
-          <li>
-            <a href="#"> <i class="far fa-list-alt"></i> Lists </a>
-          </li>
-          <li>
-            <a href="#"> <i class="far fa-bookmark"></i> Bookmarks </a>
-          </li>
-          <li>
-            <a href="#"> <i class="fab fa-adversal"></i> Ads </a>
-          </li>
-          <li>
-            <a href="#"> <i class="fas fa-chart-line"></i> Analytics </a>
-          </li>
-        </ul>
-      </div>
-      <div class="sidebar-list-2">
-        <ul>
-          <li><a href="#">Settings and Privacy</a></li>
-          <li><a href="#">Help Center</a></li>
-          <li><a href="#">Log Out</a></li>
-        </ul>
-      </div>
+    <!-- sidebar -->
+    <div class="sidebar-wrapper">
+        <div class="sidebar dark-mode-1">
+            <div class="sidebar-header border">
+                <h2 class="light-text">Account info</h2>
+                <i class="fas fa-times" (click)="Dismiss()"></i>
+            </div>
+            <div class="sidebar-user">
+                <div class="sidebar-user-img">
+                    <img src="../../assets/images/user1.jpg" />
+                </div>
+                <span>+</span>
+            </div>
+            <div class="sidebar-user-info light-text">
+                <h4>Jane Smith</h4>
+                <p>@janesmith</p>
+            </div>
+            <div class="following light-text">
+                <p class="following-paragraph"><span>711</span> Following</p>
+                <p class="following-paragraph"><span>7.5K</span> Followers</p>
+            </div>
+            <div class="sidebar-list-1 border">
+                <ul>
+                    <li>
+                        <a href="#"> <i class="fas fa-user"></i> Profile </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="far fa-list-alt"></i> Lists </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="far fa-bookmark"></i> Bookmarks </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fab fa-adversal"></i> Ads </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="fas fa-chart-line"></i> Analytics </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-list-2">
+                <ul>
+                    <li><a href="#">Settings and Privacy</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </div>
 
-      <!-- dark mode -->
-      <div class="dark-mode">
-        <p>Dark Mode</p>
-        <div class="toggle" (click)="supportDarkMode()">
-          <div class="circle"></div>
+            <!-- dark mode -->
+            <div class="dark-mode">
+                <p>Dark Mode</p>
+                <div class="toggle" (click)="supportDarkMode()">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <!-- end of dark mode -->
         </div>
-      </div>
-      <!-- end of dark mode -->
     </div>
-  </div>
-  <!-- end of sidebar -->
+    <!-- end of sidebar -->
 </section>

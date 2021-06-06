@@ -1,30 +1,58 @@
 <div class="post border" *ngFor="let item of tweetList">
-  <a routerLink="/home/{{ item.id }}">
+
     <div class="user-avatar">
-      <img [src]="item.author.image" />
+        <img [src]="item.author.image" />
     </div>
     <div class="post-content">
-      <div class="post-user-info light-text">
-        <h4>{{ item.author.firstName + " " + item.author.lastName }}</h4>
-        <i class="fas fa-check-circle"></i>
-        <span>
+        <a routerLink="/home/{{ item.id }}">
+            <div class="post-user-info light-text">
+                <h4>{{ item.author.firstName + " " + item.author.lastName }}</h4>
+                <i class="fas fa-check-circle"></i>
+                <span>
           @{{ item.author.userName }}
-          {{ item.creationDate | date: "shortTime" }}</span
-        >
-      </div>
-      <p class="post-text light-text">
-        {{ item.body }}
-      </p>
-      <div class="post-img" *ngFor="let img of item.images">
-        <img [src]="createImgPath('Resources/Images/' + img.imageName)" />
-      </div>
-      <div class="post-icons">
-        <span><i class="far fa-comment"></i>{{ item.replyCount }}</span>
-        <span><i class="fas fa-retweet"></i></span>
-
-        <span><i class="far fa-heart"></i>{{ item.likeCount }}</span>
-        <span><i class="fas fa-share-alt"></i></span>
-      </div>
+          {{ item.creationDate | date: "shortTime" }}</span>
+            </div>
+            <p class="post-text light-text">
+                {{ item.body }}
+            </p>
+        </a>
+        <div class="post-img" *ngFor="let img of item.images">
+            <img [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
+        </div>
+        <div *ngIf="item.video">
+            <video controls [src]="createResourcesPath('Resources/Videos/' + item.video.videoName)" width="100%" height="auto"></video>
+        </div>
+        <div class="post-icons">
+            <span>
+        <i class="far fa-comment" data-toggle="modal" data-target="#exampleModal"></i>{{
+        item.replyCount }}</span>
+            <span><i class="fas fa-retweet"></i></span>
+            <span><i class="far fa-heart"></i>{{ item.likeCount }}</span>
+            <span><i class="fas fa-share-alt"></i></span>
+        </div>
     </div>
-  </a>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Reply</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Reply:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Reply</button>
+            </div>
+        </div>
+    </div>
 </div>
