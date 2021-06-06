@@ -519,33 +519,7 @@
     border-color: #444 !important;
 }
 
-.image-file {
-    opacity: 0;
-    width: 0.1px;
-    height: 0.1px;
-    position: absolute;
-}
 
-.video-file {
-    opacity: 0;
-    width: 0.1px;
-    height: 0.1px;
-    position: absolute;
-}
-
-.file-input label {
-    cursor: pointer;
-}
-
-input[type="file"]+input:hover+label,
-input[type="file"]+input:focus+label {
-    transform: scale(1.02);
-}
-
-input[type="file"]+input:focus+label {
-    outline: 1px solid #000;
-    outline: -webkit-focus-ring-color auto 2px;
-}
 
 
 /* end of dark mode */

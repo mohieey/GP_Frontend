@@ -50,9 +50,12 @@ export class HomeComponent implements OnInit {
   openPostTweetWindow() {
     this.modalWrapper.classList.add('modal-wrapper-display');
     this.postTweetComponent.openPostTweetWindow();
-
   }
 
+  closePostTweetWindow()
+  {
+    this.modalWrapper.classList.remove('modal-wrapper-display');
+  }
 
   // Sidebar
 

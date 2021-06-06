@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TweetService } from '../shared/services/tweet.service';
 import { AddTweetDTO } from '../shared/_interfaces/addTweetDTO';
 import { ImageDTO } from '../shared/_interfaces/imageDTO';
@@ -22,23 +22,24 @@ export class PostTweetComponent implements OnInit {
   videoName: VideoDTO;
   videoUrls = new String();
   videoFile: File = null;
-
+  @Output() onClose:EventEmitter<any> = new EventEmitter();
   constructor(private _tweetService: TweetService) {
   }
 
   ngOnInit(): void {
-    this.modal = document.querySelector('.modal');
+    this.modal = document.querySelector('.modal.dark-mode-1');
     this.modalInput = document.querySelector('.modal-input');
   }
 
   openPostTweetWindow() {
-    console.log('ssssss')
+    console.log(this.modal)
     this.modal.style.display = 'block';
 
   }
 
   closePostTweetWindow() {
     this.modal.style.display = 'none';
+    this.onClose.emit();
     // this.modalWrapper.classList.remove('modal-wrapper-display');
 
     if (this.modalInput.value !== '') {
