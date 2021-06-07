@@ -12,12 +12,14 @@
                         @{{ item.author.userName }}
                         {{ item.creationDate | date: "shortTime" }}</span>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      . . .
+                <div class="dropdown" *ngIf="currentUser.email == item.author.email">
+                    <button style="background-color: #1aa1f5; border-color: #1aa1f5;" class="btn btn-primary dropdown" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                        </svg>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="#">Delete</a></li>
+                      <li><a style="font-size: 15px;" class="dropdown-item" (click)="deleteTweet(item.id)">Delete</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,8 +31,10 @@
                     <img [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
                 </div>
                 <div *ngIf="item.video">
-                    <video autoplay muted controls [src]="createResourcesPath('Resources/Videos/' + item.video.videoName)" width="100%"
-                        height="auto"></video>
+                    <video autoplay muted controls width="100%"
+                        height="auto">
+                        <source [src]="createResourcesPath('Resources/Videos/' + item.video.videoName)"/>
+                    </video>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { environment } from './../../../environments/environment';
 import { TweetDTO } from '../../shared/_interfaces/tweetDTO';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TokenService } from 'src/app/shared/services/token.service';
+import { TweetService } from 'src/app/shared/services/tweet.service';
 
 @Component({
   selector: 'app-tweet',
@@ -14,12 +15,13 @@ export class TweetComponent implements OnInit {
   @Input() tweetList: TweetDTO[];
   modal: HTMLElement;
   modalWrapper: HTMLElement;
+  currentUser:any;
 
   @Output() onReply: EventEmitter<any> = new EventEmitter();
-  constructor(private homeComponent: HomeComponent, private tokenService:TokenService) { }
+  constructor(private tokenService:TokenService, private tweeetService:TweetService) { }
 
   ngOnInit(): void {
-    console.log(this.tokenService.getToken());
+    this.currentUser = this.tokenService.getUser();
   }
 
   public createResourcesPath = (serverPath: string) => {
@@ -28,5 +30,11 @@ export class TweetComponent implements OnInit {
 
   addReply(id) {
     this.onReply.emit(+id);
+  }
+
+  deleteTweet(id:number)
+  {
+    console.log(id);
+    this.tweeetService.deleteTweet(id).subscribe((res) => {});
   }
 }

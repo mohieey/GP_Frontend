@@ -15,6 +15,10 @@
         <div class="post-img" *ngFor="let img of tweet.images">
             <img [src]="createImgPath('Resources/Images/' + img.imageName)" />
         </div>
+        <div class="post-img" *ngIf="tweet.video">
+            <video controls [src]="createResourcesPath('Resources/Videos/' + item.video.videoName)" width="100%"
+                height="auto"></video>
+        </div>
         <div class="post-icons">
             <span><i class="far fa-comment"></i>{{ tweet.replyCount }}</span>
             <span><i class="fas fa-retweet"></i></span>

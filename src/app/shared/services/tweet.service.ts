@@ -47,4 +47,11 @@ export class TweetService {
   addReply(id: number, tweet: AddTweetDTO): Observable<any> {
     return this.httpClient.post<any>(tweetApi + '/ReplyToTweet/' + id, tweet)
   }
+
+  deleteTweet(id:number){
+    console.log(tweetApi+"/"+id)
+    return this.httpClient.delete(tweetApi+"/"+id).pipe(catchError((err) => {
+      return throwError(err.message || "Internal Server error contact site adminstarator");
+    }));
+  }
 }
