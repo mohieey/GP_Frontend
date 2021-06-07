@@ -16,9 +16,11 @@ import { SettingsComponent } from './settings/settings.component';
 import { TweetComponent } from './TweetComponents/tweet/tweet.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { authInterceptorProviders } from './shared/_helpers/auth.interceptor';
-
 import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
 import { PostTweetComponent } from './TweetComponents/post-tweet/post-tweet.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { NavComponent } from './nav/nav.component';
+import { SidePanelComponent } from './side-panel/side-panel.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { PostTweetComponent } from './TweetComponents/post-tweet/post-tweet.comp
     TweetComponent,
     SearchResultComponent,
     PostTweetComponent,
-    TweetDetailsComponent
+    UserProfileComponent,
+    TweetDetailsComponent,
+    NavComponent,
+    SidePanelComponent,
   ],
   imports: [
     BrowserModule,

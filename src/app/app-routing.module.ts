@@ -8,6 +8,8 @@ import { SignUpComponent } from './AuthComponents/sign-up/sign-up.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StartComponent } from './start/start.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
 
 const routes: Routes = [
   { path: 'forgotpassword', component: ForgotPasswordComponent },
@@ -15,18 +17,19 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: StartComponent },
   { path: 'signup', component: SignUpComponent },
-  //{ path: 'tweets/:id', component: TweetDetailsComponent },
+  { path: 'tweets/:id', component: TweetDetailsComponent },
+  { path: 'profile', component: UserProfileComponent },
   {
     path: 'home/:page', component: HomeComponent
     // , children: [
-    //   {
-    //     path: 'post', // child route path
-    //     component: PostTweetComponent, // child route component that the router renders
-    //   },
-    //   {
-    //     path: '', // child route path
-    //     component: TweetComponent, // child route component that the router renders
-    //   }
+    // {
+    //   path: 'post', // child route path
+    //   component: PostTweetComponent, // child route component that the router renders
+    // },
+    // {
+    //   path: '', // child route path
+    //   component: TweetComponent, // child route component that the router renders
+    // }
     // ]
   },
   { path: 'setting', component: SettingsComponent },

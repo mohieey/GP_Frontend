@@ -1,0 +1,75 @@
+<nav class="feeds-nav dark-mode-1">
+  <div class="icons">
+    <a href="#" class="active"><i class="fas fa-home"></i></a>
+    <a href="#"><i class="fas fa-hashtag"></i></a>
+    <a href="#"><i class="far fa-bell"></i></a>
+    <a href="#"><i class="far fa-envelope"></i></a>
+  </div>
+  <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Search Twirrer" class="search-bar-input dark-mode-2 light-text border"
+      (keydown.enter)="search($event)" />
+  </div>
+  <div class="user" (click)="Display()">
+    <div class="user-img-wrapper">
+      <img src="../../assets/images/user1.jpg" />
+    </div>
+    <a class="user-link light-text">Jane Smith</a>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</nav>
+
+<!-- sidebar -->
+<div class="sidebar-wrapper">
+  <div class="sidebar dark-mode-1">
+    <div class="sidebar-header">
+      <h2 class="light-text">Account info</h2>
+      <i class="fas fa-times" (click)="Dismiss()"></i>
+    </div>
+    <div class="d-flex">
+      <div class="sidebar-user-img mr-3">
+        <img src="../../assets/images/user1.jpg" />
+      </div>
+      <span class="mt-2 d-inline-block sidebar-user-info light-text">
+        <h3 class="font-weight-bold">Jane Smith</h3>
+        <p>@janesmith</p>
+      </span>
+      <span class="sidebar-user-plus-icon">+</span>
+    </div>
+
+    <div class="following light-text">
+      <p class="following-paragraph"><span>711</span> Following</p>
+      <p class="following-paragraph"><span>7.5K</span> Followers</p>
+    </div>
+    <div class="sidebar-list-1">
+      <ul>
+        <li>
+          <a href="#"> <i class="fas fa-user"></i> Profile </a>
+        </li>
+        <li>
+          <a href="#"> <i class="far fa-list-alt"></i> Lists </a>
+        </li>
+        <li>
+          <a href="#"> <i class="far fa-bookmark"></i> Bookmarks </a>
+        </li>
+      </ul>
+    </div>
+    <div class="sidebar-list-2">
+      <ul>
+        <li><a href="#">Settings and Privacy</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Log Out</a></li>
+      </ul>
+    </div>
+
+    <!-- dark mode -->
+    <div class="dark-mode">
+      <p>Dark Mode</p>
+      <div class="toggle" (click)="supportDarkMode()">
+        <div class="circle"></div>
+      </div>
+    </div>
+    <!-- end of dark mode -->
+  </div>
+</div>
+<!-- end of sidebar -->

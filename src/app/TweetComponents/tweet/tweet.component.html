@@ -1,5 +1,5 @@
-<div class="post border" *ngFor="let item of tweetList">
-
+<div class="post border dark-mode-1" *ngFor="let item of tweetList" routerLink="/home/{{ item.id }}">
+    <!-- <a> -->
     <div class="user-avatar">
         <img [src]="item.author.image" />
     </div>
@@ -25,7 +25,7 @@
         <div class="post-icons">
             <span><i class="far fa-comment" (click)="addReply(item.id)"></i>{{ item.replyCount }}</span>
             <span><i class="fas fa-retweet"></i></span>
-            <span><i class="far fa-heart"></i>{{ item.likeCount }}</span>
+            <span><i class="far fa-heart mr-1"></i>{{ item.likeCount }}</span>
             <span><i class="fas fa-share-alt"></i></span>
         </div>
     </div>
