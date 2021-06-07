@@ -25,12 +25,18 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getTweets();
     this.modalWrapper = document.querySelector('.modal-wrapper');
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
     })
   }
-
+  getTweets() {
+    this._tweetService.getHomePageTweets().subscribe((res) => {
+      this.homePageTweets = res;
+      console.log(res);
+    });
+  }
 
   openPostTweetWindow(id?: number) {
     this.postTweetComponent.TweetId = id;

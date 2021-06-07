@@ -24,7 +24,8 @@
                         </div>
                     </div>
                     <ng-container *ngIf="page == 'feed'; else elseTemplate">
-                        <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets"></app-tweet>
+                        <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets" (onReply)="openPostTweetWindow($event)">
+                        </app-tweet>
                     </ng-container>
                     <ng-template #elseTemplate>
                         <app-tweet-details class="posts dark-mode-1"></app-tweet-details>
@@ -43,8 +44,8 @@
     </button>
 
         <!-- post modal -->
-        <app-post-tweet class="modal-wrapper" (onClose)="closePostTweetWindow()"></app-post-tweet>
-        <!-- (onPost)="getTweets()" -->
+        <app-post-tweet class="modal-wrapper" (onClose)="closePostTweetWindow()" (onPost)="getTweets()"></app-post-tweet>
+        <!--  -->
         <!-- end of post modal -->
     </div>
 </section>
