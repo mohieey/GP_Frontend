@@ -9,7 +9,7 @@ import { TweetDTO } from '../shared/_interfaces/tweetDTO';
 })
 export class UserProfileComponent implements OnInit {
 
-  tweets: TweetDTO[];
+  tweets: TweetDTO[] = [];
 
   constructor(private _tweetService: TweetService) { }
 

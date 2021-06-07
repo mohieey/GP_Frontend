@@ -17,14 +17,21 @@
               <div class="header-img-wrapper">
                 <img src="../../assets/images/user1.jpg" />
               </div>
-              <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border" />
+              <input
+                type="text"
+                placeholder="What's happening?"
+                class="dark-mode-2 light-text border"
+              />
               <i class="far fa-image"></i>
               <i class="fas fa-camera"></i>
               <i class="far fa-chart-bar"></i>
             </div>
           </div>
           <ng-container *ngIf="page == 'feed'; else elseTemplate">
-            <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets"></app-tweet>
+            <app-tweet
+              class="posts dark-mode-1"
+              [tweetList]="homePageTweets"
+            ></app-tweet>
           </ng-container>
           <ng-template #elseTemplate>
             <app-tweet-details class="posts dark-mode-1"></app-tweet-details>
@@ -39,12 +46,14 @@
     <!-- end of feeds content -->
 
     <button type="button" class="post-btn" (click)="openPostTweetWindow()">
-    +<i class="fas fa-feather-alt"></i> Post
-  </button>
+      +<i class="fas fa-feather-alt"></i> Post
+    </button>
 
     <!-- post modal -->
-    <app-post-tweet class="modal-wrapper" (onClose)="closePostTweetWindow()"></app-post-tweet>
+    <app-post-tweet
+      class="modal-wrapper"
+      (onClose)="closePostTweetWindow()"
+    ></app-post-tweet>
     <!-- end of post modal -->
-
-    
+  </div>
 </section>

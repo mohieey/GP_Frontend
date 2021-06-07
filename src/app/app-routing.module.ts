@@ -20,22 +20,22 @@ const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'tweets/:id', component: TweetDetailsComponent },
+  { path: 'profile', component: UserProfileComponent },
   {
     path: 'home/:page', component: HomeComponent
-    , children: [
-      {
-        path: 'post', // child route path
-        component: PostTweetComponent, // child route component that the router renders
-      },
-      {
-        path: '', // child route path
-        component: TweetComponent, // child route component that the router renders
-      }
-    ]
+    // , children: [
+      // {
+      //   path: 'post', // child route path
+      //   component: PostTweetComponent, // child route component that the router renders
+      // },
+      // {
+      //   path: '', // child route path
+      //   component: TweetComponent, // child route component that the router renders
+      // }
+    // ]
   },
   { path: 'setting', component: SettingsComponent },
   { path: 'search', component: SearchResultComponent },
-  { path: 'profile', component: UserProfileComponent },
   { path: '**', component: StartComponent }
 ];
 

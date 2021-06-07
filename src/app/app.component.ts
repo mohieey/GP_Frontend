@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'GPFrontend';
   clickEventsubscription: Subscription;
 
-  constructor(private _shared: SharedService, private _elementRef: ElementRef) {
+  constructor(private _shared: SharedService) {
     this.clickEventsubscription = this._shared.getClickEvent().subscribe(() => {
       this.supportDarkMode();
     });
