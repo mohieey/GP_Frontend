@@ -8,9 +8,6 @@ import { SignUpComponent } from './AuthComponents/sign-up/sign-up.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StartComponent } from './start/start.component';
-import { PostTweetComponent } from './post-tweet/post-tweet.component';
-import { TweetComponent } from './TweetComponents/tweet/tweet.component';
-import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
 
 const routes: Routes = [
   { path: 'forgotpassword', component: ForgotPasswordComponent },

@@ -1,9 +1,10 @@
-import { PostTweetComponent } from './../post-tweet/post-tweet.component';
+
 import { PostTweetService } from './../shared/services/post-tweet.service';
 import { TweetDTO } from './../shared/_interfaces/tweetDTO';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TweetService } from '../shared/services/tweet.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
 
 
 @Component({
@@ -24,15 +25,19 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this._tweetService.getHomePageTweets().subscribe((res) => {
-      this.homePageTweets = res;
-      console.log(res);
-    });
 
+    this.getTweets();
     this.modalWrapper = document.querySelector('.modal-wrapper');
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
     })
+  }
+
+  getTweets() {
+    this._tweetService.getHomePageTweets().subscribe((res) => {
+      this.homePageTweets = res;
+      console.log(res);
+    });
   }
 
   search(event) {
@@ -47,13 +52,13 @@ export class HomeComponent implements OnInit {
     this.circle = document.querySelector('.circle');
   }
 
-  openPostTweetWindow() {
+  openPostTweetWindow(id?: number) {
+    this.postTweetComponent.TweetId = id;
     this.modalWrapper.classList.add('modal-wrapper-display');
     this.postTweetComponent.openPostTweetWindow();
   }
 
-  closePostTweetWindow()
-  {
+  closePostTweetWindow() {
     this.modalWrapper.classList.remove('modal-wrapper-display');
   }
 

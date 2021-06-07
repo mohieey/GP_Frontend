@@ -16,8 +16,9 @@ import { SettingsComponent } from './settings/settings.component';
 import { TweetComponent } from './TweetComponents/tweet/tweet.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { authInterceptorProviders } from './shared/_helpers/auth.interceptor';
-import { PostTweetComponent } from './post-tweet/post-tweet.component';
+
 import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
+import { PostTweetComponent } from './TweetComponents/post-tweet/post-tweet.component';
 
 @NgModule({
   declarations: [

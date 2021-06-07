@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { TweetService } from '../shared/services/tweet.service';
-import { AddTweetDTO } from '../shared/_interfaces/addTweetDTO';
-import { ImageDTO } from '../shared/_interfaces/imageDTO';
-import { VideoDTO } from '../shared/_interfaces/videoDTO';
+import { TweetService } from '../../shared/services/tweet.service';
+import { AddTweetDTO } from '../../shared/_interfaces/addTweetDTO';
+import { ImageDTO } from '../../shared/_interfaces/imageDTO';
+import { VideoDTO } from '../../shared/_interfaces/videoDTO';
 
 @Component({
   selector: 'app-post-tweet',
@@ -12,7 +12,6 @@ import { VideoDTO } from '../shared/_interfaces/videoDTO';
 export class PostTweetComponent implements OnInit {
 
   modal: HTMLElement;
-
   modalInput: HTMLInputElement;
 
   imagesNames: ImageDTO[] = [];
@@ -22,7 +21,11 @@ export class PostTweetComponent implements OnInit {
   videoName: VideoDTO;
   videoUrls = new String();
   videoFile: File = null;
-  @Output() onClose:EventEmitter<any> = new EventEmitter();
+
+  TweetId: number;
+
+  @Output() onClose: EventEmitter<any> = new EventEmitter();
+  @Output() onPost: EventEmitter<any> = new EventEmitter();
   constructor(private _tweetService: TweetService) {
   }
 
@@ -172,16 +175,27 @@ export class PostTweetComponent implements OnInit {
       video: this.videoName,
     };
 
-    console.log(tweet);
+    if (this.TweetId == undefined) {
+      this._tweetService.addTweet(tweet).subscribe(
+        data => {
+          console.log(data)
+          this.onPost.emit();
+        },
+        error => {
+          console.log(error)
+        }
+      );
+    } else {
+      this._tweetService.addReply(this.TweetId, tweet).subscribe(
+        data => {
+          console.log(data)
+        },
+        error => {
+          console.log(error)
+        }
+      );
+    }
 
-    this._tweetService.addTweet(tweet).subscribe(
-      data => {
-        console.log(data)
-      },
-      error => {
-        console.log(error)
-      }
-    );
     this.closePostTweetWindow();
   }
 
