@@ -22,7 +22,6 @@ export class TweetService {
     }));
   }
 
-
   getTweet(id: number): Observable<TweetWithRepliesDTO> {
     return this.httpClient.get<TweetWithRepliesDTO>(tweetApi + '/' + id);
   }
@@ -43,5 +42,9 @@ export class TweetService {
     return this.httpClient.post<any>(tweetApi, tweet).pipe(catchError((err) => {
       return throwError(err.message || "Internal Server error contact site adminstarator");
     }));
+  }
+
+  addReply(id: number, tweet: AddTweetDTO): Observable<any> {
+    return this.httpClient.post<any>(tweetApi + '/ReplyToTweet/' + id, tweet)
   }
 }
