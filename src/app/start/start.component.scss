@@ -77,6 +77,7 @@
 
 .btn-top {
 	width: 8rem;
+	height: 4.5rem;
 	background-color: #fff;
 	color: #1aa1f5;
 	border: 0.1rem solid #1aa1f5;
@@ -93,7 +94,7 @@
 
 .middle-content {
 	position: absolute;
-	top: 50%;
+	top: 55%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	display: flex;
@@ -111,6 +112,8 @@
 	font-size: 2.8rem;
 	margin-bottom: 4rem;
 	line-height: 4rem;
+	display: inline-block;
+	width: 30rem;
 }
 
 .middle-content h4 {

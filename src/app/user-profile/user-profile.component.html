@@ -1,1 +1,62 @@
-<p>user-profile works!</p>
+<section class="feeds-page">
+    <!-- feeds nav -->
+    <app-nav></app-nav>
+    <!-- end of feeds nav -->
+
+    <!-- feeds content -->
+    <div class="container d-flex justify-content-between">
+
+        <!-- main content -->
+        <div class="col-12 col-sm-8">
+            <div class="col-11 mx-auto">
+
+
+
+
+
+                <div class="feeds-content dark-mode-2">
+                    <div class="feeds-header dark-mode-1">
+                        <div class="header-top border justify-content-start dark-mode-1">
+                            <div class="header-img-wrapper border rounded-circle light-text">
+                                <img src="../../assets/images/user1.jpg" />
+                            </div>
+                            <div>
+                                <h4 class="light-text">Tamer Hosni</h4>
+                                <h2 class="light-text">@abohosni</h2>
+                            </div>
+                            <!-- <button class="">...</button> -->
+                            <div class="light-text ms-auto dropdown light-text">
+                                <a class="header-btn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                                  ...
+                                </a>
+                              
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start dark-mode-1">
+                                  <li><a class="dropdown-item dll-item light-text" href="#">Edit profile</a></li>
+                                  <li><a class="dropdown-item dll-item light-text" href="#">Another action</a></li>
+                                  <li><a class="dropdown-item dll-item light-text" href="#">Something else here</a></li>
+                                </ul>
+                              </div>
+                        </div>
+                    </div>
+                    <app-tweet class="posts dark-mode-1" [tweetList]="tweets"></app-tweet>
+                </div>
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <!-- end of main content -->
+
+        <div class="mx-0 col-4">
+            <app-side-panel class="dark-mode-1"></app-side-panel>
+        </div>
+    </div>
+    <!-- end of feeds content -->
+</section>

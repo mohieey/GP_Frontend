@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TweetService } from '../shared/services/tweet.service';
+import { TweetDTO } from '../shared/_interfaces/tweetDTO';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+  tweets: TweetDTO[];
+
+  constructor(private _tweetService: TweetService) { }
 
   ngOnInit(): void {
+    this._tweetService.getHomePageTweets().subscribe((res) => {
+      this.tweets = res;
+      console.log(res);
+    });
   }
 
 }

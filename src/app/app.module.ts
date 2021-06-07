@@ -17,11 +17,10 @@ import { TweetComponent } from './TweetComponents/tweet/tweet.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { authInterceptorProviders } from './shared/_helpers/auth.interceptor';
 import { PostTweetComponent } from './post-tweet/post-tweet.component';
-<<<<<<< HEAD
 import { UserProfileComponent } from './user-profile/user-profile.component';
-=======
 import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
->>>>>>> 348cb52b277742b8afd83af26e1266d9369623be
+import { NavComponent } from './nav/nav.component';
+import { SidePanelComponent } from './side-panel/side-panel.component';
 
 @NgModule({
   declarations: [
@@ -37,11 +36,10 @@ import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-det
     TweetComponent,
     SearchResultComponent,
     PostTweetComponent,
-<<<<<<< HEAD
-    UserProfileComponent
-=======
-    TweetDetailsComponent
->>>>>>> 348cb52b277742b8afd83af26e1266d9369623be
+    UserProfileComponent,
+    TweetDetailsComponent,
+    NavComponent,
+    SidePanelComponent,
   ],
   imports: [
     BrowserModule,
