@@ -1,4 +1,3 @@
-
 import { PostTweetService } from './../shared/services/post-tweet.service';
 import { TweetDTO } from './../shared/_interfaces/tweetDTO';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -21,7 +20,6 @@ export class HomeComponent implements OnInit {
   display: boolean;
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
   constructor(private _tweetService: TweetService, private _router: Router, private route: ActivatedRoute, public postTweetService: PostTweetService) { }
-
 
 
   ngOnInit(): void {

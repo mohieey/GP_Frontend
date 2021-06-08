@@ -8,17 +8,17 @@ import { SignUpComponent } from './AuthComponents/sign-up/sign-up.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StartComponent } from './start/start.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: 'forgotpassword', component: ForgotPasswordComponent },
   { path: 'resetpassword', component: ResetPasswordComponent },
   { path: 'login', component: LoginComponent },
-  { path: '', component: StartComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'tweets/:id', component: TweetDetailsComponent },
   { path: 'profile', component: UserProfileComponent },
+  { path: '', component: StartComponent },
   {
     path: 'home/:page', component: HomeComponent
     // , children: [

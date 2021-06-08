@@ -23,7 +23,7 @@ export class TweetDetailsComponent implements OnInit {
       
   }
 
-  public createImgPath = (serverPath: string) => {
+  public createResourcesPath = (serverPath: string) => {
 
     return `${environment.apiUrl}/${serverPath}`;
 

@@ -2,18 +2,11 @@
     <!-- feeds nav -->
     <app-nav></app-nav>
     <!-- end of feeds nav -->
-
     <!-- feeds content -->
     <div class="container d-flex justify-content-between">
-
         <!-- main content -->
         <div class="col-12 col-sm-8">
             <div class="col-11 mx-auto">
-
-
-
-
-
                 <div class="feeds-content dark-mode-2">
                     <div class="feeds-header dark-mode-1">
                         <div class="header-top border justify-content-start dark-mode-1">
@@ -38,18 +31,9 @@
                               </div>
                         </div>
                     </div>
-                    <app-tweet class="posts dark-mode-1" [tweetList]="tweets"></app-tweet>
+                    <app-tweet [tweetList]="tweets" (onReply)="openPostTweetWindow($event)">
+                    </app-tweet>
                 </div>
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
         <!-- end of main content -->

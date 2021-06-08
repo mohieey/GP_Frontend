@@ -13,11 +13,12 @@
             {{ tweet.body }}
         </p>
         <div class="post-img" *ngFor="let img of tweet.images">
-            <img [src]="createImgPath('Resources/Images/' + img.imageName)" />
+            <img [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
         </div>
         <div class="post-img" *ngIf="tweet.video">
-            <video controls [src]="createResourcesPath('Resources/Videos/' + item.video.videoName)" width="100%"
-                height="auto"></video>
+            <video muted controls width="100%" height="auto">
+                <source [src]="createResourcesPath('Resources/Videos/' + tweet.video.videoName)" />
+            </video>
         </div>
         <div class="post-icons">
             <span><i class="far fa-comment"></i>{{ tweet.replyCount }}</span>
@@ -43,8 +44,13 @@
             <p class="post-text light-text">
                 {{ item.body }}
             </p>
-            <div class="post-img">
-                <img [src]="item.image" />
+            <div class="post-img" *ngFor="let img of item.images">
+                <img [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
+            </div>
+            <div class="post-img" *ngIf="item.video">
+                <video muted controls width="100%" height="auto">
+                    <source [src]="createResourcesPath('Resources/Videos/' + item.video.videoName)" />
+                </video>
             </div>
             <div class="post-icons">
                 <span><i class="far fa-comment"></i>{{ item.replyCount }}</span>
