@@ -33,7 +33,7 @@ export class TweetService {
   }
 
   uploadTweetVideo(formData: FormData): Observable<any> {
-    return this.httpClient.post(uploadApi + "/Video", formData).pipe(catchError((err) => {
+    return this.httpClient.post(uploadApi + "/Video", formData, {reportProgress: true, observe: 'events'}).pipe(catchError((err) => {
       return throwError(err.message || "Internal Server error contact site adminstarator");
     }));
   }

@@ -1,3 +1,4 @@
+import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TweetService } from '../../shared/services/tweet.service';
 import { AddTweetDTO } from '../../shared/_interfaces/addTweetDTO';
@@ -26,6 +27,10 @@ export class PostTweetComponent implements OnInit {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
+
+  progressBarWidth:string = "";
+  IsUploading = false;
+  UploadingProgress = 0;
   constructor(private _tweetService: TweetService) {
   }
 
@@ -74,6 +79,17 @@ export class PostTweetComponent implements OnInit {
           this.imageUrls.push(e.target.result);
         };
         this.imageFiles.push(file);
+
+        reader.onloadstart = (e)=>{
+          this.IsUploading = true;
+        }
+        reader.onprogress = (e) => {
+          this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
+        }
+        reader.onloadend = (e)=>{
+          this.IsUploading = false;
+        }
+
         reader.readAsDataURL(file);
       }
     }
@@ -86,6 +102,10 @@ export class PostTweetComponent implements OnInit {
       if (files.length > 1 || this.imageUrls.length != 0) {
         alert("you are allowed with only one gif or 4 images");
         return;
+      }
+      var videoList = document.querySelector('.video-list');
+      if (videoList.firstChild != null) {
+        videoList.firstChild.remove();
       }
       for (let file of files) {
         let reader = new FileReader();
@@ -124,6 +144,17 @@ export class PostTweetComponent implements OnInit {
           button.appendChild(i);
         };
         this.videoFile = file;
+
+        reader.onloadstart = (e)=>{
+          this.IsUploading = true;
+        }
+        reader.onprogress = (e) => {
+          this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
+        }
+        reader.onloadend = (e)=>{
+          this.IsUploading = false;
+        }
+        
         reader.readAsDataURL(file);
       }
     }
@@ -223,12 +254,20 @@ export class PostTweetComponent implements OnInit {
   uploadVideo(video: File): string {
     if (video == null)
       return;
+    
     console.log(video.name);
     const formDate = new FormData();
     formDate.append("file", video, video.name);
+    this.IsUploading = true;
     this._tweetService.uploadTweetVideo(formDate).subscribe(
-      data => {
-        return data.fileName
+      event => {
+        if (event.type === HttpEventType.UploadProgress)
+        {
+          this.UploadingProgress = Math.round(100 * event.loaded / event.total);
+        }
+        else if (event.type === HttpEventType.Response) {
+          this.IsUploading = false;
+        }
       },
       error => {
         console.log(error)
