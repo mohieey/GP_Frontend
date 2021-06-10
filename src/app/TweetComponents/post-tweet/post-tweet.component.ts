@@ -8,10 +8,9 @@ import { VideoDTO } from '../../shared/_interfaces/videoDTO';
 @Component({
   selector: 'app-post-tweet',
   templateUrl: './post-tweet.component.html',
-  styleUrls: ['./post-tweet.component.css']
+  styleUrls: ['./post-tweet.component.css'],
 })
 export class PostTweetComponent implements OnInit {
-
   modal: HTMLElement;
   modalInput: HTMLInputElement;
 
@@ -27,12 +26,12 @@ export class PostTweetComponent implements OnInit {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
+  constructor(private _tweetService: TweetService) {}
 
   progressBarWidth:string = "";
   IsUploading = false;
   UploadingProgress = 0;
-  constructor(private _tweetService: TweetService) {
-  }
+
 
   ngOnInit(): void {
     this.modal = document.querySelector('.modal.dark-mode-1');
@@ -40,9 +39,8 @@ export class PostTweetComponent implements OnInit {
   }
 
   openPostTweetWindow() {
-    console.log(this.modal)
+    console.log(this.modal);
     this.modal.style.display = 'block';
-
   }
 
   closePostTweetWindow() {
@@ -70,8 +68,8 @@ export class PostTweetComponent implements OnInit {
     this.imageUrls = [];
     let files = event.target.files;
     if (files) {
-      if (files.length > 4 || this.videoUrls != "") {
-        alert("you are allowed with only one gif or 4 images");
+      if (files.length > 4 || this.videoUrls != '') {
+        alert('you are allowed with only one gif or 4 images');
         return;
       }
       for (let file of files) {
@@ -99,11 +97,11 @@ export class PostTweetComponent implements OnInit {
   }
 
   detectVideoFiles(event) {
-    this.videoUrls = "";
+    this.videoUrls = '';
     let files = event.target.files;
     if (files) {
       if (files.length > 1 || this.imageUrls.length != 0) {
-        alert("you are allowed with only one gif or 4 images");
+        alert('you are allowed with only one gif or 4 images');
         return;
       }
       var videoList = document.querySelector('.video-list');
@@ -172,7 +170,7 @@ export class PostTweetComponent implements OnInit {
   }
 
   deletVideoFromTweet() {
-    this.videoUrls = "";
+    this.videoUrls = '';
     this.videoFile = null;
     var videoList = document.querySelector('.video-list');
     videoList.firstChild.remove();
@@ -196,9 +194,6 @@ export class PostTweetComponent implements OnInit {
   postTweet() {
     var postText: HTMLTextAreaElement = document.querySelector(".tweet-text");
 
-    console.log(this.imagesNames);
-    console.log(this.videoName);
-
     var tweet: AddTweetDTO = {
       body: postText.value,
       images: this.imagesNames,
@@ -207,21 +202,21 @@ export class PostTweetComponent implements OnInit {
 
     if (this.TweetId == undefined) {
       this._tweetService.addTweet(tweet).subscribe(
-        data => {
-          console.log(data)
+        (data) => {
+          console.log(data);
           this.onPost.emit();
         },
-        error => {
-          console.log(error)
+        (error) => {
+          console.log(error);
         }
       );
     } else {
       this._tweetService.addReply(this.TweetId, tweet).subscribe(
-        data => {
-          console.log(data)
+        (data) => {
+          console.log(data);
         },
-        error => {
-          console.log(error)
+        (error) => {
+          console.log(error);
         }
       );
     }
@@ -239,7 +234,7 @@ export class PostTweetComponent implements OnInit {
 
     var image = this.imageFiles[index]
     const formDate = new FormData();
-    formDate.append("file", image, image.name);
+    formDate.append('file', image, image.name);
     this._tweetService.uploadTweetImage(formDate).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress)

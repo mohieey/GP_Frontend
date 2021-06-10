@@ -7,32 +7,37 @@ import { ResetPasswordDto } from '../_interfaces/resetPasswordDTO.model';
 const AUTH_API = `${environment.apiUrl}/api/Account/`;
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   login(user: any) {
     const u = { email: user.email, password: user.password };
-    return this.http.post(AUTH_API + 'login', u, { observe: 'response' })
+    return this.http.post(AUTH_API + 'login', u, { observe: 'response' });
   }
 
-  signup(user:any)
-  {
-    console.log('dfdfdfe')
-    const u:any = {firstname:user.firstname, lastname:user.lastname, username:user.username,email:user.email, password:user.password};
-    return this.http.post(`${environment.apiUrl}/api/Account/register`, u,{ observe: 'response' })
+  signup(user: any) {
+    console.log('dfdfdfe');
+    const u: any = {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    };
+    return this.http.post(`${environment.apiUrl}/api/Account/register`, u, {
+      observe: 'response',
+    });
   }
   public forgotPassword = (body: ForgotPasswordDto) => {
     return this.http.post(AUTH_API + 'ForgetPassword', body);
-  }
+  };
 
   public resetPassword = (body: ResetPasswordDto) => {
     return this.http.post(AUTH_API + 'ResetPassword', body);
-  }
-
+  };
 }
