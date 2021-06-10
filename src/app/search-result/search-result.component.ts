@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { ChatService } from '../shared/services/chat.service';
 import { SearchService } from '../shared/services/search.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 import { SearchDTO } from '../shared/_interfaces/searchDTO.model';
@@ -22,7 +24,8 @@ export class SearchResultComponent implements OnInit {
   constructor(
     private _searchService: SearchService,
     private _router: Router,
-    private _activatedRouter: ActivatedRoute
+    private _activatedRouter: ActivatedRoute, 
+    private _chatService: ChatService
     ) { }
 
   ngOnInit(): void {
@@ -67,6 +70,26 @@ export class SearchResultComponent implements OnInit {
       },
       error => {
         //this.errorMsg = error;
+      }
+    )
+  }
+
+  openChat(userTo){
+    //this._router.navigateByUrl["http://localhost:1998/"];
+    console.log(userTo);
+    this._chatService.joinChat(userTo).subscribe(
+      data => {
+          // if (data[0].status == 201) {
+          //   this._router.navigateByUrl(`${environment.chatUrl}`);
+          // }
+          // console.log(data[0].json);
+        // console.log(data)
+        //window.open("https://localhost:1998", "_blank");
+        //window.location.href = "https://localhost:1998";
+      },
+      error => {
+        console.log(error)
+        //  this.errorMsg = error;
       }
     )
   }

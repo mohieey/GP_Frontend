@@ -20,7 +20,10 @@ export class UserProfileComponent implements OnInit {
   page: string;
   display: boolean;
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
-  constructor(private _tweetService: TweetService, private _router: Router, private route: ActivatedRoute, public postTweetService: PostTweetService) { }
+  constructor(private _tweetService: TweetService, 
+    private _router: Router,
+    private route: ActivatedRoute,
+    public postTweetService: PostTweetService) { }
 
 
 

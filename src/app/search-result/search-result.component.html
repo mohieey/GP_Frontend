@@ -6,6 +6,7 @@
             <th scope="col">Email</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -15,6 +16,9 @@
             <td>{{ user.email }}</td>
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
+            <td>
+                <a href="http://localhost:1998" target="_blank" class="btn btn-primary" (click)="openChat(user.userName)">Chat With {{user.userName}}</a>
+            </td>
         </tr>
     </tbody>
 </table>

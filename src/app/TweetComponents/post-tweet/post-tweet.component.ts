@@ -7,10 +7,9 @@ import { VideoDTO } from '../../shared/_interfaces/videoDTO';
 @Component({
   selector: 'app-post-tweet',
   templateUrl: './post-tweet.component.html',
-  styleUrls: ['./post-tweet.component.css']
+  styleUrls: ['./post-tweet.component.css'],
 })
 export class PostTweetComponent implements OnInit {
-
   modal: HTMLElement;
   modalInput: HTMLInputElement;
 
@@ -26,8 +25,7 @@ export class PostTweetComponent implements OnInit {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
-  constructor(private _tweetService: TweetService) {
-  }
+  constructor(private _tweetService: TweetService) {}
 
   ngOnInit(): void {
     this.modal = document.querySelector('.modal.dark-mode-1');
@@ -35,9 +33,8 @@ export class PostTweetComponent implements OnInit {
   }
 
   openPostTweetWindow() {
-    console.log(this.modal)
+    console.log(this.modal);
     this.modal.style.display = 'block';
-
   }
 
   closePostTweetWindow() {
@@ -64,8 +61,8 @@ export class PostTweetComponent implements OnInit {
     this.imageUrls = [];
     let files = event.target.files;
     if (files) {
-      if (files.length > 4 || this.videoUrls != "") {
-        alert("you are allowed with only one gif or 4 images");
+      if (files.length > 4 || this.videoUrls != '') {
+        alert('you are allowed with only one gif or 4 images');
         return;
       }
       for (let file of files) {
@@ -80,11 +77,11 @@ export class PostTweetComponent implements OnInit {
   }
 
   detectVideoFiles(event) {
-    this.videoUrls = "";
+    this.videoUrls = '';
     let files = event.target.files;
     if (files) {
       if (files.length > 1 || this.imageUrls.length != 0) {
-        alert("you are allowed with only one gif or 4 images");
+        alert('you are allowed with only one gif or 4 images');
         return;
       }
       for (let file of files) {
@@ -130,38 +127,48 @@ export class PostTweetComponent implements OnInit {
   }
 
   deletImageFromTweet(event) {
-    this.imageUrls.splice(this.imageUrls.indexOf(event.target.parentElement.previousSibling.getAttribute("src")));
-    this.imageFiles.splice(event.target.parentElement.previousSibling.getAttribute("data-index"));
+    this.imageUrls.splice(
+      this.imageUrls.indexOf(
+        event.target.parentElement.previousSibling.getAttribute('src')
+      )
+    );
+    this.imageFiles.splice(
+      event.target.parentElement.previousSibling.getAttribute('data-index')
+    );
   }
 
   deletVideoFromTweet() {
-    this.videoUrls = "";
+    this.videoUrls = '';
     this.videoFile = null;
     var videoList = document.querySelector('.video-list');
     videoList.firstChild.remove();
   }
 
   postTweet() {
-    var postText: HTMLTextAreaElement = document.querySelector(".tweet-text");
-    if (postText.value == '' && this.videoUrls == "" && this.imageUrls.length == 0) {
+    var postText: HTMLTextAreaElement = document.querySelector('.tweet-text');
+    if (
+      postText.value == '' &&
+      this.videoUrls == '' &&
+      this.imageUrls.length == 0
+    ) {
       console.log(postText.value);
       return;
     }
 
     for (var i = 0; i < this.imageFiles.length; i++) {
       var result = this.uploadImage(this.imageFiles[i]);
-      if (result == "error") {
+      if (result == 'error') {
         return;
       }
       var image: ImageDTO = {
-        imageName: this.imageFiles[i].name
-      }
-      this.imagesNames.push(image)
+        imageName: this.imageFiles[i].name,
+      };
+      this.imagesNames.push(image);
     }
 
     if (this.videoFile != null) {
       var videoresult = this.uploadVideo(this.videoFile);
-      if (videoresult == "error") {
+      if (videoresult == 'error') {
         return;
       }
       this.videoName = {
@@ -177,21 +184,21 @@ export class PostTweetComponent implements OnInit {
 
     if (this.TweetId == undefined) {
       this._tweetService.addTweet(tweet).subscribe(
-        data => {
-          console.log(data)
+        (data) => {
+          console.log(data);
           this.onPost.emit();
         },
-        error => {
-          console.log(error)
+        (error) => {
+          console.log(error);
         }
       );
     } else {
       this._tweetService.addReply(this.TweetId, tweet).subscribe(
-        data => {
-          console.log(data)
+        (data) => {
+          console.log(data);
         },
-        error => {
-          console.log(error)
+        (error) => {
+          console.log(error);
         }
       );
     }
@@ -200,20 +207,19 @@ export class PostTweetComponent implements OnInit {
   }
 
   uploadImage(image: File): string {
-    if (image == null)
-      return;
-    var imageName = ""
+    if (image == null) return;
+    var imageName = '';
     console.log(image.name);
     const formDate = new FormData();
-    formDate.append("file", image, image.name);
+    formDate.append('file', image, image.name);
     this._tweetService.uploadTweetImage(formDate).subscribe(
-      data => {
+      (data) => {
         return data.fileName;
       },
-      error => {
-        console.log(error)
-        alert("error");
-        imageName = "error";
+      (error) => {
+        console.log(error);
+        alert('error');
+        imageName = 'error';
       }
     );
     console.log(imageName);
@@ -221,19 +227,18 @@ export class PostTweetComponent implements OnInit {
   }
 
   uploadVideo(video: File): string {
-    if (video == null)
-      return;
+    if (video == null) return;
     console.log(video.name);
     const formDate = new FormData();
-    formDate.append("file", video, video.name);
+    formDate.append('file', video, video.name);
     this._tweetService.uploadTweetVideo(formDate).subscribe(
-      data => {
-        return data.fileName
+      (data) => {
+        return data.fileName;
       },
-      error => {
-        console.log(error)
-        alert("error");
-        return "error";
+      (error) => {
+        console.log(error);
+        alert('error');
+        return 'error';
       }
     );
     return '';
