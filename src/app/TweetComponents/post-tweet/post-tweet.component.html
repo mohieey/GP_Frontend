@@ -10,6 +10,14 @@
             <textarea style="resize: none; clear: both" type="text" placeholder="What's happening?"
                 class="modal-input dark-mode-2 light-text border tweet-text" maxlength="280" rows="6"></textarea>
         </div>
+        <div style="width: 70%; margin: auto; padding-bottom: 10px;" *ngIf="progressBarWidth != '100%' && IsUploading">
+            <label style="font-size: 10px;">Uploading...</label>
+            <div class="progress">
+                <div class="progress-bar uploading-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+                    aria-valuemax="100" [style.width]="UploadingProgress + '%'">
+                </div>
+            </div>
+        </div>
         <!-- style="margin-left: 6.7rem;" -->
         <div class="d-flex flex-wrap justify-content-center ml-5 image-list">
             <div class="modal-image position-relative" *ngFor="let url of imageUrls; let i = index">
