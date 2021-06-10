@@ -7,6 +7,7 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,10 @@
             <td>{{ user.lastName }}</td>
             <td>
                 <a href="http://localhost:1998" target="_blank" class="btn btn-primary" (click)="openChat(user.userName)">Chat With {{user.userName}}</a>
+            </td>
+            <td>
+                <button class="btn btn-primary me-2" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)">Follow</button>
+                <button class="btn btn-danger" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)">UnFollow</button>
             </td>
         </tr>
     </tbody>
