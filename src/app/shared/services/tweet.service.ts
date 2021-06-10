@@ -27,7 +27,7 @@ export class TweetService {
   }
 
   uploadTweetImage(formData: FormData): Observable<any> {
-    return this.httpClient.post(uploadApi + "/Image", formData).pipe(catchError((err) => {
+    return this.httpClient.post(uploadApi + "/Image", formData, {reportProgress: true, observe: 'events'}).pipe(catchError((err) => {
       return throwError(err.message || "Internal Server error contact site adminstarator");
     }));
   }

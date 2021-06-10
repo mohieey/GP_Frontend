@@ -16,7 +16,7 @@
             <img [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
         </div>
         <div class="post-img" *ngIf="tweet.video">
-            <video muted controls width="100%" height="auto">
+            <video controls width="100%" height="auto">
                 <source [src]="createResourcesPath('Resources/Videos/' + tweet.video.videoName)" />
             </video>
         </div>

@@ -48,7 +48,6 @@ export class PostTweetComponent implements OnInit {
   closePostTweetWindow() {
     this.modal.style.display = 'none';
     this.onClose.emit();
-    // this.modalWrapper.classList.remove('modal-wrapper-display');
 
     if (this.modalInput.value !== '') {
       this.modalInput.value = '';
@@ -58,6 +57,8 @@ export class PostTweetComponent implements OnInit {
     this.videoUrls = '';
     this.imageFiles = [];
     this.videoFile = null;
+    this.imagesNames = [];
+    this.videoName = null;
 
     var videoList = document.querySelector('.video-list');
     if (videoList.firstChild != null) {
@@ -78,8 +79,7 @@ export class PostTweetComponent implements OnInit {
         reader.onload = (e: any) => {
           this.imageUrls.push(e.target.result);
         };
-        this.imageFiles.push(file);
-
+        
         reader.onloadstart = (e)=>{
           this.IsUploading = true;
         }
@@ -87,7 +87,10 @@ export class PostTweetComponent implements OnInit {
           this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
         }
         reader.onloadend = (e)=>{
-          this.IsUploading = false;
+          setTimeout(()=>{
+            this.IsUploading = false;
+            this.imageFiles.push(file);
+          },1000);
         }
 
         reader.readAsDataURL(file);
@@ -143,7 +146,6 @@ export class PostTweetComponent implements OnInit {
           i.setAttribute('style', 'border-radius: 50%');
           button.appendChild(i);
         };
-        this.videoFile = file;
 
         reader.onloadstart = (e)=>{
           this.IsUploading = true;
@@ -152,7 +154,11 @@ export class PostTweetComponent implements OnInit {
           this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
         }
         reader.onloadend = (e)=>{
-          this.IsUploading = false;
+          setTimeout(()=>{
+            this.IsUploading = false;
+            this.videoFile = file;
+            console.log(this.videoFile);
+          },3000);
         }
         
         reader.readAsDataURL(file);
@@ -161,7 +167,7 @@ export class PostTweetComponent implements OnInit {
   }
 
   deletImageFromTweet(event) {
-    this.imageUrls.splice(this.imageUrls.indexOf(event.target.parentElement.previousSibling.getAttribute("src")));
+    this.imageUrls.splice(this.imageUrls.indexOf(event.target.parentElement.previousSibling.getAttribute("src")),1);
     this.imageFiles.splice(event.target.parentElement.previousSibling.getAttribute("data-index"));
   }
 
@@ -172,33 +178,26 @@ export class PostTweetComponent implements OnInit {
     videoList.firstChild.remove();
   }
 
-  postTweet() {
+  checkBeforeUploading(){
     var postText: HTMLTextAreaElement = document.querySelector(".tweet-text");
     if (postText.value == '' && this.videoUrls == "" && this.imageUrls.length == 0) {
-      console.log(postText.value);
       return;
     }
-
-    for (var i = 0; i < this.imageFiles.length; i++) {
-      var result = this.uploadImage(this.imageFiles[i]);
-      if (result == "error") {
-        return;
-      }
-      var image: ImageDTO = {
-        imageName: this.imageFiles[i].name
-      }
-      this.imagesNames.push(image)
+    else{
+      this.startUploading();
     }
+  }
 
-    if (this.videoFile != null) {
-      var videoresult = this.uploadVideo(this.videoFile);
-      if (videoresult == "error") {
-        return;
-      }
-      this.videoName = {
-        videoName: this.videoFile.name,
-      };
-    }
+  startUploading(){
+    this.IsUploading = true;
+    this.uploadImage(0);
+  }
+
+  postTweet() {
+    var postText: HTMLTextAreaElement = document.querySelector(".tweet-text");
+
+    console.log(this.imagesNames);
+    console.log(this.videoName);
 
     var tweet: AddTweetDTO = {
       body: postText.value,
@@ -230,32 +229,42 @@ export class PostTweetComponent implements OnInit {
     this.closePostTweetWindow();
   }
 
-  uploadImage(image: File): string {
-    if (image == null)
+  uploadImage(index: number) {
+    if(index == this.imageFiles.length)
+    {
+      this.IsUploading = false;
+      this.uploadVideo(this.videoFile);
       return;
-    var imageName = ""
-    console.log(image.name);
+    }
+
+    var image = this.imageFiles[index]
     const formDate = new FormData();
     formDate.append("file", image, image.name);
     this._tweetService.uploadTweetImage(formDate).subscribe(
-      data => {
-        return data.fileName;
+      event => {
+        if (event.type === HttpEventType.UploadProgress)
+        {
+          this.UploadingProgress = Math.round(100 * event.loaded / event.total);
+        }
+        else if (event.type === HttpEventType.Response) {
+
+          this.imagesNames.push({imageName:event.body.fileName});
+          this.uploadImage(++index);
+        }
       },
       error => {
-        console.log(error)
         alert("error");
-        imageName = "error";
       }
     );
-    console.log(imageName);
-    return imageName;
   }
 
-  uploadVideo(video: File): string {
+  uploadVideo(video: File){
     if (video == null)
+    {
+      this.postTweet();
       return;
+    }
     
-    console.log(video.name);
     const formDate = new FormData();
     formDate.append("file", video, video.name);
     this.IsUploading = true;
@@ -266,15 +275,19 @@ export class PostTweetComponent implements OnInit {
           this.UploadingProgress = Math.round(100 * event.loaded / event.total);
         }
         else if (event.type === HttpEventType.Response) {
-          this.IsUploading = false;
+          setTimeout(()=>{
+            this.IsUploading = false;
+          }, 1000);
+          
+          this.videoName = {
+            videoName: event.body.fileName
+          }
+          this.postTweet();
         }
       },
       error => {
-        console.log(error)
         alert("error");
-        return "error";
       }
     );
-    return '';
   }
 }
