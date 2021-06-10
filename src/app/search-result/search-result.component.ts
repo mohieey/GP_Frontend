@@ -71,7 +71,7 @@ export class SearchResultComponent implements OnInit {
     );
   }
 
-  openChat(userTo) {
+  openChat(userTo){
     //this._router.navigateByUrl["http://localhost:1998/"];
     console.log(userTo);
     this._chatService.joinChat(userTo).subscribe(
@@ -83,6 +83,8 @@ export class SearchResultComponent implements OnInit {
         // console.log(data)
         //window.open("https://localhost:1998", "_blank");
         //window.location.href = "https://localhost:1998";
+        window.location.href ='https://gp41-chat.herokuapp.com'
+
       },
       (error) => {
         console.log(error);

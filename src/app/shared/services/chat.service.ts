@@ -14,4 +14,5 @@ export class ChatService {
     const info = { token: this._token.getToken(), usernameTo: userTo };
     return this._http.post(environment.chatUrl, info, { observe: 'response' })
   }
+
 }
