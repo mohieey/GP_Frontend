@@ -12,7 +12,7 @@
                         @{{ item.author.userName }}
                         {{ item.creationDate | date: "shortTime" }}</span>
                 </div>
-                <div class="dropdown" *ngIf="currentUser.email == item.author.email">
+                <div class="dropdown" >
                     <button style="background-color: white; border-color: white;" class="btn btn-primary dropdown"
                         type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
@@ -22,12 +22,14 @@
                         </svg>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a style="font-size: 15px;" class="dropdown-item" (click)="deleteTweet(item.id)">Delete</a>
+                        <li><a style="font-size: 15px;" class="dropdown-item" routerLink="/home/{{ item.id }}">Details</a>
+                        </li>
+                        <li *ngIf="currentUser.email == item.author.email"><a style="font-size: 15px;" class="dropdown-item" (click)="deleteTweet(item.id)">Delete</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div routerLink="/home/{{ item.id }}">
+            <div>
                 <p class="post-text light-text">
                     {{ item.body }}
                 </p>
