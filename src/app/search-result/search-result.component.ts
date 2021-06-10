@@ -83,7 +83,8 @@ export class SearchResultComponent implements OnInit {
         // console.log(data)
         //window.open("https://localhost:1998", "_blank");
         //window.location.href = "https://localhost:1998";
-        window.location.href ='https://gp41-chat.herokuapp.com'
+        //window.location.href ='https://gp41-chat.herokuapp.com'
+        window.open("https://gp41-chat.herokuapp.com", "_blank");
 
       },
       (error) => {
