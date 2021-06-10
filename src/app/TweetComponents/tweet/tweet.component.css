@@ -74,6 +74,14 @@
       object-fit: cover;
       border-radius: 50%;
   }
+
+  .user-like {
+    color: #dd0e0e !important;
+  }
+
+  .user-bookmark {
+    color: #dfc906ce !important;
+  }
   /* ---------------- */
   
   @media (max-width: 600px) {

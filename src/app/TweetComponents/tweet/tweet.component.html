@@ -43,8 +43,9 @@
         </div>
         <div class="post-icons">
             <span><i class="far fa-comment" (click)="addReply(item.id)"></i>{{ item.replyCount }}</span>
-            <span><i class="fas fa-retweet"></i></span>
-            <span><i class="far fa-heart mr-1"></i>{{ item.likeCount }}</span>
+            <!-- <span><i class="fas fa-retweet"></i></span> -->
+            <span [ngClass]="{'user-bookmark': item.isBookmarked === true }" (click)="bookmarkOrRemoveBookmark(item.id, item.isBookmarked)"><i class="fas fa-bookmark" [ngClass]="{'user-bookmark': item.isBookmarked === true }"></i>{{item.bookmarkCount}}</span> 
+            <span [ngClass]="{'user-like': item.isLiked === true }" (click)="likeOrDislike(item.id, item.isLiked)"><i class="fas fa-heart mr-1" [ngClass]="{'user-like': item.isLiked === true }"></i>{{ item.likeCount }}</span>
             <span><i class="fas fa-share-alt"></i></span>
         </div>
     </div>
