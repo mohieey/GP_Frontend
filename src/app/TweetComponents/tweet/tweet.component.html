@@ -12,7 +12,7 @@
                         @{{ item.author.userName }}
                         {{ item.creationDate | date: "shortTime" }}</span>
                 </div>
-                <div class="dropdown" >
+                <div class="dropdown">
                     <button style="background-color: white; border-color: white;" class="btn btn-primary dropdown"
                         type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
@@ -22,9 +22,23 @@
                         </svg>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a style="font-size: 15px;" class="dropdown-item" routerLink="/home/{{ item.id }}">Details</a>
+                        <li><a class="dropdown-item h4"
+                                routerLink="/home/{{ item.id }}">Details</a>
                         </li>
-                        <li *ngIf="currentUser.email == item.author.email"><a style="font-size: 15px;" class="dropdown-item" (click)="deleteTweet(item.id)">Delete</a>
+                        <li>
+                            <a class="dropdown-item h4" [ngClass]="{'user-bookmark': item.isBookmarked === true }" (click)="bookmarkOrRemoveBookmark(item.id, item.isBookmarked)">
+                                Bookmark 
+                                <span class="h6" *ngIf="currentUser.email == item.author.email">
+                                    ({{item.bookmarkCount}})
+                                </span>
+                            </a>
+                            <!-- <span [ngClass]="{'user-bookmark': item.isBookmarked === true }" (click)="bookmarkOrRemoveBookmark(item.id, item.isBookmarked)">
+                                <i class="fas fa-bookmark" [ngClass]="{'user-bookmark': item.isBookmarked === true }"></i>
+                                {{item.bookmarkCount}}
+                            </span> -->
+                        </li>
+                        <li *ngIf="currentUser.email == item.author.email"><a
+                                class="dropdown-item h4" (click)="deleteTweet(item.id)">Delete</a>
                         </li>
                     </ul>
                 </div>
@@ -45,10 +59,13 @@
         </div>
         <div class="post-icons">
             <span><i class="far fa-comment" (click)="addReply(item.id)"></i>{{ item.replyCount }}</span>
-            <!-- <span><i class="fas fa-retweet"></i></span> -->
-            <span [ngClass]="{'user-bookmark': item.isBookmarked === true }" (click)="bookmarkOrRemoveBookmark(item.id, item.isBookmarked)"><i class="fas fa-bookmark" [ngClass]="{'user-bookmark': item.isBookmarked === true }"></i>{{item.bookmarkCount}}</span> 
-            <span [ngClass]="{'user-like': item.isLiked === true }" (click)="likeOrDislike(item.id, item.isLiked)"><i class="fas fa-heart mr-1" [ngClass]="{'user-like': item.isLiked === true }"></i>{{ item.likeCount }}</span>
+            <span><i class="fas fa-retweet"></i></span>
+            <!-- <span [ngClass]="{'user-bookmark': item.isBookmarked === true }" (click)="bookmarkOrRemoveBookmark(item.id, item.isBookmarked)"><i class="fas fa-bookmark" [ngClass]="{'user-bookmark': item.isBookmarked === true }"></i>{{item.bookmarkCount}}</span>  -->
+            <span [ngClass]="{'user-like': item.isLiked === true }" (click)="likeOrDislike(item.id, item.isLiked)"><i
+                    class="fas fa-heart mr-1" [ngClass]="{'user-like': item.isLiked === true }"></i>{{ item.likeCount
+                }}</span>
             <span><i class="fas fa-share-alt"></i></span>
         </div>
     </div>
 </div>
+<!-- {{tweetList = signalRService.tweetList}} -->

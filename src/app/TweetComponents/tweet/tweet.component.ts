@@ -6,6 +6,9 @@ import { TokenService } from 'src/app/shared/services/token.service';
 import { TweetService } from 'src/app/shared/services/tweet.service';
 import { LikeService } from 'src/app/shared/services/like.service';
 import { BookmarkService } from 'src/app/shared/services/bookmark.service';
+import { SignalRService } from 'src/app/shared/services/signal-r.service';
+import { Subscription } from 'rxjs';
+import { TweetSharedService } from 'src/app/shared/services/tweet-shared.service';
 
 @Component({
   selector: 'app-tweet',
@@ -21,15 +24,51 @@ export class TweetComponent implements OnInit {
   currentUser: any;
 
   @Output() onReply: EventEmitter<any> = new EventEmitter();
+  clickEventsubscription: Subscription;
   constructor(
     private _tokenService: TokenService,
     private _tweeetService: TweetService,
     private _likeService: LikeService,
-    private _bookmarkService: BookmarkService
-  ) {}
+    private _bookmarkService: BookmarkService,
+    private _tweetSharedService: TweetSharedService,
+    public signalRService: SignalRService
+  ) {
+    this.clickEventsubscription = this._tweetSharedService
+      .getClickEvent()
+      .subscribe(() => {
+        this.updateValue();
+      });
+  }
+
+  private updateValue() {
+    // this.tweetList = this.signalRService.tweetList;
+    // trival solution
+    for(let i = 0 ; i < this.tweetList.length;i++){
+      for(let key in this.tweetList[i])
+      { 
+        if(key !== "isLiked") {
+          this.tweetList[i][key] = this.signalRService.tweetList[i][key]
+        }
+      }
+      // let tempObject:TweetDTO = this._objectWithoutProperties(this.signalRService.tweetList[i],["isLiked"]);
+      // tempObject["isLiked"] = this.tweetList[i].isLiked;
+      // this.tweetList[i] = tempObject;
+    }
+  }
+  // private _objectWithoutProperties(obj, keys):TweetDTO {
+  //   var target:TweetDTO;
+  //   for (var i in obj) {
+  //     if (keys.indexOf(i) >= 0) continue;
+  //     if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+  //     target[i] = obj[i];
+  //   }
+  //   return target;
+  // }
 
   ngOnInit(): void {
     this.currentUser = this._tokenService.getUser();
+    this.signalRService.startConnection();
+    this.signalRService.addBroadcastDataListener();
   }
 
   public createResourcesPath = (serverPath: string) => {
@@ -64,14 +103,17 @@ export class TweetComponent implements OnInit {
       );
     }
     this.tweetList.forEach((tweet) => {
-      if(tweet.id == tweetId){
-        tweet.isLiked = !tweet.isLiked
-        tweet.likeCount = (isLiked) ? tweet.likeCount - 1 : tweet.likeCount + 1
+      if (tweet.id == tweetId) {
+        tweet.isLiked = !tweet.isLiked;
+        tweet.likeCount = isLiked ? tweet.likeCount - 1 : tweet.likeCount + 1;
       }
-    })
+    });
+
+    this.signalRService.broadcastData(this.tweetList);
+    //this.tweetList = this.signalRService.tweetList;
   }
 
-  bookmarkOrRemoveBookmark(tweetId: number, isBookmarked: boolean){
+  bookmarkOrRemoveBookmark(tweetId: number, isBookmarked: boolean) {
     if (!isBookmarked) {
       isBookmarked = false;
       this._bookmarkService.bookmark(tweetId).subscribe(
@@ -90,10 +132,15 @@ export class TweetComponent implements OnInit {
       );
     }
     this.tweetList.forEach((tweet) => {
-      if(tweet.id == tweetId){
-        tweet.isBookmarked = !tweet.isBookmarked
-        tweet.bookmarkCount = (isBookmarked) ? tweet.bookmarkCount - 1 : tweet.bookmarkCount + 1
+      if (tweet.id == tweetId) {
+        tweet.isBookmarked = !tweet.isBookmarked;
+        tweet.bookmarkCount = isBookmarked
+          ? tweet.bookmarkCount - 1
+          : tweet.bookmarkCount + 1;
       }
-    })
+    });
+
+    this.signalRService.broadcastData(this.tweetList);
+    //this.tweetList = this.signalRService.tweetList;
   }
 }
