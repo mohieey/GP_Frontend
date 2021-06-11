@@ -47,7 +47,7 @@ export class TweetComponent implements OnInit {
       (t) => t.id == this.signalRService.tweet['id']
     );
     if (
-      this.tweetList[tweetIndex]['author']['userName'] ===
+      this.currentUser["username"] ===
       this.signalRService.userName
     ) {
       this.tweetList[tweetIndex] = this.signalRService.tweet;
