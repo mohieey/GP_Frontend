@@ -28,13 +28,14 @@ export class SignalRService {
 
 
   public broadcastData = (data , userName) => {
-    this.hubConnection.invoke('BroadcastTweet', data , userName)
+    this.hubConnection.invoke('BroadcastTweet', data, userName)
     .catch(err => console.error(err));
   }
 
   public addBroadcastDataListener = () => {
-    this.hubConnection.on('BroadcastTweet', (data) => {
+    this.hubConnection.on('BroadcastTweet', (data, userName) => {
       this.tweet = data;
+      this.userName = userName;
       this._tweetSharedService.sendClickEvent();
     })
   }
