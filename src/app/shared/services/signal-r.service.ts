@@ -10,7 +10,8 @@ import { TweetSharedService } from './tweet-shared.service';
 })
 export class SignalRService {
 
-  public tweetList: TweetDTO[];
+  public tweet: TweetDTO;
+  public userName: string;
 
   private hubConnection: signalR.HubConnection;
   constructor(private _tweetSharedService: TweetSharedService) {}
@@ -26,14 +27,14 @@ export class SignalRService {
   };
 
 
-  public broadcastData = (data) => {
-    this.hubConnection.invoke('BroadcastTweetList', data)
+  public broadcastData = (data , userName) => {
+    this.hubConnection.invoke('BroadcastTweet', data , userName)
     .catch(err => console.error(err));
   }
 
   public addBroadcastDataListener = () => {
-    this.hubConnection.on('BroadcastTweetList', (data) => {
-      this.tweetList = data;
+    this.hubConnection.on('BroadcastTweet', (data) => {
+      this.tweet = data;
       this._tweetSharedService.sendClickEvent();
     })
   }

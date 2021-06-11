@@ -43,23 +43,40 @@ export class TweetComponent implements OnInit {
   private updateValue() {
     // this.tweetList = this.signalRService.tweetList;
     // trival solution
-    for (let i = 0; i < this.tweetList.length; i++) {
-      if (
-        this.tweetList[i]['author']['userName'] === this.currentUser["username"]
-      ) {
-        this.tweetList[i] = this.signalRService.tweetList[i];
-      } else {
-        for (let key in this.tweetList[i]) {
-          if (key !== 'isLiked') {
-            this.tweetList[i][key] = this.signalRService.tweetList[i][key];
-          }
+    var tweetIndex = this.tweetList.findIndex(
+      (t) => t.id == this.signalRService.tweet['id']
+    );
+    if (
+      this.tweetList[tweetIndex]['author']['userName'] ===
+      this.signalRService.userName
+    ) {
+      this.tweetList[tweetIndex] = this.signalRService.tweet;
+    } else {
+      console.log("Enter else")
+      for (let key in this.tweetList[tweetIndex]) {
+        if (key !== 'isLiked') {
+          this.tweetList[tweetIndex][key] = this.signalRService.tweet[key];
         }
       }
-      // console.log(this.currentUser["username"]);
-      // let tempObject:TweetDTO = this._objectWithoutProperties(this.signalRService.tweetList[i],["isLiked"]);
-      // tempObject["isLiked"] = this.tweetList[i].isLiked;
-      // this.tweetList[i] = tempObject;
     }
+
+    // for (let i = 0; i < this.tweetList.length; i++) {
+    //   if (
+    //     this.tweetList[i]['author']['userName'] === this.currentUser["username"]
+    //   ) {
+    //     this.tweetList[i] = this.signalRService.tweetList[i];
+    //   } else {
+    //     for (let key in this.tweetList[i]) {
+    //       if (key !== 'isLiked') {
+    //         this.tweetList[i][key] = this.signalRService.tweetList[i][key];
+    //       }
+    //     }
+    //   }
+    // console.log(this.currentUser["username"]);
+    // let tempObject:TweetDTO = this._objectWithoutProperties(this.signalRService.tweetList[i],["isLiked"]);
+    // tempObject["isLiked"] = this.tweetList[i].isLiked;
+    // this.tweetList[i] = tempObject;
+    //}
   }
   // private _objectWithoutProperties(obj, keys):TweetDTO {
   //   var target:TweetDTO;
@@ -115,7 +132,12 @@ export class TweetComponent implements OnInit {
       }
     });
 
-    this.signalRService.broadcastData(this.tweetList);
+    this.signalRService.broadcastData(
+      this.tweetList.find(t => t.id == tweetId),
+      this.currentUser['username']
+    );
+    // var car = this.cars.find(c => c.ID == carId);
+    // return car;
     //this.tweetList = this.signalRService.tweetList;
   }
 
@@ -146,7 +168,10 @@ export class TweetComponent implements OnInit {
       }
     });
 
-    this.signalRService.broadcastData(this.tweetList);
+    this.signalRService.broadcastData(
+      this.tweetList.find(t => t.id == tweetId),
+      this.currentUser['username']
+    );
     //this.tweetList = this.signalRService.tweetList;
   }
 }
