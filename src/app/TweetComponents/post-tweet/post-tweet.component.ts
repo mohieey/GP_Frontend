@@ -65,13 +65,14 @@ export class PostTweetComponent implements OnInit {
   }
 
   detectImageFiles(event) {
-    this.imageUrls = [];
     let files = event.target.files;
     if (files) {
       if (files.length > 4 || this.videoUrls != '') {
         alert('you are allowed with only one gif or 4 images');
         return;
       }
+      this.imageUrls = [];
+      this.imageFiles = [];
       for (let file of files) {
         let reader = new FileReader();
         reader.onload = (e: any) => {
@@ -97,13 +98,14 @@ export class PostTweetComponent implements OnInit {
   }
 
   detectVideoFiles(event) {
-    this.videoUrls = '';
     let files = event.target.files;
     if (files) {
       if (files.length > 1 || this.imageUrls.length != 0) {
         alert('you are allowed with only one gif or 4 images');
         return;
       }
+      this.videoUrls = '';
+      this.videoFile = null;
       var videoList = document.querySelector('.video-list');
       if (videoList.firstChild != null) {
         videoList.firstChild.remove();
