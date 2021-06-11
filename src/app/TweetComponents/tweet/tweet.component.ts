@@ -43,13 +43,19 @@ export class TweetComponent implements OnInit {
   private updateValue() {
     // this.tweetList = this.signalRService.tweetList;
     // trival solution
-    for(let i = 0 ; i < this.tweetList.length;i++){
-      for(let key in this.tweetList[i])
-      { 
-        if(key !== "isLiked") {
-          this.tweetList[i][key] = this.signalRService.tweetList[i][key]
+    for (let i = 0; i < this.tweetList.length; i++) {
+      if (
+        this.tweetList[i]['author']['userName'] === this.currentUser["username"]
+      ) {
+        this.tweetList[i] = this.signalRService.tweetList[i];
+      } else {
+        for (let key in this.tweetList[i]) {
+          if (key !== 'isLiked') {
+            this.tweetList[i][key] = this.signalRService.tweetList[i][key];
+          }
         }
       }
+      // console.log(this.currentUser["username"]);
       // let tempObject:TweetDTO = this._objectWithoutProperties(this.signalRService.tweetList[i],["isLiked"]);
       // tempObject["isLiked"] = this.tweetList[i].isLiked;
       // this.tweetList[i] = tempObject;
