@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { SharedService } from '../shared/services/shared.service';
+import { TokenService } from '../shared/services/token.service';
 
 @Component({
   selector: 'app-nav',
@@ -8,12 +10,14 @@ import { SharedService } from '../shared/services/shared.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-  constructor(private _router: Router, private _shared: SharedService) {}
+  currentUser:any;
+  constructor(private _router: Router, private _shared: SharedService, private _tokenService:TokenService) {}
 
   ngOnInit(): void {
     this.sidebar = document.querySelector('.sidebar');
     this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
     this.circle = document.querySelector('.circle');
+    this.currentUser = this._tokenService.getUser();
   }
 
   search(event) {
@@ -49,5 +53,9 @@ export class NavComponent implements OnInit {
       window.localStorage.setItem('darkmode', 'light');
     }
     this._shared.sendClickEvent();
+  }
+
+  public createResourcesPath = (serverPath: string) => {
+    return `${environment.apiUrl}/${serverPath}`;
   }
 }

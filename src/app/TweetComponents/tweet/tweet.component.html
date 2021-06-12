@@ -1,6 +1,6 @@
 <div class="post border dark-mode-1" *ngFor="let item of tweetList">
     <div class="user-avatar">
-        <img [src]="item.author.image" />
+        <img [src]="createResourcesPath('Resources/Images/' + item.author.userPic)" />
     </div>
     <div class="post-content" style="width: 100%;">
         <div class="mainpost">
