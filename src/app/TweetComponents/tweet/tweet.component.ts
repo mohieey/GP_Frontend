@@ -27,7 +27,7 @@ export class TweetComponent implements OnInit {
   clickEventsubscription: Subscription;
   constructor(
     private _tokenService: TokenService,
-    private _tweeetService: TweetService,
+    private _tweetService: TweetService,
     private _likeService: LikeService,
     private _bookmarkService: BookmarkService,
     private _tweetSharedService: TweetSharedService,
@@ -41,8 +41,6 @@ export class TweetComponent implements OnInit {
   }
 
   private updateValue() {
-    // this.tweetList = this.signalRService.tweetList;
-    // trival solution
     var tweetIndex = this.tweetList.findIndex(
       (t) => t.id == this.signalRService.tweet['id']
     );
@@ -52,41 +50,13 @@ export class TweetComponent implements OnInit {
     ) {
       this.tweetList[tweetIndex] = this.signalRService.tweet;
     } else {
-      console.log("Enter else")
       for (let key in this.tweetList[tweetIndex]) {
-        if (key !== 'isLiked') {
+        if (key !== 'isLiked' && key !== 'isBookmarked') {
           this.tweetList[tweetIndex][key] = this.signalRService.tweet[key];
         }
       }
     }
-
-    // for (let i = 0; i < this.tweetList.length; i++) {
-    //   if (
-    //     this.tweetList[i]['author']['userName'] === this.currentUser["username"]
-    //   ) {
-    //     this.tweetList[i] = this.signalRService.tweetList[i];
-    //   } else {
-    //     for (let key in this.tweetList[i]) {
-    //       if (key !== 'isLiked') {
-    //         this.tweetList[i][key] = this.signalRService.tweetList[i][key];
-    //       }
-    //     }
-    //   }
-    // console.log(this.currentUser["username"]);
-    // let tempObject:TweetDTO = this._objectWithoutProperties(this.signalRService.tweetList[i],["isLiked"]);
-    // tempObject["isLiked"] = this.tweetList[i].isLiked;
-    // this.tweetList[i] = tempObject;
-    //}
   }
-  // private _objectWithoutProperties(obj, keys):TweetDTO {
-  //   var target:TweetDTO;
-  //   for (var i in obj) {
-  //     if (keys.indexOf(i) >= 0) continue;
-  //     if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-  //     target[i] = obj[i];
-  //   }
-  //   return target;
-  // }
 
   ngOnInit(): void {
     this.currentUser = this._tokenService.getUser();
@@ -104,7 +74,7 @@ export class TweetComponent implements OnInit {
 
   deleteTweet(id: number) {
     console.log(id);
-    this._tweeetService.deleteTweet(id).subscribe((res) => {});
+    this._tweetService.deleteTweet(id).subscribe((res) => {});
   }
 
   likeOrDislike(tweetId: number, isLiked: boolean) {
@@ -136,9 +106,6 @@ export class TweetComponent implements OnInit {
       this.tweetList.find(t => t.id == tweetId),
       this.currentUser['username']
     );
-    // var car = this.cars.find(c => c.ID == carId);
-    // return car;
-    //this.tweetList = this.signalRService.tweetList;
   }
 
   bookmarkOrRemoveBookmark(tweetId: number, isBookmarked: boolean) {

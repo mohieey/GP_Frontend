@@ -13,7 +13,6 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.sidebar = document.querySelector('.sidebar');
     this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
-
     this.circle = document.querySelector('.circle');
   }
 
@@ -44,7 +43,11 @@ export class NavComponent implements OnInit {
 
   supportDarkMode() {
     this.circle.classList.toggle('move');
-
+    if (window.localStorage.getItem('darkmode') == 'light')
+      window.localStorage.setItem('darkmode', 'dark');
+    else {
+      window.localStorage.setItem('darkmode', 'light');
+    }
     this._shared.sendClickEvent();
   }
 }

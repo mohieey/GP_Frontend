@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TweetService } from 'src/app/shared/services/tweet.service';
 import { environment } from 'src/environments/environment';
 import { TokenService } from 'src/app/shared/services/token.service';
+import { LikeService } from 'src/app/shared/services/like.service';
 
 @Component({
   selector: 'app-tweet-details',
@@ -18,7 +19,7 @@ export class TweetDetailsComponent implements OnInit {
   constructor(
     private tweetService: TweetService, 
     private route: ActivatedRoute, 
-    private _tweeetService: TweetService,
+    private _tweetService: TweetService,
     private _tokenService: TokenService,
     ) { }
 
@@ -32,14 +33,12 @@ export class TweetDetailsComponent implements OnInit {
   }
 
   public createResourcesPath = (serverPath: string) => {
-
     return `${environment.apiUrl}/${serverPath}`;
-
   }
 
   deleteTweet(id: number) {
     console.log(id);
-    this._tweeetService.deleteTweet(id).subscribe((res) => {});
+    this._tweetService.deleteTweet(id).subscribe((res) => {});
   }
 }
 
