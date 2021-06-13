@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AccountService } from '../shared/services/account.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { PatternValidation } from '../shared/validations/patternMatcher';
@@ -15,29 +16,27 @@ import { UpdateUserDTO } from '../shared/_interfaces/updateUserDTO.model';
 export class SettingsComponent implements OnInit {
   settingForm: FormGroup;
   invalidEmailOrPassword: boolean = false;
+  image: string;
 
   constructor(
     private _authService: AuthenticationService,
     private fb: FormBuilder,
     private router: Router,
     private _accountService: AccountService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+
     this.settingForm = this.fb.group({
-      username: [{value: '', disabled: true}, [Validators.required, Validators.minLength(5)]],
-      firstname: ['', [Validators.required, Validators.minLength(5)]],
-      lastname: ['', [Validators.required, Validators.minLength(5)]],
-      email: [
-        '',
-        [
-          Validators.required,
-          PatternValidation(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
-        ],
-      ],
+      username: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(3)]],
+      firstname: ['', [Validators.required, Validators.minLength(3)]],
+      lastname: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+
     });
+
     this._accountService
-      .getCurrentUser('georg5000@gmail.com')
+      .getCurrentUser()
       .pipe(first())
       .subscribe(
         (data) => {
@@ -47,6 +46,7 @@ export class SettingsComponent implements OnInit {
             firstname: data.firstName,
             lastname: data.lastName,
           });
+          this.image = data.image;
         },
         (error) => {
           // this.error = error;
@@ -73,9 +73,11 @@ export class SettingsComponent implements OnInit {
       firstName: this.firstname.value,
       lastName: this.lastname.value,
       email: this.email.value,
+      image: this.image
     };
+
     this._accountService
-      .updateUser(this.username.value, this.settingForm.value)
+      .updateUser(this.settingForm.value)
       .subscribe(
         (response) => {
           this.invalidEmailOrPassword = false;
@@ -85,5 +87,12 @@ export class SettingsComponent implements OnInit {
           this.invalidEmailOrPassword = true;
         }
       );
+
+
+
+  }
+
+  public createResourcesPath = (serverPath: string) => {
+    return `${environment.apiUrl}/${serverPath}`;
   }
 }
