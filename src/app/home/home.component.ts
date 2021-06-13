@@ -4,6 +4,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TweetService } from '../shared/services/tweet.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
+import { environment } from 'src/environments/environment';
+import { TokenService } from '../shared/services/token.service';
 
 
 @Component({
@@ -18,8 +20,14 @@ export class HomeComponent implements OnInit {
   modalInput: HTMLInputElement;
   page: string;
   display: boolean;
+  currentUser:any;
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
-  constructor(private _tweetService: TweetService, private _router: Router, private route: ActivatedRoute, public postTweetService: PostTweetService) { }
+  constructor(
+    private _tweetService: TweetService, 
+    private _router: Router, 
+    private route: ActivatedRoute, 
+    public postTweetService: PostTweetService,
+    private _tokenService:TokenService) { }
 
 
   ngOnInit(): void {
@@ -28,6 +36,7 @@ export class HomeComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
     })
+    this.currentUser = this._tokenService.getUser();
   }
   getTweets() {
     this._tweetService.getHomePageTweets().subscribe((res) => {
@@ -45,4 +54,8 @@ export class HomeComponent implements OnInit {
   closePostTweetWindow() {
     this.modalWrapper.classList.remove('modal-wrapper-display');
   }
+
+  public createResourcesPath = (serverPath: string) => {
+    return `${environment.apiUrl}/${serverPath}`;
+  };
 }

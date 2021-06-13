@@ -15,7 +15,7 @@
                         </div>
                         <div class="header-post dark-mode-1 border" *ngIf="page == 'feed'">
                             <div class="header-img-wrapper">
-                                <img src="../../assets/images/user1.jpg" />
+                                <img [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
                             </div>
                             <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border" />
                             <i class="far fa-image"></i>
