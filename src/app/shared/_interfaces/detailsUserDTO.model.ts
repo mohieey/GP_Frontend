@@ -4,6 +4,6 @@ export interface DetailsUserDTO {
   lastName: string;
   email: string;
   userName: string;
-  image: string;
+  userPic: string;
   isFollowedByCurrentUser: boolean;
 }

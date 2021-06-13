@@ -11,11 +11,11 @@
                     <div class="feeds-header dark-mode-1">
                         <div class="header-top border justify-content-start dark-mode-1">
                             <div class="header-img-wrapper border rounded-circle light-text">
-                                <img src="../../assets/images/user1.jpg" />
+                                <img [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
                             </div>
                             <div>
-                                <h4 class="light-text">Tamer Hosni</h4>
-                                <h2 class="light-text">@abohosni</h2>
+                                <h4 class="light-text">{{currentUser.firstName}} {{currentUser.lastName}}</h4>
+                                <h2 class="light-text">@{{currentUser.username}}</h2>
                             </div>
                             <!-- <button class="">...</button> -->
                             <div class="light-text ms-auto dropdown light-text">
