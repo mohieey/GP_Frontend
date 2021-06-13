@@ -76,14 +76,20 @@ export class TweetComponent implements OnInit {
 
   deleteTweet(id: number) {
     console.log(id);
-    this._tweetService.deleteTweet(id).subscribe((res) => {});
+    this._tweetService.deleteTweet(id).subscribe((res) => {
+      var tweetIndex = this.tweetList.findIndex(
+        (t) => t.id == id
+      );
+      this.tweetList.splice(tweetIndex, 1);
+    });
+
   }
 
   likeOrDislike(tweetId: number, isLiked: boolean) {
     if (!isLiked) {
       isLiked = false;
       this._likeService.like(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -91,7 +97,7 @@ export class TweetComponent implements OnInit {
     } else {
       isLiked = true;
       this._likeService.dislike(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -114,7 +120,7 @@ export class TweetComponent implements OnInit {
     if (!isBookmarked) {
       isBookmarked = false;
       this._bookmarkService.bookmark(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -122,7 +128,7 @@ export class TweetComponent implements OnInit {
     } else {
       isBookmarked = true;
       this._bookmarkService.removeBookmark(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -151,21 +157,19 @@ export class TweetComponent implements OnInit {
   //   // a.diff(b, 'days')
   //   return moment(date).add(-d.getTimezoneOffset(), 'minutes').fromNow();
   // }
-  getDate(date: Date){
+  getDate(date: Date) {
     //return moment.tz(date, moment.tz.guess()).format("h:mma");
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
     //let momentOfPost = moment("2021/01/01");
     let momentOfNow = moment();
     var difference = momentOfNow.diff(momentOfPost, "days");
-    if(difference == 0)
-    {
+    if (difference == 0) {
       //within few hours
       return momentOfPost.format("h:mma");
     }
     else {
-      if(momentOfNow.year() - momentOfPost.year() >= 1)
-      {
+      if (momentOfNow.year() - momentOfPost.year() >= 1) {
         return momentOfPost.format("MMM D, YYYY")
       }
       return momentOfPost.format("MMM D"); // within the same year
@@ -175,7 +179,7 @@ export class TweetComponent implements OnInit {
     // console.log(momentOfNow.format("h:mma"))
     //return moment().format("h:mma");
   }
-  getDateOfToolTip(date: Date){
+  getDateOfToolTip(date: Date) {
     //return moment.tz(date, moment.tz.guess()).format("h:mma");
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');

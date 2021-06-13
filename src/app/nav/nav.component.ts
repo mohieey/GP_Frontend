@@ -10,14 +10,15 @@ import { TokenService } from '../shared/services/token.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-  currentUser:any;
-  constructor(private _router: Router, private _shared: SharedService, private _tokenService:TokenService) {}
+  currentUser: any;
+  constructor(private _router: Router, private _shared: SharedService, private _tokenService: TokenService) { }
 
   ngOnInit(): void {
     this.sidebar = document.querySelector('.sidebar');
     this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
     this.circle = document.querySelector('.circle');
     this.currentUser = this._tokenService.getUser();
+    console.log(this.currentUser)
   }
 
   search(event) {

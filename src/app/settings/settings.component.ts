@@ -1,3 +1,4 @@
+import { TweetService } from 'src/app/shared/services/tweet.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,6 +8,7 @@ import { AccountService } from '../shared/services/account.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { PatternValidation } from '../shared/validations/patternMatcher';
 import { UpdateUserDTO } from '../shared/_interfaces/updateUserDTO.model';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-settings',
@@ -17,12 +19,14 @@ export class SettingsComponent implements OnInit {
   settingForm: FormGroup;
   invalidEmailOrPassword: boolean = false;
   image: string;
+  profilePic: File;
 
   constructor(
     private _authService: AuthenticationService,
     private fb: FormBuilder,
     private router: Router,
-    private _accountService: AccountService
+    private _accountService: AccountService,
+    private _tweetService: TweetService
   ) { }
 
   ngOnInit(): void {
@@ -35,24 +39,21 @@ export class SettingsComponent implements OnInit {
 
     });
 
-    this._accountService
-      .getCurrentUser()
-      .pipe(first())
-      .subscribe(
-        (data) => {
-          this.settingForm.setValue({
-            username: data.userName,
-            email: data.email,
-            firstname: data.firstName,
-            lastname: data.lastName,
-          });
-          this.image = data.image;
-        },
-        (error) => {
-          // this.error = error;
-          // this.loading = false;
-        }
-      );
+    this._accountService.getCurrentUser().pipe(first()).subscribe(
+      (data) => {
+        this.settingForm.setValue({
+          username: data.userName,
+          email: data.email,
+          firstname: data.firstName,
+          lastname: data.lastName,
+        });
+        this.image = data.userPic;
+      },
+      (error) => {
+        // this.error = error;
+        // this.loading = false;
+      }
+    );
   }
 
   get firstname() {
@@ -69,30 +70,54 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit() {
+    this.uploadImage();
+  }
+
+  updateData() {
     let updateUserDTO: UpdateUserDTO = {
       firstName: this.firstname.value,
       lastName: this.lastname.value,
       email: this.email.value,
       image: this.image
     };
-
+    console.log(updateUserDTO);
     this._accountService
-      .updateUser(this.settingForm.value)
+      .updateUser(updateUserDTO)
       .subscribe(
         (response) => {
           this.invalidEmailOrPassword = false;
-          this.router.navigate(['/home']);
+          // this.router.navigate(['/home']);
         },
         (err) => {
           this.invalidEmailOrPassword = true;
         }
       );
-
-
-
   }
+
 
   public createResourcesPath = (serverPath: string) => {
     return `${environment.apiUrl}/${serverPath}`;
   }
+
+  changePhoto(event) {
+    let files = event.target.files;
+    this.profilePic = files[0];
+  }
+
+  uploadImage() {
+    if (this.profilePic !== null && this.profilePic !== undefined) {
+      const formDate = new FormData();
+      formDate.append("file", this.profilePic, this.profilePic.name);
+      this._tweetService.uploadTweetImage(formDate).subscribe(event => {
+        if (event.type === HttpEventType.Response) {
+          this.image = event.body.fileName;
+          this.updateData();
+        }
+      })
+    } else {
+      this.updateData();
+    }
+  }
+
+
 }

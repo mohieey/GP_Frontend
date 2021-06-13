@@ -61,6 +61,7 @@
                         <div class="col-md-5" style="margin-top: 100px;">
                             <img [src]="createResourcesPath('Resources/Images/' +image)" width="100%" alt="">
                         </div>
+                        <input type="file" (change)="changePhoto($event)" value="Change Photo">
                     </div>
                 </div>
                 <button type="submit" class="btn-top" value="Submit Form" [disabled]="settingForm.invalid">
