@@ -1,5 +1,6 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import * as moment from 'moment';
 import { TweetService } from '../../shared/services/tweet.service';
 import { AddTweetDTO } from '../../shared/_interfaces/addTweetDTO';
 import { ImageDTO } from '../../shared/_interfaces/imageDTO';
@@ -195,11 +196,11 @@ export class PostTweetComponent implements OnInit {
 
   postTweet() {
     var postText: HTMLTextAreaElement = document.querySelector(".tweet-text");
-
     var tweet: AddTweetDTO = {
       body: postText.value,
       images: this.imagesNames,
       video: this.videoName,
+      creationDate: new Date()
     };
 
     if (this.TweetId == undefined) {

@@ -76,6 +76,33 @@
   color: #dfc906ce !important;
 }
 
+.tooltipCSS {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltipCSS .tooltipCSStext {
+  visibility: hidden;
+  width: 130px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  background-color: rgba(18, 18, 18, 0.517);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size: 12px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 20;
+}
+
+.tooltipCSS:hover .tooltipCSStext {
+  visibility: visible;
+}
+
 @media (max-width: 600px) {
   .post-img{
     width: 100%

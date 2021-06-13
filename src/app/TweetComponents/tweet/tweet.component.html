@@ -10,7 +10,12 @@
                     <i class="fas fa-check-circle"></i>
                     <span>
                         @{{ item.author.userName }}
-                        {{ item.creationDate | date: "shortTime" }}</span>
+                        <!-- {{ item.creationDate | date: "shortTime" }} -->
+                        &nbsp;·&nbsp;&nbsp;
+                        <div class="tooltipCSS">{{getDate(item.creationDate)}}
+                            <span class="tooltipCSStext h6">{{getDateOfToolTip(item.creationDate)}}</span>
+                        </div>
+                    </span>
                 </div>
                 <div class="dropdown">
                     <button class="btn dropdown light-text"

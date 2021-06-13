@@ -5,4 +5,5 @@ export interface AddTweetDTO {
     body: string;
     images: ImageDTO[];
     video: VideoDTO;
+    creationDate: Date
   }
