@@ -9,7 +9,11 @@
                 <i class="fas fa-check-circle"></i>
                 <span>
                     @{{ tweet.author.userName }}
-                    {{ tweet.creationDate | date: "shortTime" }}</span>
+                    &nbsp;·&nbsp;&nbsp;
+                    <div class="tooltipCSS">{{getDate(tweet.creationDate)}}
+                        <span class="tooltipCSStext h6">{{getDateOfToolTip(tweet.creationDate)}}</span>
+                    </div>
+                </span>
             </div>
             <div class="dropdown" *ngIf="currentUser.email == tweet.author.email">
                 <button style="background-color: white; border-color: white;" class="btn btn-primary dropdown"
@@ -59,7 +63,11 @@
                 <h4>{{ item.author.firstName + " " + item.author.lastName }}</h4>
                 <i class="fas fa-check-circle"></i>
                 <span>@{{ item.author.userName }}
-                    {{ item.creationDate | date: "shortTime" }}</span>
+                    &nbsp;·&nbsp;&nbsp;
+                    <div class="tooltipCSS">{{getDate(item.creationDate)}}
+                        <span class="tooltipCSStext h6">{{getDateOfToolTip(item.creationDate)}}</span>
+                    </div>
+                </span>
             </div>
             <p class="post-text light-text">
                 {{ item.body }}
