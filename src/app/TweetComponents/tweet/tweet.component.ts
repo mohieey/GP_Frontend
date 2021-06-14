@@ -56,6 +56,7 @@ export class TweetComponent implements OnInit {
         }
       }
     }
+
   }
 
   ngOnInit(): void {
@@ -71,6 +72,8 @@ export class TweetComponent implements OnInit {
   addReply(id) {
     this.onReply.emit(+id);
   }
+
+  isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
 
   deleteTweet(id: number) {
     console.log(id);

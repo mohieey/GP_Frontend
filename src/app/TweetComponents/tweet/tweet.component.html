@@ -1,4 +1,4 @@
-<div class="post border dark-mode-1" *ngFor="let item of tweetList">
+<div class="post border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngFor="let item of tweetList">
     <div class="user-avatar">
         <img [src]="item.author.image" />
     </div>
