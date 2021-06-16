@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SharedService } from '../shared/services/shared.service';
@@ -12,6 +12,13 @@ import { TokenService } from '../shared/services/token.service';
 export class NavComponent implements OnInit {
   currentUser: any;
   constructor(private _router: Router, private _shared: SharedService, private _tokenService: TokenService) { }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event) {    
+    if(event.srcElement.classList.contains('sidebar-wrapper-display')) {
+      this.Dismiss();
+    }
+  }
 
   ngOnInit(): void {
     this.sidebar = document.querySelector('.sidebar');
@@ -58,5 +65,10 @@ export class NavComponent implements OnInit {
 
   public createResourcesPath = (serverPath: string) => {
     return `${environment.apiUrl}/${serverPath}`;
+  }
+
+  logout() {
+    this._tokenService.signOut();
+    // this._router.navigate([''])
   }
 }

@@ -11,15 +11,15 @@
 /* feeds content */
 
 .feeds-content {
-    display: grid;
+    /* display: grid; */
     /* grid-template-columns: minmax(5rem, 1fr) 60rem minmax(5rem, 1fr); */
-    grid-template-rows: repeat(2, min-content);
+    /* grid-template-rows: repeat(2, min-content); */
     padding-top: 6.5rem;
 }
 
 .feeds-header {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    /* grid-column: 2 / 3; */
+    /* grid-row: 1 / 2; */
     background-color: #fff;
     margin-top: 1.5rem;
 }
@@ -77,8 +77,8 @@
 }
 
 .posts {
-    grid-column: 2 / 3;
-    grid-row: 2 / -1;
+    /* grid-column: 2 / 3; */
+    /* grid-row: 2 / -1; */
     background-color: #fff;
 }
 
@@ -270,11 +270,7 @@
 	.icons i {
 		font-size: 2rem;
 	}
-
-	.header-img-wrapper {
-		display: none;
-	}
-
+	
 	.icons a {
 		margin-right: 4rem;
 	}

@@ -1,0 +1,44 @@
+<div class="post border dark-mode-1" *ngFor="let item of replies">
+    <div class="user-avatar">
+        <img [src]="item.author.image" />
+    </div>
+    <div class="post-content">
+        <div class="post-user-info light-text">
+            <h4>{{ item.author.firstName + " " + item.author.lastName }}</h4>
+            <i class="fas fa-check-circle"></i>
+            <span>@{{ item.author.userName }}
+                &nbsp;·&nbsp;&nbsp;
+                <div class="tooltipCSS">{{getDate(item.creationDate)}}
+                    <span class="tooltipCSStext h6">{{getDateOfToolTip(item.creationDate)}}</span>
+                </div>
+            </span>
+        </div>
+        <p class="post-text light-text">
+            {{ item.body }}
+        </p>
+        <div class="post-img" *ngFor="let img of item.images">
+            <img [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
+        </div>
+        <div class="post-img" *ngIf="item.video">
+            <video muted controls width="100%" height="auto">
+                <source [src]="createResourcesPath('Resources/Videos/' + item.video.videoName)" />
+            </video>
+        </div>
+        <div class="post-icons">
+            <span><i class="far fa-comment"></i>
+                <span class="light-text">{{ item.replyCount }}
+                </span>
+            </span>
+            <span><i class="fas fa-retweet"></i></span>
+
+            <span [ngClass]="{'user-like': item.isLiked === true }">
+                <i class="fas fa-heart" [ngClass]="{'user-like': item.isLiked === true }">
+                </i>
+                <span class="light-text">
+                    {{ item.likeCount}}
+                </span>
+            </span>
+            <span><i class="fas fa-share-alt"></i></span>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { TweetWithRepliesDTO } from './../../shared/_interfaces/tweetWithRepliesDTO.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TweetService } from 'src/app/shared/services/tweet.service';
 import { environment } from 'src/environments/environment';
@@ -33,9 +33,38 @@ export class TweetDetailsComponent implements OnInit {
     this.currentUser = this._tokenService.getUser();
   }
 
+  // private wasInside = false;
+  
+  // @HostListener('click')
+  // clickInsid() {
+  //   console.log("clicked inside")
+  //   this.wasInside = true;
+  // }
+  
+  // @HostListener('document:click')
+  // clickout() {
+  //   if (!this.wasInside) {
+  //   console.log("clicked outside")
+  //   }
+  //   this.wasInside = false;
+  // }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event) {  
+    let element = event.target
+    while (element.parentElement && element.parentElement.getAttribute('id') !== 'replyDiv') {
+      element = element.parentElement
+    }
+    if(!element.parentElement) {
+      this.hideReplyUIChange(event);
+    }
+  }
+
   public createResourcesPath = (serverPath: string) => {
     return `${environment.apiUrl}/${serverPath}`;
   }
+
+  isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
 
   deleteTweet(id: number) {
     console.log(id);
@@ -60,10 +89,77 @@ export class TweetDetailsComponent implements OnInit {
       return momentOfPost.format("MMM D"); // within the same year
     }
   }
+
   getDateOfToolTip(date: Date){
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
     return momentOfPost.format("h:mm A . MMM D, YYYY");
+  }
+
+  getFullDate(date: Date){
+    let d = new Date(date);
+    let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
+    return `${momentOfPost.format("h:mm A · MMM D, YYYY · ")}Twirrer for Browser`;
+  }
+
+  showReplyUIChange(event) {
+    // const elements = document.querySelectorAll('.reply-at-text, .reply-input-icons, #replyButtonNextToInput');
+    
+    // Array.from(elements).map((element) => {
+    //   element.classList.toggle('d-flex')
+    //   element.classList.toggle('d-none')
+    // });
+
+    document.querySelector("#mt5Class").classList.remove('mt-5')
+
+    document.querySelector(".reply-at-text").classList.remove('d-none')
+    document.querySelector(".reply-at-text").classList.add('d-flex')
+    
+    document.querySelector(".reply-input-icons").classList.remove('d-none')
+    document.querySelector(".reply-input-icons").classList.add('d-flex')    
+
+    document.querySelector("#replyButtonNextToInput").classList.remove('d-flex')
+    document.querySelector("#replyButtonNextToInput").classList.add('d-none')
+  }
+
+  hideReplyUIChange(event) {
+    document.querySelector("#mt5Class").classList.add('mt-5')
+
+    document.querySelector(".reply-at-text").classList.add('d-none')
+    document.querySelector(".reply-at-text").classList.remove('d-flex')
+    
+    document.querySelector(".reply-input-icons").classList.add('d-none')
+    document.querySelector(".reply-input-icons").classList.remove('d-flex')    
+
+    document.querySelector("#replyButtonNextToInput").classList.add('d-flex')
+    document.querySelector("#replyButtonNextToInput").classList.remove('d-none')
+  }
+
+  getImageClasses(imgCount: number) {
+    if(imgCount === 1) {
+      return 'img-count-1'
+    } 
+
+    if(imgCount === 2) {
+      return 'img-count-2'
+    } 
+
+    if(imgCount === 3) {      
+      return 'img-count-3'
+    } 
+
+    if(imgCount === 4) {      
+      return 'img-count-4'
+    } 
+  }
+
+  private imgSourceToDisplayInModal:string = ''
+  setImgResource(imgSource: string) {
+    this.imgSourceToDisplayInModal = imgSource
+  }
+
+  getImageResource(){
+    return this.imgSourceToDisplayInModal
   }
 }
 

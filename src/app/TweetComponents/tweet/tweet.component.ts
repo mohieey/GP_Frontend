@@ -169,7 +169,7 @@ export class TweetComponent implements OnInit {
     var difference = momentOfNow.diff(momentOfPost, "days");
     if (difference == 0) {
       //within few hours
-      return momentOfPost.format("h:mma");
+      return momentOfPost.format("h:mm A");
     }
     else {
       if (momentOfNow.year() - momentOfPost.year() >= 1) {
@@ -182,10 +182,29 @@ export class TweetComponent implements OnInit {
     // console.log(momentOfNow.format("h:mma"))
     //return moment().format("h:mma");
   }
+
   getDateOfToolTip(date: Date) {
     //return moment.tz(date, moment.tz.guess()).format("h:mma");
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
     return momentOfPost.format("h:mm A . MMM D, YYYY");
+  }
+
+  getImageClasses(imgCount: number) {
+    if(imgCount === 1) {
+      return 'img-count-1'
+    } 
+
+    if(imgCount === 2) {
+      return 'img-count-2'
+    } 
+
+    if(imgCount === 3) {      
+      return 'img-count-3'
+    } 
+
+    if(imgCount === 4) {      
+      return 'img-count-4'
+    } 
   }
 }

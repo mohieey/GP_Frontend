@@ -38,6 +38,9 @@ export class HomeComponent implements OnInit {
     })
     this.currentUser = this._tokenService.getUser();
   }
+
+  isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
+
   getTweets() {
     this._tweetService.getHomePageTweets().subscribe((res) => {
       this.homePageTweets = res;

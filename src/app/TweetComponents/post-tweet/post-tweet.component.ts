@@ -1,5 +1,5 @@
 import { HttpEventType } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import * as moment from 'moment';
 import { TweetService } from '../../shared/services/tweet.service';
 import { AddTweetDTO } from '../../shared/_interfaces/addTweetDTO';
@@ -37,6 +37,13 @@ export class PostTweetComponent implements OnInit {
   ngOnInit(): void {
     this.modal = document.querySelector('.modal.dark-mode-1');
     this.modalInput = document.querySelector('.modal-input');
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event) {    
+    if(event.srcElement.classList.contains('modal-wrapper-display')) {
+      this.closePostTweetWindow();
+    }
   }
 
   openPostTweetWindow() {

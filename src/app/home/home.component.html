@@ -5,30 +5,29 @@
 
     <!-- feeds content -->
     <div class="container d-flex justify-content-between">
-        <div class="col-12 col-xxl-8 col-xl-1 col-lg-12 main-content">
+        <div class="col-12 col-xxl-8 col-xl-8 col-lg-12 main-content">
             <div class="col-11 mx-auto">
                 <div class="feeds-content">
-                    <div class="feeds-header dark-mode-1">
-                        <div class="header-top border" *ngIf="page == 'feed'">
-                            <h4 class="light-text">Home</h4>
+                    <div class="feeds-header">
+                        <div class="header-top border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngIf="page == 'feed'">
+                            <h4 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">Home</h4>
                             <i class="far fa-star"></i>
                         </div>
-                        <div class="header-post dark-mode-1 border" *ngIf="page == 'feed'">
+                        <div class="header-post dark-mode-1 border" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngIf="page == 'feed'">
                             <div class="header-img-wrapper">
                                 <img [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
                             </div>
-                            <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border" />
+                            <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border h4" [ngClass]="{'dark-1 border-color light' : isDarkModeEnabled()}" />
                             <i class="far fa-image"></i>
                             <i class="fas fa-camera"></i>
-                            <i class="far fa-chart-bar"></i>
                         </div>
                     </div>
                     <ng-container *ngIf="page == 'feed'; else elseTemplate">
-                        <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets" (onReply)="openPostTweetWindow($event)">
+                        <app-tweet class="posts dark-mode-1" [tweetList]="homePageTweets" (onReply)="openPostTweetWindow($event)" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
                         </app-tweet>
                     </ng-container>
                     <ng-template #elseTemplate>
-                        <app-tweet-details class="posts dark-mode-1"></app-tweet-details>
+                        <app-tweet-details class="posts dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}"></app-tweet-details>
                     </ng-template>
                 </div>
             </div>
@@ -39,7 +38,7 @@
         </div>
         <!-- end of feeds content -->
 
-        <button type="button" class="post-btn" (click)="openPostTweetWindow()">
+        <button *ngIf="page == 'feed'" type="button" class="post-btn" (click)="openPostTweetWindow()">
       +<i class="fas fa-feather-alt"></i> Post
     </button>
 
