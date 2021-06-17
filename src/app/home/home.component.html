@@ -17,7 +17,7 @@
                         <div class="header-post dark-mode-1 border"
                             [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngIf="page == 'feed'">
                             <div class="header-img-wrapper">
-                                <img [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
+                                <img *ngIf="currentUser != undefined" [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
                             </div>
                             <input type="text" placeholder="What's happening?" class="dark-mode-2 light-text border h4"
                                 [ngClass]="{'dark-1 border-color light' : isDarkModeEnabled()}" />

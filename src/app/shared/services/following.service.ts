@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { DetailsUserDTO } from '../_interfaces/detailsUserDTO.model';
 import { UserInteractionDetailsDTO } from '../_interfaces/userInteractionDetailsDTO.model';
 
 @Injectable({
@@ -54,6 +55,17 @@ export class FollowingService {
   ): Observable<UserInteractionDetailsDTO[]> {
     let url = `${environment.apiUrl}/user/followers/${pageSize}/${pageNumber}`;
     return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
+      catchError((err) => {
+        return throwError(
+          err.message || 'Internal Server error contact site adminstarator'
+        );
+      })
+    );
+  }
+
+  getSuggestedFollowings():Observable<DetailsUserDTO[]>{
+    let url = `${environment.apiUrl}/user/suggestedfollowings`;
+    return this._http.get<DetailsUserDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(
           err.message || 'Internal Server error contact site adminstarator'
