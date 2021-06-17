@@ -27,7 +27,7 @@ export class TweetDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['page'];
     this.tweetService.getTweet(this.id).subscribe(
-      res => { this.tweet = res; console.log(res) },
+      res => { this.tweet = res },
       err => console.log(err));
       
     this.currentUser = this._tokenService.getUser();
@@ -55,8 +55,14 @@ export class TweetDetailsComponent implements OnInit {
     while (element.parentElement && element.parentElement.getAttribute('id') !== 'replyDiv') {
       element = element.parentElement
     }
+    
     if(!element.parentElement) {
+      // console.log(document.readyState);
+
+    //   document.addEventListener('DOMContentLoaded', () => {
+    // });
       this.hideReplyUIChange(event);
+    
     }
   }
 
@@ -110,29 +116,29 @@ export class TweetDetailsComponent implements OnInit {
     //   element.classList.toggle('d-none')
     // });
 
-    document.querySelector("#mt5Class").classList.remove('mt-5')
+    document.querySelector("#mt5Class")?.classList.remove('mt-5')
 
-    document.querySelector(".reply-at-text").classList.remove('d-none')
-    document.querySelector(".reply-at-text").classList.add('d-flex')
+    document.querySelector(".reply-at-text")?.classList.remove('d-none')
+    document.querySelector(".reply-at-text")?.classList.add('d-flex')
     
-    document.querySelector(".reply-input-icons").classList.remove('d-none')
-    document.querySelector(".reply-input-icons").classList.add('d-flex')    
+    document.querySelector(".reply-input-icons")?.classList.remove('d-none')
+    document.querySelector(".reply-input-icons")?.classList.add('d-flex')    
 
-    document.querySelector("#replyButtonNextToInput").classList.remove('d-flex')
-    document.querySelector("#replyButtonNextToInput").classList.add('d-none')
+    document.querySelector("#replyButtonNextToInput")?.classList.remove('d-flex')
+    document.querySelector("#replyButtonNextToInput")?.classList.add('d-none')
   }
 
   hideReplyUIChange(event) {
-    document.querySelector("#mt5Class").classList.add('mt-5')
+    document.querySelector("#mt5Class")?.classList.add('mt-5')
 
-    document.querySelector(".reply-at-text").classList.add('d-none')
-    document.querySelector(".reply-at-text").classList.remove('d-flex')
+    document.querySelector(".reply-at-text")?.classList.add('d-none')
+    document.querySelector(".reply-at-text")?.classList.remove('d-flex')
     
-    document.querySelector(".reply-input-icons").classList.add('d-none')
-    document.querySelector(".reply-input-icons").classList.remove('d-flex')    
+    document.querySelector(".reply-input-icons")?.classList.add('d-none')
+    document.querySelector(".reply-input-icons")?.classList.remove('d-flex')    
 
-    document.querySelector("#replyButtonNextToInput").classList.add('d-flex')
-    document.querySelector("#replyButtonNextToInput").classList.remove('d-none')
+    document.querySelector("#replyButtonNextToInput")?.classList.add('d-flex')
+    document.querySelector("#replyButtonNextToInput")?.classList.remove('d-none')
   }
 
   getImageClasses(imgCount: number) {
