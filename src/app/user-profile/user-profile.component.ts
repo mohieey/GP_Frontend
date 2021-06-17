@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { BookmarkService } from '../shared/services/bookmark.service';
+import { FollowingService } from '../shared/services/following.service';
+import { LikeService } from '../shared/services/like.service';
 import { PostTweetService } from '../shared/services/post-tweet.service';
 import { TokenService } from '../shared/services/token.service';
 import { TweetService } from '../shared/services/tweet.service';
 import { TweetDTO } from '../shared/_interfaces/tweetDTO';
+import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteractionDetailsDTO.model';
 import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
 
 @Component({
@@ -14,7 +18,7 @@ import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.com
 })
 export class UserProfileComponent implements OnInit {
 
-  tweets: TweetDTO[] = [];
+  //tweets: UserInteractionDetailsDTO[] = [];
 
   modal: HTMLElement;
   modalWrapper: HTMLElement;
@@ -27,23 +31,44 @@ export class UserProfileComponent implements OnInit {
     private _router: Router,
     private route: ActivatedRoute,
     public postTweetService: PostTweetService,
-    private _tokenService:TokenService) { }
+    private _tokenService:TokenService,
+    private _followingService: FollowingService,
+    private _likeService: LikeService,
+    private _bookmarkService: BookmarkService) { }
 
 
 
   ngOnInit(): void {
-    this.getTweets();
+    this.getMyBookmarks();
     this.modalWrapper = document.querySelector('.modal-wrapper');
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
     })
     this.currentUser = this._tokenService.getUser();
   }
-  getTweets() {
-    this._tweetService.getHomePageTweets().subscribe((res) => {
-      this.tweets = res;
+
+  getFollowing() {
+    this._followingService.getFollowingByPage(10, 1).subscribe((res) => {
       console.log(res);
     });
+  }
+
+  getFollowers() {
+    this._followingService.getFollowersByPage(10, 1).subscribe((res) => {
+      console.log(res);
+    });
+  }
+
+  getMyLikes() {
+    this._likeService.getMyLikesByPage(10, 1).subscribe((res) => {
+      console.log(res); 
+    })
+  }
+
+  getMyBookmarks() {
+    this._bookmarkService.getMyBookmarksByPage(10, 1).subscribe((res) => {
+      console.log(res);
+    })
   }
 
   openPostTweetWindow(id?: number) {

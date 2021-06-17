@@ -38,7 +38,21 @@ export class FollowingService {
     pageSize: number,
     pageNumber: number
   ): Observable<UserInteractionDetailsDTO[]> {
-    let url = `${environment.apiUrl}/user​/following/${pageSize}/${pageNumber}`;
+    let url = `${environment.apiUrl}/user/following/${pageSize}/${pageNumber}`;
+    return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
+      catchError((err) => {
+        return throwError(
+          err.message || 'Internal Server error contact site adminstarator'
+        );
+      })
+    );
+  }
+
+  getFollowersByPage(
+    pageSize: number,
+    pageNumber: number
+  ): Observable<UserInteractionDetailsDTO[]> {
+    let url = `${environment.apiUrl}/user/followers/${pageSize}/${pageNumber}`;
     return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(

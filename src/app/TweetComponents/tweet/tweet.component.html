@@ -28,8 +28,12 @@
                         </svg>
                     </button>
                     <ul class="dropdown-menu dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item h4 light-text" [ngClass]="{'light' : isDarkModeEnabled()}"
-                                routerLink="/home/{{ item.id }}">Details</a>
+                        <li>
+                            <a class="dropdown-item h4 light-text" 
+                                [ngClass]="{'light' : isDarkModeEnabled()}"
+                                routerLink="/home/{{ item.id }}">
+                                Details
+                            </a>
                         </li>
                         <li>
                             <a class="dropdown-item h4 light-text" [ngClass]="{'user-bookmark': item.isBookmarked === true, 'light' : isDarkModeEnabled() }" (click)="bookmarkOrRemoveBookmark(item.id, item.isBookmarked)">
@@ -38,14 +42,21 @@
                                     ({{item.bookmarkCount}})
                                 </span>
                             </a>
-                            <!-- <span [ngClass]="{'user-bookmark': item.isBookmarked === true }" (click)="bookmarkOrRemoveBookmark(item.id, item.isBookmarked)">
-                                <i class="fas fa-bookmark" [ngClass]="{'user-bookmark': item.isBookmarked === true }"></i>
-                                {{item.bookmarkCount}}
-                            </span> -->
                         </li>
-                        <li *ngIf="currentUser.email == item.author.email"><a
-                                class="dropdown-item h4 light-text" [ngClass]="{'light' : isDarkModeEnabled()}" (click)="deleteTweet(item.id)">Delete</a>
+                        <li *ngIf="currentUser.email != item.author.email">
+                            <a *ngIf="!item.author.isFollowedByCurrentUser" class="dropdown-item h4 light-text" [ngClass]="{'light' : isDarkModeEnabled()}" (click)="follow(item.author.id)">
+                               Follow
+                            </a>
+                            <a *ngIf="item.author.isFollowedByCurrentUser" class="dropdown-item h4 light-text" [ngClass]="{'light' : isDarkModeEnabled()}" (click)="unfollow(item.author.id)">
+                                UnFollow
+                            </a>
                         </li>
+                        <li *ngIf="currentUser.email == item.author.email">
+                            <a class="dropdown-item h4 light-text" [ngClass]="{'light' : isDarkModeEnabled()}" (click)="deleteTweet(item.id)">
+                                Delete
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
