@@ -1,7 +1,7 @@
 <div class="post border dark-mode-1" *ngIf="tweet" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" >
     <div class="post-header">
         <div class="user-avatar">
-            <img [src]="tweet.author.image" />
+            <img [src]="createResourcesPath('Resources/Images/' + tweet.author.userPic)" />
         </div>
         <div class="post-content" style="width: 100%;">
             <div>
@@ -87,7 +87,7 @@
         <div class="d-flex">
 
             <div class="user-avatar mt-4">
-                <img [src]="tweet.author.image" />
+                <img [src]="createResourcesPath('Resources/Images/' + tweet.author.userPic)" />
             </div>
             <div style="width: 100%;">
                 <p class="reply-at-text d-none">Replying to &nbsp;<a href="#">@{{ tweet.author.userName }}</a></p>
