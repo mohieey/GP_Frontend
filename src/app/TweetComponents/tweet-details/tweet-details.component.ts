@@ -1,5 +1,5 @@
 import { TweetWithRepliesDTO } from './../../shared/_interfaces/tweetWithRepliesDTO.model';
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TweetService } from 'src/app/shared/services/tweet.service';
 import { environment } from 'src/environments/environment';
@@ -13,6 +13,8 @@ import * as moment from 'moment';
   styleUrls: ['./tweet-details.component.css']
 })
 export class TweetDetailsComponent implements OnInit {
+  
+  @ViewChild('closebutton') closebutton;
 
   tweet: TweetWithRepliesDTO;
   id: number;
@@ -166,6 +168,10 @@ export class TweetDetailsComponent implements OnInit {
 
   getImageResource(){
     return this.imgSourceToDisplayInModal
+  }
+
+  closeModal() {
+    this.closebutton.nativeElement.click();
   }
 }
 

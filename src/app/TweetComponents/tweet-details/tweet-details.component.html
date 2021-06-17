@@ -44,16 +44,14 @@
             <img (click)="setImgResource($event.target.src)" *ngFor="let img of tweet.images" data-bs-toggle="modal" data-bs-target="#imageModal" [class]='getImageClasses(tweet.images.length)' [src]="createResourcesPath('Resources/Images/' + img.imageName)" />
         </div>
 
-        <div class="modal fade" id="imageModal">
-            
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-body">
-                  <img [src]="getImageResource()" style="object-fit:cover"/>
+        <div class="modal fade" id="imageModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <button #closebutton class="btn-close d-none" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                    <img [src]="getImageResource()" class="img-thumbnail" (click)='closeModal()'/>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
 
         <div class="post-img" *ngIf="tweet.video">
             <video controls width="100%" height="auto">

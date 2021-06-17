@@ -25,7 +25,6 @@ export class NavComponent implements OnInit {
     this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
     this.circle = document.querySelector('.circle');
     this.currentUser = this._tokenService.getUser();
-    console.log(this.currentUser)
   }
 
   search(event) {
@@ -40,8 +39,6 @@ export class NavComponent implements OnInit {
   sidebarWrapper: Element;
 
   Display() {
-    console.log(this.sidebar);
-
     this.sidebar.classList.add('sidebar-display');
     this.sidebarWrapper.classList.add('sidebar-wrapper-display');
   }
