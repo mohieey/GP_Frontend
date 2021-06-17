@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
 import { environment } from 'src/environments/environment';
 import { TokenService } from '../shared/services/token.service';
+import { DeleteTweetSharedService } from '../shared/services/delete-tweet-shared.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -14,36 +16,49 @@ import { TokenService } from '../shared/services/token.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  homePageTweets: TweetDTO[];
+  deleteTweetClickEventSubscription: Subscription;
+  homePageTweets: TweetDTO[] = [];
   modal: HTMLElement;
   modalWrapper: HTMLElement;
   modalInput: HTMLInputElement;
   page: string;
   display: boolean;
   currentUser:any;
+  currentPageNumber: number = 1;
+  pageSize : number = 2;
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
   constructor(
     private _tweetService: TweetService, 
     private _router: Router, 
     private route: ActivatedRoute, 
     public postTweetService: PostTweetService,
-    private _tokenService:TokenService) { }
+    private _tokenService:TokenService, 
+    private _deleteTweetSharedService: DeleteTweetSharedService) { }
 
 
   ngOnInit(): void {
-    this.getTweets();
+    this.getTweets(this.pageSize, this.currentPageNumber);
     this.modalWrapper = document.querySelector('.modal-wrapper');
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
     })
     this.currentUser = this._tokenService.getUser();
+
+    this.deleteTweetClickEventSubscription = this._deleteTweetSharedService
+    .getClickEvent()
+    .subscribe(() => {
+      this.changeSuccessful();
+    });
+
   }
 
   isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
 
-  getTweets() {
-    this._tweetService.getHomePageTweets().subscribe((res) => {
-      this.homePageTweets = res;
+  getTweets(pageSize: number,pageNumber: number) {
+    this.currentPageNumber = pageNumber;
+    this._tweetService.getHomePageTweets(pageSize,pageNumber).subscribe((res) => {
+      //this.homePageTweets = res;
+      this.homePageTweets.push(...res);
       console.log(res);
     });
   }
@@ -61,4 +76,9 @@ export class HomeComponent implements OnInit {
   public createResourcesPath = (serverPath: string) => {
     return `${environment.apiUrl}/${serverPath}`;
   };
+
+  changeSuccessful() {
+    this.homePageTweets = [];
+    this.getTweets(this.pageSize, 1);
+  }
 }

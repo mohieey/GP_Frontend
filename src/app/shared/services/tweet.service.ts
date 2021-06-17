@@ -16,8 +16,8 @@ export class TweetService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getHomePageTweets(): Observable<TweetDTO[]> {
-    return this.httpClient.get<TweetDTO[]>(tweetApi + "/HomePageTweets").pipe(catchError((err) => {
+  getHomePageTweets(pageSize: number, pageNumber: number): Observable<TweetDTO[]> {
+    return this.httpClient.get<TweetDTO[]>(`${tweetApi}/HomePageTweets/${pageSize}/${pageNumber}`).pipe(catchError((err) => {
       return throwError(err.message || "Internal Server error contact site adminstarator");
     }));
   }

@@ -214,7 +214,7 @@ export class PostTweetComponent implements OnInit {
       this._tweetService.addTweet(tweet).subscribe(
         (data) => {
           console.log(data);
-          this.onPost.emit();
+          this.onPost.emit(data);
         },
         (error) => {
           console.log(error);

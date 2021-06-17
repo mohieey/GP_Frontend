@@ -114,6 +114,19 @@
     transition: background-color 0.3s;
 }
 
+.load-more-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 5%;
+    width: 10rem;
+    padding: 1rem 1rem;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+}
+
 .post-btn:hover {
     background-color: #117abb;
 }
