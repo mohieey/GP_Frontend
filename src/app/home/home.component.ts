@@ -5,9 +5,10 @@ import { TweetService } from '../shared/services/tweet.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
 import { environment } from 'src/environments/environment';
-import { TokenService } from '../shared/services/token.service';
 import { DeleteTweetSharedService } from '../shared/services/delete-tweet-shared.service';
 import { Subscription } from 'rxjs';
+import { AccountService } from '../shared/services/account.service';
+import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
   modalInput: HTMLInputElement;
   page: string;
   display: boolean;
-  currentUser:any;
+  currentUser:DetailsUserDTO;
   currentPageNumber: number = 1;
   pageSize : number = 2;
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit {
     private _router: Router, 
     private route: ActivatedRoute, 
     public postTweetService: PostTweetService,
-    private _tokenService:TokenService, 
+    private _accountService:AccountService, 
     private _deleteTweetSharedService: DeleteTweetSharedService) { }
 
 
@@ -42,7 +43,10 @@ export class HomeComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
     })
-    this.currentUser = this._tokenService.getUser();
+    this._accountService.getCurrentUser().subscribe(
+      (data)=>{
+        this.currentUser = data;
+    });
 
     this.deleteTweetClickEventSubscription = this._deleteTweetSharedService
     .getClickEvent()

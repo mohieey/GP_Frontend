@@ -1,6 +1,9 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import * as moment from 'moment';
+import { AccountService } from 'src/app/shared/services/account.service';
+import { DetailsUserDTO } from 'src/app/shared/_interfaces/detailsUserDTO.model';
+import { environment } from 'src/environments/environment';
 import { TweetService } from '../../shared/services/tweet.service';
 import { AddTweetDTO } from '../../shared/_interfaces/addTweetDTO';
 import { ImageDTO } from '../../shared/_interfaces/imageDTO';
@@ -27,16 +30,20 @@ export class PostTweetComponent implements OnInit {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
-  constructor(private _tweetService: TweetService) {}
+  constructor(private _tweetService: TweetService, private _accountService: AccountService) {}
 
   progressBarWidth:string = "";
   IsUploading = false;
   UploadingProgress = 0;
-
+  currentUser: DetailsUserDTO;
 
   ngOnInit(): void {
     this.modal = document.querySelector('.modal.dark-mode-1');
     this.modalInput = document.querySelector('.modal-input');
+    this._accountService.getCurrentUser().subscribe(
+      (data)=>{
+        this.currentUser = data;
+    });
   }
 
   @HostListener('document:click', ['$event'])
@@ -294,5 +301,9 @@ export class PostTweetComponent implements OnInit {
         alert("error");
       }
     );
+  }
+
+  public createResourcesPath = (serverPath: string) => {
+    return `${environment.apiUrl}/${serverPath}`;
   }
 }

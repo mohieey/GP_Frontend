@@ -1,8 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { AccountService } from '../shared/services/account.service';
 import { SharedService } from '../shared/services/shared.service';
 import { TokenService } from '../shared/services/token.service';
+import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 
 @Component({
   selector: 'app-nav',
@@ -10,8 +12,8 @@ import { TokenService } from '../shared/services/token.service';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-  currentUser: any;
-  constructor(private _router: Router, private _shared: SharedService, private _tokenService: TokenService) { }
+  currentUser: DetailsUserDTO;
+  constructor(private _router: Router, private _shared: SharedService, private _accountService: AccountService, private _tokenService: TokenService) { }
 
   @HostListener('document:click', ['$event'])
   clickout(event) {    
@@ -24,7 +26,10 @@ export class NavComponent implements OnInit {
     this.sidebar = document.querySelector('.sidebar');
     this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
     this.circle = document.querySelector('.circle');
-    this.currentUser = this._tokenService.getUser();
+    this._accountService.getCurrentUser().subscribe(
+      (data)=>{
+        this.currentUser = data;
+    });
   }
 
   search(event) {

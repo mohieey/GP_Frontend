@@ -5,7 +5,7 @@
     <div style="overflow: hidden" class="border">
         <div class="modal-body">
             <div class="modal-img">
-                <img src="../../assets/images/user1.jpg" />
+                <img *ngIf="currentUser != undefined" [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
             </div>
             <textarea style="resize: none; clear: both" type="text" placeholder="What's happening?"
                 class="modal-input dark-mode-2 light-text border tweet-text" maxlength="280" rows="6"></textarea>
