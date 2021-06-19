@@ -26,7 +26,7 @@
         </div>
         <div class="post-icons">
             <span><i class="far fa-comment"></i>
-                <span class="light-text">{{ item.replyCount }}
+                <span class="light-text user-select-none">{{ item.replyCount }}
                 </span>
             </span>
             <span><i class="fas fa-retweet"></i></span>
@@ -34,7 +34,7 @@
             <span [ngClass]="{'user-like': item.isLiked === true }">
                 <i class="fas fa-heart" [ngClass]="{'user-like': item.isLiked === true }">
                 </i>
-                <span class="light-text">
+                <span class="light-text user-select-none">
                     {{ item.likeCount}}
                 </span>
             </span>

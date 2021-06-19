@@ -18,7 +18,8 @@ import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.com
 })
 export class UserProfileComponent implements OnInit {
 
-  //tweets: UserInteractionDetailsDTO[] = [];
+  // tweets: UserInteractionDetailsDTO[] = [];
+  tweets: TweetDTO[] = []
 
   modal: HTMLElement;
   modalWrapper: HTMLElement;
@@ -39,7 +40,6 @@ export class UserProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getMyBookmarks();
     this.modalWrapper = document.querySelector('.modal-wrapper');
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
@@ -61,13 +61,13 @@ export class UserProfileComponent implements OnInit {
 
   getMyLikes() {
     this._likeService.getMyLikesByPage(10, 1).subscribe((res) => {
-      console.log(res); 
+      this.tweets = res
     })
   }
 
   getMyBookmarks() {
     this._bookmarkService.getMyBookmarksByPage(10, 1).subscribe((res) => {
-      console.log(res);
+      this.tweets = res
     })
   }
 
@@ -82,7 +82,30 @@ export class UserProfileComponent implements OnInit {
   }
 
   public createResourcesPath = (serverPath: string) => {
-    return `${environment.apiUrl}/${serverPath}`;
+    return `${environment.apiUrl}/${serverPath}`
   }
 
+  changeTab(tabHeader) {
+    console.log(this.tweets);
+    
+    const value = tabHeader.parentElement.getAttribute('data-value')
+    console.log(value)
+    
+    const liElements = document.getElementById('tweet-tabs').children
+    
+    for (let element of Array.from(liElements)) {
+      if(element.classList.contains('active'))
+        element.classList.remove('active')        
+      if(element.getAttribute('data-value') === value)
+        element.classList.add('active')
+    }
+
+    switch (value) {
+      case 'tweets': this.tweets = []; break;
+      case 'retweets_replies': this.tweets = []; break;
+      case 'likes': this.getMyLikes(); break;
+      case 'bookmarks': this.getMyBookmarks(); break;
+      default: break;
+    }
+  }
 }

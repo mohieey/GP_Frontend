@@ -24,10 +24,12 @@
   font-size: 1.6rem;
   color: #1aa1f5;
   margin-right: 0.5rem;
+  margin-top: -0.6rem;
 }
 
 .post-user-info span {
   font-size: 1.6rem;
+  margin-top: -0.6rem;
 }
 
 .post-text {

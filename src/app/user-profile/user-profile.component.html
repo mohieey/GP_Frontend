@@ -5,11 +5,11 @@
     <!-- feeds content -->
     <div class="container d-flex justify-content-between">
         <!-- main content -->
-        <div class="col-12 col-sm-8">
-            <div class="col-11 mx-auto">
+        <div class="col-12 col-xl-8">
+            <div class="col-xl-11 col-12 mx-auto">
                 <div class="feeds-content dark-mode-2">
                     <div class="feeds-header dark-mode-1">
-                        <div class="header-top border justify-content-start dark-mode-1">
+                        <div class="header-top border dark-mode-1">
                             <div class="header-img-wrapper border rounded-circle light-text">
                                 <img [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
                             </div>
@@ -31,16 +31,35 @@
                               </div>
                         </div>
                     </div>
-                    <!-- <app-tweet [tweetList]="tweets" (onReply)="openPostTweetWindow($event)">
-                    </app-tweet> -->
+                    <div class="main-content border dark-mode-1">
+                        <ul id="tweet-tabs">
+                            <li data-value='tweets' class="active">
+                                <a class="light-text" (click)="changeTab($event.target)">Tweets</a>
+                            </li>
+                            <li data-value='retweets_replies'>
+                                <a class="light-text" (click)="changeTab($event.target)">Retweets & replies</a>
+                            </li>
+                            <li data-value='likes'>
+                                <a (click)="changeTab($event.target)">Likes</a>
+                            </li>
+                            <li data-value='bookmarks'>
+                                <a (click)="changeTab($event.target)">Bookmarks</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="post border no-tweets-div dark-mode-1" *ngIf="tweets.length === 0">
+                        <h1 class="user-select-none">No Tweets Here</h1>
+                        <p class="user-select-none">Follow more people</p>
+                    </div>
+                    <app-tweet [tweetList]="tweets" (onReply)="openPostTweetWindow($event)">
+                    </app-tweet>
                 </div>
             </div>
         </div>
         <!-- end of main content -->
 
-        <div class="mx-0 col-4">
-            <app-side-panel class="dark-mode-1"></app-side-panel>
-        </div>
+        <app-side-panel class="mx-0 col-xl-4"></app-side-panel>
+
     </div>
     <!-- end of feeds content -->
 </section>

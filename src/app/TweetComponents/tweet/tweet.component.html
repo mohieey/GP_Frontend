@@ -6,7 +6,7 @@
         <div class="mainpost">
             <div class="justify-content-between d-flex">
                 <div class="post-user-info light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
-                    <h4>{{ item.author.firstName + " " + item.author.lastName }}</h4>
+                    <h4 class="fw-bold">{{ item.author.firstName + " " + item.author.lastName }}</h4>
                     <i class="fas fa-check-circle"></i>
                     <span>
                         @{{ item.author.userName }}
@@ -79,14 +79,14 @@
         <div class="post-icons">
             <span>
                 <i class="far fa-comment" (click)="addReply(item.id)"></i>
-                <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ item.replyCount }}</span>
+                <span class="light-text user-select-none" [ngClass]="{'light' : isDarkModeEnabled()}">{{ item.replyCount }}</span>
             </span>
             <span>
                 <i class="fas fa-retweet"></i>
             </span>
             <span [ngClass]="{'user-like': item.isLiked === true }" (click)="likeOrDislike(item.id, item.isLiked)">
                 <i class="fas fa-heart mr-1" [ngClass]="{'user-like': item.isLiked === true }"></i>
-                <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ item.likeCount}}</span>
+                <span class="light-text user-select-none" [ngClass]="{'light' : isDarkModeEnabled()}">{{ item.likeCount}}</span>
             </span>
             <span>
                 <i class="fas fa-share-alt"></i>
