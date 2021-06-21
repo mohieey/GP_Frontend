@@ -25,7 +25,8 @@ export class StartComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
+  
   loginForm = this.fb.group({
     password: ['', [Validators.required, Validators.minLength(5)]],
     email: ['', [Validators.required, PatternValidation(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],

@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   currentUser:DetailsUserDTO;
   currentPageNumber: number = 1;
   pageSize : number = 2;
+
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
   constructor(
     private _tweetService: TweetService, 
@@ -61,10 +62,13 @@ export class HomeComponent implements OnInit {
   getTweets(pageSize: number,pageNumber: number) {
     this.currentPageNumber = pageNumber;
     this._tweetService.getHomePageTweets(pageSize,pageNumber).subscribe((res) => {
-      //this.homePageTweets = res;
-      this.homePageTweets.push(...res);
-      console.log(res);
-    });
+      if(res.length > 0) {
+        this.homePageTweets.push(...res);
+      } else {
+        document.querySelector('.load-more-btn').classList.add('d-none')
+        document.querySelector('#all-caught-up-text').classList.remove('d-none')
+      }
+  });
   }
 
   openPostTweetWindow(id?: number) {

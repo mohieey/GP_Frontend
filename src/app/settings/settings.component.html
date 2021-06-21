@@ -1,22 +1,22 @@
 <!-- login page -->
-<section class="login-page">
-    <!-- login page nav -->
-    <nav class="login-page-nav">
-        <ul>
-            <li class="brand">
-                <a href="#"><i class="fas fa-dove"></i> Home</a>
-            </li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Language: English</a></li>
-        </ul>
-    </nav>
-    <!-- end of login page nav -->
-    <!-- login -->
-    <div class="login">
-        <div class="login-content">
+<section class="settings-page dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
+     <!-- nav -->
+     <!-- <app-nav></app-nav> -->
+     <!-- end of nav -->
+    <!-- settings -->
+    <div class="main-page-content container d-flex justify-content-between">
+        <div class="container d-flex justify-content-between">
+            <div class="col-10 mx-auto">
+                <div class="settings-content">
+                    asds
+                </div>
+            </div>
+        </div>
+
+
+        <div class="settings-content d-none">
             <h2>Settings</h2>
             <form class="login-form" [formGroup]="settingForm" (ngSubmit)="onSubmit()">
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-7">
@@ -73,7 +73,7 @@
             </form>
         </div>
     </div>
-    <!-- end of login -->
+    <!-- end of settings -->
     <!-- login modal -->
     <div class="login-modal">
         <i class="fas fa-times"></i>

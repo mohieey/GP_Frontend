@@ -1,11 +1,7 @@
 /* login page */
 .login-page {
 	width: 100%;
-	height: 100vh;
-	// display:grid;
-	// grid-template-columns: minmax(5rem, 1fr) 2fr minmax(5rem, 1fr);
-	// grid-template-rows: repeat(2, min-content) 1fr;
-	// grid-row-gap: 1.5rem;
+	height: 100%;
 }
 
 .login-page .container{
@@ -14,10 +10,8 @@
 
 /* login page nav */
 .login-page-nav {
-	// grid-column: 1 / -1;
-	// grid-row: 1 / 2;
 	background-color: #fff;
-	padding: 2.5rem 0;
+	padding: 2rem 0;
 	box-shadow: 0 0 0.7rem rgba(0, 0, 0, 0.3);
 	z-index: 1;
 }
@@ -45,7 +39,7 @@
 	height: 0.4rem;
 	background-color: #1aa1f5;
 	position: absolute;
-	bottom: -2.5rem;
+	bottom: -2rem;
 	left: 0;
 	opacity: 0;
 	transition: opacity 0.3s;

@@ -43,6 +43,8 @@ export class ResetPasswordComponent implements OnInit {
     return this.resetPasswordForm.controls[controlName].hasError(errorName)
   }
 
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
+  
   public resetPassword = (resetPasswordFormValue) => {
     this.showError = this.showSuccess = false;
 

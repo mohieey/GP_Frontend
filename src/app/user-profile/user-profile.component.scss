@@ -4,12 +4,18 @@
 
 .feeds-page {
     width: 100%;
-    height: 100vh;
+    height: fit-content;
+    min-height: 100%;
 }
 
 /* no tweets div */
 .no-tweets-div {
+    height: 25rem;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
 }
 
 .no-tweets-div h1 {
@@ -78,13 +84,53 @@
 .active::after {
 	opacity: 1 !important;
 }
+
 /* end of profile main content */
 
+.load-more-btn {
+    width: 15rem;
+    padding: 1rem .5rem;
+    font-size: 1.5rem;
+}
+
+.load-more-users-btn {
+    width: 10rem;
+    padding: 1rem .5rem;
+    font-size: 1.35rem;
+}
 
 /* feeds content */
 
 .feeds-content {
     padding-top: 6.5rem;
+}
+
+.follow-statistics {
+    font-size: 1.5rem;
+}
+
+.follow-statistics div {
+    font-weight: bold;
+    color: #000;
+}
+
+.follow-statistics span {
+    color: rgb(126, 126, 126);
+    font-weight: normal;
+}
+
+.follow-statistics div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #009dff !important;
+}
+
+.follow-statistics div:hover span {
+    color: #009dff !important;
+}
+
+.follow-statistics div:first-child {
+    margin-right: 1.5rem;
 }
 
 .feeds-header {
@@ -133,12 +179,18 @@
     border-radius: 50%;
 }
 
-.post {
-    padding: 1.5rem;
-    border-bottom: 0.1rem solid #eee;
-    background-color: #fff;
-  }
+.user-avatar {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+}
 
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
 // .myicon{
 //     margin-right: 3rem;
 // }

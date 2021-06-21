@@ -9,12 +9,13 @@
 
 html {
 	font-size: 62.5%;
+    height: 100%;
 }
 
 body {
 	background-color: #f0f8fd;
-    overflow-x: hidden
-
+    overflow-x: hidden;
+    height: 100%;
 }
 button:focus {outline:0;}
 

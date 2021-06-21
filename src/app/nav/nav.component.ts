@@ -2,9 +2,11 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../shared/services/account.service';
+import { FollowingService } from '../shared/services/following.service';
 import { SharedService } from '../shared/services/shared.service';
 import { TokenService } from '../shared/services/token.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
+import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteractionDetailsDTO.model';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +15,16 @@ import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 })
 export class NavComponent implements OnInit {
   currentUser: DetailsUserDTO;
-  constructor(private _router: Router, private _shared: SharedService, private _accountService: AccountService, private _tokenService: TokenService) { }
+  followingUsers:UserInteractionDetailsDTO[] = []
+  followerUsers:UserInteractionDetailsDTO[] = []
+  
+  constructor(
+    private _router: Router,
+    private _shared: SharedService,
+    private _accountService: AccountService,
+    private _followingService: FollowingService,
+    private _tokenService: TokenService
+    ) { }
 
   @HostListener('document:click', ['$event'])
   clickout(event) {    
@@ -23,6 +34,7 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getFollowing()
     this.sidebar = document.querySelector('.sidebar');
     this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
     this.circle = document.querySelector('.circle');
@@ -30,6 +42,8 @@ export class NavComponent implements OnInit {
       (data)=>{
         this.currentUser = data;
     });
+    if(this.isDarkModeEnabled())
+      this.circle.classList.toggle('move');
   }
 
   search(event) {
@@ -38,6 +52,8 @@ export class NavComponent implements OnInit {
     });
   }
 
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
+  
   // Sidebar
 
   sidebar: Element;
@@ -72,5 +88,17 @@ export class NavComponent implements OnInit {
   logout() {
     this._tokenService.signOut();
     // this._router.navigate([''])
+  }
+
+  getFollowing() {
+    this._followingService.getFollowingByPage(10, 1).subscribe((res) => {
+      this.followingUsers = res
+    });
+  }
+
+  getFollowers() {
+    this._followingService.getFollowersByPage(10, 1).subscribe((res) => {
+      this.followerUsers = res
+    });
   }
 }

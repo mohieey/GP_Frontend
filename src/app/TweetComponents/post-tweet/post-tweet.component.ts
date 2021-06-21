@@ -53,6 +53,8 @@ export class PostTweetComponent implements OnInit {
     }
   }
 
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
+  
   openPostTweetWindow() {
     console.log(this.modal);
     this.modal.style.display = 'block';

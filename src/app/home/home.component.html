@@ -1,4 +1,4 @@
-<section class="feeds-page">
+<section class="feeds-page dark-mode-2"  [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
     <!-- feeds nav -->
     <app-nav></app-nav>
     <!-- end of feeds nav -->
@@ -36,6 +36,10 @@
                             [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}"></app-tweet-details>
                     </ng-template>
                 </div>
+                <div class="text-center py-5">
+                    <button *ngIf="page == 'feed'" class="btn btn-outline-primary btn-lg rounded-pill fw-bold load-more-btn" (click)="getTweets(pageSize,currentPageNumber + 1)">Load More</button>
+                    <h3 *ngIf="page == 'feed'" class="light-text d-none" id='all-caught-up-text' [ngClass]="{'light' : isDarkModeEnabled()}">You are all caught up</h3>
+                </div>
             </div>
         </div>
 
@@ -48,7 +52,7 @@
             +<i class="fas fa-feather-alt"></i> Post
         </button>
 
-        <button *ngIf="page == 'feed'" class="btn btn-primary load-more-btn" (click)="getTweets(pageSize,currentPageNumber + 1)">Load More</button>
+        <!-- <button *ngIf="page == 'feed'" class="btn btn-primary load-more-btn" (click)="getTweets(pageSize,currentPageNumber + 1)">Load More</button> -->
 
         <!-- post modal -->
         <app-post-tweet style="z-index: 2;" class="modal-wrapper" (onClose)="closePostTweetWindow()"

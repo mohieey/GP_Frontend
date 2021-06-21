@@ -107,7 +107,7 @@ export class TweetDetailsComponent implements OnInit {
   getFullDate(date: Date){
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
-    return `${momentOfPost.format("h:mm A · MMM D, YYYY · ")}Twirrer for Browser`;
+    return `${momentOfPost.format("h:mm A · MMM D, YYYY · ")}Twitter for Browser`;
   }
 
   showReplyUIChange(event) {

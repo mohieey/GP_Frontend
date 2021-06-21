@@ -20,6 +20,12 @@ export class TweetService {
     return this.httpClient.get<TweetDTO[]>(`${tweetApi}/HomePageTweets/${pageSize}/${pageNumber}`).pipe(catchError((err) => {
       return throwError(err.message || "Internal Server error contact site adminstarator");
     }));
+  }  
+
+  getMyTweets(pageSize: number, pageNumber: number): Observable<TweetDTO[]> {
+    return this.httpClient.get<TweetDTO[]>(`${tweetApi}/mytweets/${pageSize}/${pageNumber}`).pipe(catchError((err) => {
+      return throwError(err.message || "Internal Server error contact site adminstarator");
+    }));
   }
 
   getTweet(id: number): Observable<TweetWithRepliesDTO> {

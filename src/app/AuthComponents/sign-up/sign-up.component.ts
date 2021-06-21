@@ -17,6 +17,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
 
   get firstname() {
     return this.signupform.get('firstname');

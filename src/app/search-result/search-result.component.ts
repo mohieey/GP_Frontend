@@ -49,6 +49,12 @@ export class SearchResultComponent implements OnInit {
     );
   }
 
+  public createResourcesPath = (serverPath: string) => {
+    return `${environment.apiUrl}/${serverPath}`
+  }
+  
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
+  
   counter(i: number) {
     return new Array(i);
   }

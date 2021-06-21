@@ -1,20 +1,20 @@
-<div class="follow dark-mode-1">
-    <h3 class="follow-heading light-text border dark-mode-1">Who to follow</h3>
-    <div class="follow-user border dark-mode-1" *ngFor="let user of suggestedUsers">
+<div class="follow">
+    <h3 class="follow-heading light-text border dark-mode-1" [ngClass]="{'light dark-1 border-color' : isDarkModeEnabled()}">Who to follow</h3>
+    <div class="follow-user border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngFor="let user of suggestedUsers">
         <div class="follow-user-img">
             <img [src]="createResourcesPath('Resources/Images/' + user.userPic)" />
         </div>
-        <div class="follow-user-info light-text">
+        <div class="follow-user-info light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
             <h4>{{user.firstName}} {{user.lastName}}</h4>
             <p>@{{user.userName}}</p>
         </div>
-        <button type="button" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)" class="follow-btn dark-mode-2">Follow</button>
-        <button style="color: #dc3545; border-color: #dc3545;" type="button" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)" class="follow-btn dark-mode-2">Un Follow</button>
+        <button type="button" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)" class="follow-btn dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">Follow</button>
+        <button style="color: #dc3545; border-color: #dc3545;" type="button" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)" class="follow-btn dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">Un Follow</button>
     </div>
-    <div class="follow-link dark-mode-1 border">
+    <div class="follow-link dark-mode-1 border" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
       <a>Show more</a>
     </div>
-    <footer class="follow-footer dark-mode-2">
+    <footer class="follow-footer">
         <ul>
             <li><a href="#">Terms</a></li>
             <li><a href="#">Privacy policy</a></li>

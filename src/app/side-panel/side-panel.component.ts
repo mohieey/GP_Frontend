@@ -37,6 +37,8 @@ export class SidePanelComponent implements OnInit {
     );
     this.updateIsFollowedValue(userId);
   }
+  
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
 
   unfollow(userId: string) {
     this._followingService.unfollow(userId).subscribe(

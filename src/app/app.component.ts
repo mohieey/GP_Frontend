@@ -41,7 +41,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    window.localStorage.setItem('darkmode', 'light');
+    // window.localStorage.setItem('darkmode', 'light');
   }
 
   ngAfterViewChecked(): void {

@@ -94,6 +94,7 @@ export class SettingsComponent implements OnInit {
       );
   }
 
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
 
   public createResourcesPath = (serverPath: string) => {
     return `${environment.apiUrl}/${serverPath}`;

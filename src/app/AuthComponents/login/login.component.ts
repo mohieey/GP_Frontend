@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
     email: ['', [Validators.required, PatternValidation(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
   });
 
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
 
   invalidEmailOrPassword: boolean = false;
 

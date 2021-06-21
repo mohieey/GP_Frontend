@@ -25,6 +25,8 @@ export class ForgotPasswordComponent implements OnInit {
     })
   }
 
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
+
   public validateControl = (controlName: string) => {
     return this.forgotPasswordForm.controls[controlName].invalid && this.forgotPasswordForm.controls[controlName].touched
   }
