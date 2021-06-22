@@ -1,12 +1,12 @@
 <div class="post border dark-mode-1" *ngFor="let item of replies">
-    <div class="user-avatar">
-        <img [src]="item.author.image" />
+    <div class="user-avatar" routerLink="/profile/{{item.author.userName}}">
+        <img [src]="createResourcesPath('Resources/Images/' + item.author.userPic)" />
     </div>
     <div class="post-content">
         <div class="post-user-info light-text">
-            <h4>{{ item.author.firstName + " " + item.author.lastName }}</h4>
+            <h4 routerLink="/profile/{{item.author.userName}}">{{ item.author.firstName + " " + item.author.lastName }}</h4>
             <i class="fas fa-check-circle"></i>
-            <span>@{{ item.author.userName }}
+            <span><span routerLink="/profile/{{item.author.userName}}" style="cursor: pointer;">@{{ item.author.userName }}</span>
                 &nbsp;·&nbsp;&nbsp;
                 <div class="tooltipCSS">{{getDate(item.creationDate)}}
                     <span class="tooltipCSStext h6">{{getDateOfToolTip(item.creationDate)}}</span>

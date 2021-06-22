@@ -1,15 +1,17 @@
 <div class="post border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngFor="let item of tweetList">
-    <div class="user-avatar">
-        <img [src]="createResourcesPath('Resources/Images/' + item.author.userPic)" />
-    </div>
+    <a class="user-avatar" routerLink="/profile/{{item.author.userName}}">
+        <img [src]="createResourcesPath('Resources/Images/' + item.author.userPic)"/>
+    </a>
     <div class="post-content" style="width: 100%;">
         <div class="mainpost">
             <div class="justify-content-between d-flex">
                 <div class="post-user-info light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
-                    <h4 class="fw-bold">{{ item.author.firstName + " " + item.author.lastName }}</h4>
+                    <h4 class="fw-bold" routerLink="/profile/{{item.author.userName}}">{{ item.author.firstName + " " + item.author.lastName }}</h4>
                     <i class="fas fa-check-circle"></i>
                     <span>
-                        @{{ item.author.userName }}
+                        <span routerLink="/profile/{{item.author.userName}}" style="cursor: pointer;">
+                            @{{ item.author.userName }}
+                        </span>
                         <!-- {{ item.creationDate | date: "shortTime" }} -->
                         &nbsp;·&nbsp;
                         <div class="tooltipCSS">{{getDate(item.creationDate)}}

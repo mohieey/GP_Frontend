@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'tweets/:id', component: TweetDetailsComponent },
-  { path: 'profile', component: UserProfileComponent },
+  { path: 'profile/:username', component: UserProfileComponent },
   { path: '', component: StartComponent },
   {
     path: 'home/:page', component: HomeComponent

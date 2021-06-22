@@ -35,4 +35,15 @@ export class AccountService {
       })
     );
   }
+
+  getUserByUsername(username: string): Observable<DetailsUserDTO> {
+    let url = `${environment.apiUrl}/api/Account/details/${username}`;
+    return this._http.get<DetailsUserDTO>(url).pipe(
+      catchError((err) => {
+        return throwError(
+          err.message || 'Internal Server error contact site adminstarator'
+        );
+      })
+    );
+  }
 }

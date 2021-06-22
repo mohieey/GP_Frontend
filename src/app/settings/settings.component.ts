@@ -9,6 +9,7 @@ import { AuthenticationService } from '../shared/services/authentication.service
 import { PatternValidation } from '../shared/validations/patternMatcher';
 import { UpdateUserDTO } from '../shared/_interfaces/updateUserDTO.model';
 import { HttpEventType } from '@angular/common/http';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-settings',
@@ -20,13 +21,15 @@ export class SettingsComponent implements OnInit {
   invalidEmailOrPassword: boolean = false;
   image: string;
   profilePic: File;
+  newImagePath:any = '';
 
   constructor(
     private _authService: AuthenticationService,
     private fb: FormBuilder,
     private router: Router,
     private _accountService: AccountService,
-    private _tweetService: TweetService
+    private _tweetService: TweetService,
+    private sanitizer:DomSanitizer,
   ) { }
 
   ngOnInit(): void {
@@ -103,6 +106,12 @@ export class SettingsComponent implements OnInit {
   changePhoto(event) {
     let files = event.target.files;
     this.profilePic = files[0];
+
+    var reader = new FileReader();
+    reader.readAsDataURL(this.profilePic); 
+    reader.onload = (_event) => { 
+      this.newImagePath = reader.result; 
+    }
   }
 
   uploadImage() {

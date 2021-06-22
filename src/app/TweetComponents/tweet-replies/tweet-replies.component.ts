@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { TweetDTO } from 'src/app/shared/_interfaces/tweetDTO';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tweet-replies',
@@ -40,5 +41,8 @@ export class TweetRepliesComponent implements OnInit {
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
     return momentOfPost.format("h:mm A . MMM D, YYYY");
+  }
+  public createResourcesPath = (serverPath: string) => {
+    return `${environment.apiUrl}/${serverPath}`;
   }
 }

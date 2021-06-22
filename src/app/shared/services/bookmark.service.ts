@@ -35,11 +35,12 @@ export class BookmarkService {
     );
   }
 
-  getMyBookmarksByPage(
+  getBookmarksByPage(
+    username: string,
     pageSize: number,
     pageNumber: number
   ): Observable<TweetDTO[]> {
-    let url = `${environment.apiUrl}/tweet/mybookmarks/${pageSize}/${pageNumber}`;
+    let url = `${environment.apiUrl}/tweet/bookmarks/${username}/${pageSize}/${pageNumber}`;
     return this._http.get<TweetDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(
