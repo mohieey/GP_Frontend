@@ -15,8 +15,8 @@ import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteraction
 })
 export class NavComponent implements OnInit {
   currentUser: DetailsUserDTO;
-  followingUsers:UserInteractionDetailsDTO[] = []
-  followerUsers:UserInteractionDetailsDTO[] = []
+  // followingUsers:UserInteractionDetailsDTO[] = []
+  // followerUsers:UserInteractionDetailsDTO[] = []
   
   constructor(
     private _router: Router,
@@ -34,7 +34,7 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getFollowing()
+    // this.getFollowing()
     this.sidebar = document.querySelector('.sidebar');
     this.sidebarWrapper = document.querySelector('.sidebar-wrapper');
     this.circle = document.querySelector('.circle');
@@ -90,15 +90,15 @@ export class NavComponent implements OnInit {
     // this._router.navigate([''])
   }
 
-  getFollowing() {
-    this._followingService.getFollowingByPage(10, 1).subscribe((res) => {
-      this.followingUsers = res
-    });
-  }
+  // getFollowing() {
+  //   this._followingService.getFollowingByPage(10, 1).subscribe((res) => {
+  //     this.followingUsers = res
+  //   });
+  // }
 
-  getFollowers() {
-    this._followingService.getFollowersByPage(10, 1).subscribe((res) => {
-      this.followerUsers = res
-    });
-  }
+  // getFollowers() {
+  //   this._followingService.getFollowersByPage(10, 1).subscribe((res) => {
+  //     this.followerUsers = res
+  //   });
+  // }
 }

@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { AccountService } from '../shared/services/account.service';
 import { BookmarkService } from '../shared/services/bookmark.service';
 import { FollowingService } from '../shared/services/following.service';
 import { LikeService } from '../shared/services/like.service';
 import { PostTweetService } from '../shared/services/post-tweet.service';
 import { TokenService } from '../shared/services/token.service';
 import { TweetService } from '../shared/services/tweet.service';
+import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 import { TweetDTO } from '../shared/_interfaces/tweetDTO';
 import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteractionDetailsDTO.model';
 import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
@@ -34,7 +36,7 @@ export class UserProfileComponent implements OnInit {
   modalInput: HTMLInputElement;
   page: string;
   display: boolean;
-  currentUser:any;
+  currentUser:DetailsUserDTO;
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
   constructor(
     private _tweetService: TweetService, 
@@ -44,7 +46,8 @@ export class UserProfileComponent implements OnInit {
     private _tokenService:TokenService,
     private _followingService: FollowingService,
     private _likeService: LikeService,
-    private _bookmarkService: BookmarkService) { }
+    private _bookmarkService: BookmarkService,
+    private _accountService: AccountService) { }
 
 
 
@@ -56,7 +59,10 @@ export class UserProfileComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.page = params.get('page');
     })
-    this.currentUser = this._tokenService.getUser();
+    this._accountService.getCurrentUser().subscribe(
+      (data)=>{
+        this.currentUser = data;
+    });
   }
 
   isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';

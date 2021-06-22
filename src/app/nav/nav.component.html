@@ -1,6 +1,6 @@
 <nav class="feeds-nav dark-mode-1" style="z-index: 1;" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
   <div class="icons">
-    <a href="#" class="active"><i class="fas fa-home"></i></a>
+    <a routerLink="/home/feed" class="active"><i class="fas fa-home"></i></a>
     <a href="#"><i class="fas fa-hashtag"></i></a>
     <a href="#"><i class="far fa-bell"></i></a>
     <a href="#"><i class="far fa-envelope"></i></a>
@@ -38,8 +38,8 @@
     </div>
 
     <div class="following light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
-      <p class="following-paragraph"><span>{{followingUsers.length}}</span> Following</p>
-      <p class="following-paragraph"><span>{{followerUsers.length}}</span> Followers</p>
+      <p class="following-paragraph"><span>{{currentUser.followingCount}}</span> Following</p>
+      <p class="following-paragraph"><span>{{currentUser.followersCount}}</span> Followers</p>
     </div>
     <div class="sidebar-list-1">
       <ul>

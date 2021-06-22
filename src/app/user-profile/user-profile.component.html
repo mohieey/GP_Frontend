@@ -15,10 +15,10 @@
                             </div>
                             <div>
                                 <h4 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentUser.firstName}} {{currentUser.lastName}}</h4>
-                                <h2 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">@{{currentUser.username}}</h2>
+                                <h2 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">@{{currentUser.userName}}</h2>
                                 <div class="d-flex follow-statistics">
-                                    <div id="followings" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">22 <!-- {{followingUsers.length}} --> <span>Following</span></div>
-                                    <div id="followers" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">22 <!-- {{followerUsers.length}} --> <span>Follower</span></div>
+                                    <div id="followings" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentUser.followingCount}} <span>Following</span></div>
+                                    <div id="followers" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentUser.followersCount}} <span>Follower</span></div>
                                 </div>  
                             </div>
 

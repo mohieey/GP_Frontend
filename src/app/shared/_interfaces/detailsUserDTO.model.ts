@@ -6,4 +6,6 @@ export interface DetailsUserDTO {
   userName: string;
   userPic: string;
   isFollowedByCurrentUser: boolean;
+  followingCount: number;
+  followersCount: number;
 }
