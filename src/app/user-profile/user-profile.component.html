@@ -9,16 +9,16 @@
             <div class="col-xl-11 col-12 mx-auto">
                 <div class="feeds-content dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
                     <div class="feeds-header dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
-                        <div class="header-top border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+                        <div class="header-top border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngIf="currentOpenedUserProfile != undefined">
                             <div class="header-img-wrapper border rounded-circle light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
-                                <img [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
+                                <img [src]="createResourcesPath('Resources/Images/' + currentOpenedUserProfile.userPic)" />
                             </div>
                             <div>
-                                <h4 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentUser.firstName}} {{currentUser.lastName}}</h4>
-                                <h2 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">@{{currentUser.userName}}</h2>
+                                <h4 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentOpenedUserProfile.firstName}} {{currentOpenedUserProfile.lastName}}</h4>
+                                <h2 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">@{{currentOpenedUserProfile.userName}}</h2>
                                 <div class="d-flex follow-statistics">
-                                    <div id="followings" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentUser.followingCount}} <span>Following</span></div>
-                                    <div id="followers" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentUser.followersCount}} <span>Follower</span></div>
+                                    <div id="followings" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentOpenedUserProfile.followingCount}} <span>Following</span></div>
+                                    <div id="followers" (click)="openFollowModal($event.currentTarget)" data-bs-toggle="modal" data-bs-target="#followModal" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{currentOpenedUserProfile.followersCount}} <span>Follower</span></div>
                                 </div>  
                             </div>
 
@@ -34,10 +34,10 @@
                                         <div class="modal-body">
                                             <div class="d-flex flex-column" *ngIf="followUsersForModal.length > 0; else elseTemplate">
                                                 <div *ngFor="let user of followUsersForModal" class="d-flex align-items-center mb-3">
-                                                    <div class="user-avatar">
+                                                    <div class="user-avatar" routerLink="/profile/{{user.username}}">
                                                         <img [src]="createResourcesPath('Resources/Images/' + user.image)">
                                                     </div>
-                                                    <div class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
+                                                    <div class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{user.username}}" style="cursor: pointer">
                                                         <h2 class="fw-bold">{{user.fullName}}</h2>
                                                         <h5>@{{user.username}}</h5>
                                                     </div>

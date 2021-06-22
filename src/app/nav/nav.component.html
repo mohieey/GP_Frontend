@@ -1,4 +1,4 @@
-<nav class="feeds-nav dark-mode-1" style="z-index: 1;" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+<nav class="feeds-nav dark-mode-1" style="z-index: 2;" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
   <div class="icons">
     <a routerLink="/home/feed" class="active"><i class="fas fa-home"></i></a>
     <a href="#"><i class="fas fa-hashtag"></i></a>
@@ -20,7 +20,7 @@
 </nav>
 
 <!-- sidebar -->
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper" style="z-index: 3;">
   <div class="sidebar dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
     <div class="sidebar-header">
       <h2 class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">Account info</h2>
@@ -38,13 +38,13 @@
     </div>
 
     <div class="following light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
-      <p class="following-paragraph"><span>{{currentUser.followingCount}}</span> Following</p>
-      <p class="following-paragraph"><span>{{currentUser.followersCount}}</span> Followers</p>
+      <p class="following-paragraph"><span>{{currentUser?.followingCount}}</span> Following</p>
+      <p class="following-paragraph"><span>{{currentUser?.followersCount}}</span> Followers</p>
     </div>
     <div class="sidebar-list-1">
       <ul>
         <li>
-          <a routerLink="/profile"> <i class="fas fa-user"></i> Profile </a>
+          <a routerLink="/profile/{{currentUser?.userName}}" (click)="Dismiss()"> <i class="fas fa-user"></i> Profile </a>
         </li>
         <li>
           <a href="#"> <i class="far fa-list-alt"></i> Lists </a>

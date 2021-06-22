@@ -34,11 +34,12 @@ export class LikeService {
     );
   }
 
-  getMyLikesByPage(
+  getLikesByPage(
+    username: string,
     pageSize: number,
     pageNumber: number
   ): Observable<TweetDTO[]> {
-    let url = `${environment.apiUrl}/tweet/mylikes/${pageSize}/${pageNumber}`;
+    let url = `${environment.apiUrl}/tweet/likes/${username}/${pageSize}/${pageNumber}`;
     return this._http.get<TweetDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(

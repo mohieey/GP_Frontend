@@ -1,6 +1,6 @@
 <div class="post border dark-mode-1" *ngIf="tweet" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" >
     <div class="post-header">
-        <div class="user-avatar">
+        <div class="user-avatar" routerLink="/profile/{{tweet.author.userName}}">
             <img [src]="createResourcesPath('Resources/Images/' + tweet.author.userPic)" />
         </div>
         <div class="post-content" style="width: 100%;">
@@ -8,10 +8,10 @@
                 <div class="justify-content-between d-flex">
                     <div class="post-user-info light-text" [ngClass]="{'light' : isDarkModeEnabled()}" >
                         <span class="post-user-name">
-                            <h4>{{ tweet.author.firstName + " " + tweet.author.lastName }}</h4>
+                            <h4 routerLink="/profile/{{tweet.author.userName}}">{{ tweet.author.firstName + " " + tweet.author.lastName }}</h4>
                             <i class="fas fa-check-circle"></i>
                         </span>
-                        <span class="post-user-username">
+                        <span class="post-user-username" routerLink="/profile/{{tweet.author.userName}}">
                             @{{ tweet.author.userName }}
                         </span>
                     </div>

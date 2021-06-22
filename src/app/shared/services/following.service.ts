@@ -36,10 +36,11 @@ export class FollowingService {
   }
 
   getFollowingByPage(
+    username: string,
     pageSize: number,
     pageNumber: number
   ): Observable<UserInteractionDetailsDTO[]> {
-    let url = `${environment.apiUrl}/user/following/${pageSize}/${pageNumber}`;
+    let url = `${environment.apiUrl}/user/following/${username}/${pageSize}/${pageNumber}`;
     return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(
@@ -50,10 +51,11 @@ export class FollowingService {
   }
 
   getFollowersByPage(
+    username: string,
     pageSize: number,
     pageNumber: number
   ): Observable<UserInteractionDetailsDTO[]> {
-    let url = `${environment.apiUrl}/user/followers/${pageSize}/${pageNumber}`;
+    let url = `${environment.apiUrl}/user/followers/${username}/${pageSize}/${pageNumber}`;
     return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(
