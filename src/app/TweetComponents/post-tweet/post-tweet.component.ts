@@ -1,3 +1,6 @@
+import { AddTweetDTO } from './../../shared/_interfaces/addTweetDTO';
+import { AddRetweetDTO } from './../../shared/_interfaces/addRetweetDTO';
+import { RetweetService } from './../../shared/services/retweet.service';
 import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import * as moment from 'moment';
@@ -5,7 +8,6 @@ import { AccountService } from 'src/app/shared/services/account.service';
 import { DetailsUserDTO } from 'src/app/shared/_interfaces/detailsUserDTO.model';
 import { environment } from 'src/environments/environment';
 import { TweetService } from '../../shared/services/tweet.service';
-import { AddTweetDTO } from '../../shared/_interfaces/addTweetDTO';
 import { ImageDTO } from '../../shared/_interfaces/imageDTO';
 import { VideoDTO } from '../../shared/_interfaces/videoDTO';
 
@@ -27,12 +29,13 @@ export class PostTweetComponent implements OnInit {
   videoFile: File = null;
 
   TweetId: number;
+  action: string;
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
-  constructor(private _tweetService: TweetService, private _accountService: AccountService) {}
+  constructor(private _tweetService: TweetService, private _accountService: AccountService, private _retweetService: RetweetService) { }
 
-  progressBarWidth:string = "";
+  progressBarWidth: string = "";
   IsUploading = false;
   UploadingProgress = 0;
   currentUser: DetailsUserDTO;
@@ -41,20 +44,20 @@ export class PostTweetComponent implements OnInit {
     this.modal = document.querySelector('.modal.dark-mode-1');
     this.modalInput = document.querySelector('.modal-input');
     this._accountService.getCurrentUser().subscribe(
-      (data)=>{
+      (data) => {
         this.currentUser = data;
-    });
+      });
   }
 
   @HostListener('document:click', ['$event'])
-  clickout(event) {    
-    if(event.srcElement.classList.contains('modal-wrapper-display')) {
+  clickout(event) {
+    if (event.srcElement.classList.contains('modal-wrapper-display')) {
       this.closePostTweetWindow();
     }
   }
 
   isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
-  
+
   openPostTweetWindow() {
     console.log(this.modal);
     this.modal.style.display = 'block';
@@ -95,18 +98,18 @@ export class PostTweetComponent implements OnInit {
         reader.onload = (e: any) => {
           this.imageUrls.push(e.target.result);
         };
-        
-        reader.onloadstart = (e)=>{
+
+        reader.onloadstart = (e) => {
           this.IsUploading = true;
         }
         reader.onprogress = (e) => {
           this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
         }
-        reader.onloadend = (e)=>{
-          setTimeout(()=>{
+        reader.onloadend = (e) => {
+          setTimeout(() => {
             this.IsUploading = false;
             this.imageFiles.push(file);
-          },1000);
+          }, 1000);
         }
 
         reader.readAsDataURL(file);
@@ -164,27 +167,27 @@ export class PostTweetComponent implements OnInit {
           button.appendChild(i);
         };
 
-        reader.onloadstart = (e)=>{
+        reader.onloadstart = (e) => {
           this.IsUploading = true;
         }
         reader.onprogress = (e) => {
           this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
         }
-        reader.onloadend = (e)=>{
-          setTimeout(()=>{
+        reader.onloadend = (e) => {
+          setTimeout(() => {
             this.IsUploading = false;
             this.videoFile = file;
             console.log(this.videoFile);
-          },3000);
+          }, 3000);
         }
-        
+
         reader.readAsDataURL(file);
       }
     }
   }
 
   deletImageFromTweet(event) {
-    this.imageUrls.splice(this.imageUrls.indexOf(event.target.parentElement.previousSibling.getAttribute("src")),1);
+    this.imageUrls.splice(this.imageUrls.indexOf(event.target.parentElement.previousSibling.getAttribute("src")), 1);
     this.imageFiles.splice(event.target.parentElement.previousSibling.getAttribute("data-index"));
   }
 
@@ -195,17 +198,17 @@ export class PostTweetComponent implements OnInit {
     videoList.firstChild.remove();
   }
 
-  checkBeforeUploading(){
+  checkBeforeUploading() {
     var postText: HTMLTextAreaElement = document.querySelector(".tweet-text");
     if (postText.value == '' && this.videoUrls == "" && this.imageUrls.length == 0) {
       return;
     }
-    else{
+    else {
       this.startUploading();
     }
   }
 
-  startUploading(){
+  startUploading() {
     this.IsUploading = true;
     this.uploadImage(0);
   }
@@ -230,22 +233,33 @@ export class PostTweetComponent implements OnInit {
         }
       );
     } else {
-      this._tweetService.addReply(this.TweetId, tweet).subscribe(
-        (data) => {
-          console.log(data);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      if (this.action == 'reply') {
+        this._tweetService.addReply(this.TweetId, tweet).subscribe(
+          (data) => {
+            console.log(data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        let obj: AddRetweetDTO = { reTweetId: this.TweetId, qouteTweet: tweet }
+        this._retweetService.addRetweet(obj).subscribe(
+          (data) => {
+            console.log(data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }
 
     this.closePostTweetWindow();
   }
 
   uploadImage(index: number) {
-    if(index == this.imageFiles.length)
-    {
+    if (index == this.imageFiles.length) {
       this.IsUploading = false;
       this.uploadVideo(this.videoFile);
       return;
@@ -256,13 +270,12 @@ export class PostTweetComponent implements OnInit {
     formDate.append('file', image, image.name);
     this._tweetService.uploadTweetImage(formDate).subscribe(
       event => {
-        if (event.type === HttpEventType.UploadProgress)
-        {
+        if (event.type === HttpEventType.UploadProgress) {
           this.UploadingProgress = Math.round(100 * event.loaded / event.total);
         }
         else if (event.type === HttpEventType.Response) {
 
-          this.imagesNames.push({imageName:event.body.fileName});
+          this.imagesNames.push({ imageName: event.body.fileName });
           this.uploadImage(++index);
         }
       },
@@ -272,27 +285,25 @@ export class PostTweetComponent implements OnInit {
     );
   }
 
-  uploadVideo(video: File){
-    if (video == null)
-    {
+  uploadVideo(video: File) {
+    if (video == null) {
       this.postTweet();
       return;
     }
-    
+
     const formDate = new FormData();
     formDate.append("file", video, video.name);
     this.IsUploading = true;
     this._tweetService.uploadTweetVideo(formDate).subscribe(
       event => {
-        if (event.type === HttpEventType.UploadProgress)
-        {
+        if (event.type === HttpEventType.UploadProgress) {
           this.UploadingProgress = Math.round(100 * event.loaded / event.total);
         }
         else if (event.type === HttpEventType.Response) {
-          setTimeout(()=>{
+          setTimeout(() => {
             this.IsUploading = false;
           }, 1000);
-          
+
           this.videoName = {
             videoName: event.body.fileName
           }
