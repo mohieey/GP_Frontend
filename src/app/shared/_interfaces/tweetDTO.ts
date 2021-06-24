@@ -13,4 +13,6 @@ export interface TweetDTO {
   author: DetailsUserDTO;
   isLiked: boolean;
   isBookmarked: boolean;
+  isRetweet: boolean;
+  tweet: TweetDTO;
 }
