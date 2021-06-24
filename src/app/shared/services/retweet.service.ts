@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AddRetweetDTO } from '../_interfaces/addRetweetDTO';
+import { RetweetDetailsDTO } from '../_interfaces/retweetDetailsDTO.model';
 
 const retweetApi = environment.apiUrl + "/api/Retweet";
 
@@ -25,4 +26,14 @@ export class RetweetService {
       return throwError(err.message || "Internal Server error contact site adminstarator");
     }));
   }
+
+  getRetweets(username: string, pageSize: number, pageNumber: number): Observable<RetweetDetailsDTO[]> {
+    return this.httpClient.get<RetweetDetailsDTO[]>(`${retweetApi}/${pageSize}/${pageNumber}`).pipe(catchError((err) => {
+      return throwError(err.message || "Internal Server error contact site adminstarator");
+    }));
+  }
+
+  // getTweet(id: number): Observable<TweetWithRepliesDTO> {
+  //   return this.httpClient.get<TweetWithRepliesDTO>(tweetApi + '/' + id);
+  // }
 }

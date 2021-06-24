@@ -72,8 +72,8 @@ export class HomeComponent implements OnInit {
   }
 
   openPostTweetWindow(obj) {
-    this.postTweetComponent.TweetId = +obj.id;
-    this.postTweetComponent.action = obj.action;
+    this.postTweetComponent.TweetId = +obj?.id;
+    this.postTweetComponent.action = obj?.action;
     this.modalWrapper.classList.add('modal-wrapper-display');
     this.postTweetComponent.openPostTweetWindow();
   }
