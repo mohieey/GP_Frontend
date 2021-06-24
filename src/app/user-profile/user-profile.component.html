@@ -35,13 +35,15 @@
                                             <div class="d-flex flex-column" *ngIf="followUsersForModal.length > 0; else elseTemplate">
                                                 <div *ngFor="let user of followUsersForModal" class="d-flex align-items-center mb-3">
                                                     <div class="user-avatar" routerLink="/profile/{{user.username}}">
-                                                        <img [src]="createResourcesPath('Resources/Images/' + user.image)">
+                                                        <img [src]="createResourcesPath('Resources/Images/' + user.userPic)">
                                                     </div>
                                                     <div class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{user.username}}" style="cursor: pointer">
-                                                        <h2 class="fw-bold">{{user.fullName}}</h2>
-                                                        <h5>@{{user.username}}</h5>
+                                                        <h2 class="fw-bold">{{user.firstName}} {{user.lastName}}</h2>
+                                                        <h5>@{{user.userName}}</h5>
                                                     </div>
-                                                    <button class="btn btn-primary ms-auto btn-lg fw-bold">Follow</button>
+                                                    <!-- <button class="btn btn-primary ms-auto btn-lg fw-bold">Follow</button> -->
+                                                    <button class="btn btn-primary btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user)">Follow</button>
+                                                    <button class="btn btn-danger btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user)">UnFollow</button>    
                                                 </div>
                                             </div>
                                         </div>

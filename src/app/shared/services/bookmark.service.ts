@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { DetailsUserDTO } from '../_interfaces/detailsUserDTO.model';
 import { TweetDTO } from '../_interfaces/tweetDTO';
-import { UserInteractionDetailsDTO } from '../_interfaces/userInteractionDetailsDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -54,9 +54,9 @@ export class BookmarkService {
     tweetId: number,
     pageSize: number,
     pageNumber: number
-  ): Observable<UserInteractionDetailsDTO[]> {
+  ): Observable<DetailsUserDTO[]> {
     let url = `${environment.apiUrl}/tweet/tweetbookmarks/${tweetId}/${pageSize}/${pageNumber}`;
-    return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
+    return this._http.get<DetailsUserDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(
           err.message || 'Internal Server error contact site adminstarator'

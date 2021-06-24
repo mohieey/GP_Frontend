@@ -10,7 +10,6 @@ import { TokenService } from '../shared/services/token.service';
 import { TweetService } from '../shared/services/tweet.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 import { TweetDTO } from '../shared/_interfaces/tweetDTO';
-import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteractionDetailsDTO.model';
 import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
 
 @Component({
@@ -21,7 +20,7 @@ import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.com
 export class UserProfileComponent implements OnInit {
 
   tweets: TweetDTO[] = []
-  followUsersForModal:UserInteractionDetailsDTO[] = []
+  followUsersForModal:DetailsUserDTO[] = []
   modalHeader:string = ''
   currentSelectedTabHeader:string
   currentPageNumber: number = 1;
@@ -72,7 +71,7 @@ export class UserProfileComponent implements OnInit {
   getFollowing() {
     this._followingService.getFollowingByPage(this.currentOpenedUserProfile?.userName, this.pageSize, this.currentModalNumber++).subscribe((res) => {
       if(res.length > 0) {
-        this.followUsersForModal.push(...res);
+        this.followUsersForModal.push(...res);        
       } else {
         this.hideOrShowLoadMoreUsersButton()
       }
@@ -193,5 +192,26 @@ export class UserProfileComponent implements OnInit {
   hideOrShowLoadMoreUsersButton() {
     document.querySelector('.load-more-users-btn')?.classList.toggle('d-none')
     document.querySelector('#no-more-users-text')?.classList.toggle('d-none')
+  }
+
+  follow(user: DetailsUserDTO) {
+    this._followingService.follow(user.id).subscribe(
+      (data) => {
+        user.isFollowedByCurrentUser === !user.isFollowedByCurrentUser
+      },
+      (error) => {
+        //  this.errorMsg = error;
+      }
+    );
+  }
+
+  unfollow(user: DetailsUserDTO) {
+    this._followingService.unfollow(user.id).subscribe(
+      (data) => {
+        user.isFollowedByCurrentUser === !user.isFollowedByCurrentUser},
+      (error) => {
+        //  this.errorMsg = error;
+      }
+    );
   }
 }
