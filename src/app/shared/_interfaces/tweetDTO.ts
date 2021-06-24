@@ -14,5 +14,6 @@ export interface TweetDTO {
   isLiked: boolean;
   isBookmarked: boolean;
   isRetweet: boolean;
+  isReply: boolean;
   tweet: TweetDTO;
 }

@@ -29,6 +29,10 @@
           This Tweet is Retweet
           <!-- {{item.tweet | json}} This is the parent tweet -->
         </div>
+        <div *ngIf="item.isReply" class="float-right text-info h3">
+          This Tweet is Reply
+          <!-- {{item.tweet | json}} This is the parent tweet -->
+        </div>
         <div class="dropdown">
           <button class="btn dropdown light-text" [ngClass]="{ light: isDarkModeEnabled() }" type="button"
             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
