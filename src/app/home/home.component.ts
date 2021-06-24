@@ -24,17 +24,17 @@ export class HomeComponent implements OnInit {
   modalInput: HTMLInputElement;
   page: string;
   display: boolean;
-  currentUser:DetailsUserDTO;
+  currentUser: DetailsUserDTO;
   currentPageNumber: number = 1;
-  pageSize : number = 2;
+  pageSize: number = 2;
 
   @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
   constructor(
-    private _tweetService: TweetService, 
-    private _router: Router, 
-    private route: ActivatedRoute, 
+    private _tweetService: TweetService,
+    private _router: Router,
+    private route: ActivatedRoute,
     public postTweetService: PostTweetService,
-    private _accountService:AccountService, 
+    private _accountService: AccountService,
     private _deleteTweetSharedService: DeleteTweetSharedService) { }
 
 
@@ -45,34 +45,35 @@ export class HomeComponent implements OnInit {
       this.page = params.get('page');
     })
     this._accountService.getCurrentUser().subscribe(
-      (data)=>{
+      (data) => {
         this.currentUser = data;
-    });
+      });
 
     this.deleteTweetClickEventSubscription = this._deleteTweetSharedService
-    .getClickEvent()
-    .subscribe(() => {
-      this.changeSuccessful();
-    });
+      .getClickEvent()
+      .subscribe(() => {
+        this.changeSuccessful();
+      });
 
   }
 
   isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
 
-  getTweets(pageSize: number,pageNumber: number) {
+  getTweets(pageSize: number, pageNumber: number) {
     this.currentPageNumber = pageNumber;
-    this._tweetService.getHomePageTweets(pageSize,pageNumber).subscribe((res) => {
-      if(res.length > 0) {
+    this._tweetService.getHomePageTweets(pageSize, pageNumber).subscribe((res) => {
+      if (res.length > 0) {
         this.homePageTweets.push(...res);
       } else {
         document.querySelector('.load-more-btn').classList.add('d-none')
         document.querySelector('#all-caught-up-text').classList.remove('d-none')
       }
-  });
+    });
   }
 
-  openPostTweetWindow(id?: number) {
-    this.postTweetComponent.TweetId = id;
+  openPostTweetWindow(obj) {
+    this.postTweetComponent.TweetId = +obj.id;
+    this.postTweetComponent.action = obj.action;
     this.modalWrapper.classList.add('modal-wrapper-display');
     this.postTweetComponent.openPostTweetWindow();
   }

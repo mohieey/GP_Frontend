@@ -98,6 +98,16 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  getRetweetsAndReplies () {
+    this._tweetService.getRetweetsAndReplies(this.currentOpenedUserProfile?.userName, this.pageSize, this.currentPageNumber++).subscribe((res) => {
+      if(res.length > 0) {
+        this.tweets.push(...res);
+      } else {
+        this.hideOrShowLoadMoreButton()
+      }
+    });
+  }
+
   getLikes() {
     this._likeService.getLikesByPage(this.currentOpenedUserProfile?.userName, this.pageSize, this.currentPageNumber++).subscribe((res) => {
       if(res.length > 0) {
@@ -156,7 +166,7 @@ export class UserProfileComponent implements OnInit {
   getTweetsForSelectedTab() {
     switch (this.currentSelectedTabHeader) {
       case 'tweets': this.getTweets(); break;
-      case 'retweets_replies': this.tweets = []; break;
+      case 'retweets_replies': this.getRetweetsAndReplies(); break;
       case 'likes': this.getLikes(); break;
       case 'bookmarks': this.getBookmarks(); break;
       default: break;

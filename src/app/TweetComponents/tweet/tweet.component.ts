@@ -73,7 +73,11 @@ export class TweetComponent implements OnInit {
   };
 
   addReply(id) {
-    this.onReply.emit(+id);
+    this.onReply.emit({ id: id, action: 'reply' });
+  }
+
+  addRetweet(id) {
+    this.onReply.emit({ id: id, action: 'retweet' });
   }
 
   isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
@@ -91,7 +95,7 @@ export class TweetComponent implements OnInit {
     if (!isLiked) {
       isLiked = false;
       this._likeService.like(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -99,7 +103,7 @@ export class TweetComponent implements OnInit {
     } else {
       isLiked = true;
       this._likeService.dislike(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -122,7 +126,7 @@ export class TweetComponent implements OnInit {
     if (!isBookmarked) {
       isBookmarked = false;
       this._bookmarkService.bookmark(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -130,7 +134,7 @@ export class TweetComponent implements OnInit {
     } else {
       isBookmarked = true;
       this._bookmarkService.removeBookmark(tweetId).subscribe(
-        (data) => {},
+        (data) => { },
         (error) => {
           //  this.errorMsg = error;
         }
@@ -208,7 +212,7 @@ export class TweetComponent implements OnInit {
 
   follow(userId: string) {
     this._followingService.follow(userId).subscribe(
-      (data) => {},
+      (data) => { },
       (error) => {
         //  this.errorMsg = error;
       }
@@ -218,7 +222,7 @@ export class TweetComponent implements OnInit {
 
   unfollow(userId: string) {
     this._followingService.unfollow(userId).subscribe(
-      (data) => {},
+      (data) => { },
       (error) => {
         //  this.errorMsg = error;
       }
