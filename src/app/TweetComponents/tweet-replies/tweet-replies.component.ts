@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { TokenService } from 'src/app/shared/services/token.service';
+import { TweetService } from 'src/app/shared/services/tweet.service';
 import { TweetDTO } from 'src/app/shared/_interfaces/tweetDTO';
 import { environment } from 'src/environments/environment';
 
@@ -11,10 +13,12 @@ import { environment } from 'src/environments/environment';
 export class TweetRepliesComponent implements OnInit {
 
   @Input() replies: TweetDTO[];
+  currentUser: any;
 
-  constructor() { }
+  constructor(private _tokenService: TokenService, private _tweetService: TweetService) { }
 
   ngOnInit(): void {
+    this.currentUser = this._tokenService.getUser();
   }
   
   isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
@@ -42,6 +46,15 @@ export class TweetRepliesComponent implements OnInit {
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
     return momentOfPost.format("h:mm A . MMM D, YYYY");
   }
+
+  deleteTweet(id: number) {
+    console.log(id);
+    this._tweetService.deleteTweet(id).subscribe((res) => {
+      var tweet = this.replies.find( t => t.id == id);
+      this.replies.splice(this.replies.indexOf(tweet),1);
+    });
+  }
+
   public createResourcesPath = (serverPath: string) => {
     return `${environment.apiUrl}/${serverPath}`;
   }
