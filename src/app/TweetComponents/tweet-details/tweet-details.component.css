@@ -1,3 +1,7 @@
+.feeds-page {
+  height: fit-content;
+  min-height: 100%;
+}
 .feeds-content {
   padding-top: 8rem;
 }
