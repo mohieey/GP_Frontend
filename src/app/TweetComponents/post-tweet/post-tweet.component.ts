@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { TweetService } from '../../shared/services/tweet.service';
 import { ImageDTO } from '../../shared/_interfaces/imageDTO';
 import { VideoDTO } from '../../shared/_interfaces/videoDTO';
+import { DeleteTweetSharedService } from 'src/app/shared/services/delete-tweet-shared.service';
+import { IncreaseReplyCountServiceService } from 'src/app/shared/services/increase-reply-count-service.service';
 
 @Component({
   selector: 'app-post-tweet',
@@ -33,7 +35,11 @@ export class PostTweetComponent implements OnInit {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
-  constructor(private _tweetService: TweetService, private _accountService: AccountService, private _retweetService: RetweetService) { }
+  constructor(private _tweetService: TweetService, 
+    private _accountService: AccountService,
+    private _retweetService: RetweetService,
+    private _deleteTweetSharedService: DeleteTweetSharedService,
+    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService) { }
 
   progressBarWidth: string = "";
   IsUploading = false;
@@ -237,6 +243,8 @@ export class PostTweetComponent implements OnInit {
         this._tweetService.addReply(this.TweetId, tweet).subscribe(
           (data) => {
             console.log(data);
+            this._increaseReplyCountSharedService.TweetId = this.TweetId;
+            this._increaseReplyCountSharedService.sendClickEvent();
           },
           (error) => {
             console.log(error);
@@ -247,6 +255,7 @@ export class PostTweetComponent implements OnInit {
         this._retweetService.addRetweet(obj).subscribe(
           (data) => {
             console.log(data);
+            this._deleteTweetSharedService.sendClickEvent();
           },
           (error) => {
             console.log(error);

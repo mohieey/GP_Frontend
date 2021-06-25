@@ -42,8 +42,8 @@
                                                         <h5>@{{user.userName}}</h5>
                                                     </div>
                                                     <!-- <button class="btn btn-primary ms-auto btn-lg fw-bold">Follow</button> -->
-                                                    <button class="btn btn-primary btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user)">Follow</button>
-                                                    <button class="btn btn-danger btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user)">UnFollow</button>    
+                                                    <button class="btn btn-primary btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)">Follow</button>
+                                                    <button class="btn btn-danger btn-lg ms-auto rounded-pill fw-bold" style="width:8rem" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)">UnFollow</button>    
                                                 </div>
                                             </div>
                                         </div>
@@ -106,9 +106,9 @@
             </div>
         </div>
         <!-- end of main content -->
-
+        <app-post-tweet style="z-index: 2;" class="modal-wrapper" (onClose)="closePostTweetWindow()"
+            (onPost)="changeSuccessful()"></app-post-tweet>
         <app-side-panel class="mx-0 col-xl-4"></app-side-panel>
-
     </div>
     <!-- end of feeds content -->
 </section>

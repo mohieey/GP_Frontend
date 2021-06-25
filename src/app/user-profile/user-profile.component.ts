@@ -1,9 +1,12 @@
-import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../shared/services/account.service';
 import { BookmarkService } from '../shared/services/bookmark.service';
+import { DeleteTweetSharedService } from '../shared/services/delete-tweet-shared.service';
 import { FollowingService } from '../shared/services/following.service';
+import { IncreaseReplyCountServiceService } from '../shared/services/increase-reply-count-service.service';
 import { LikeService } from '../shared/services/like.service';
 import { PostTweetService } from '../shared/services/post-tweet.service';
 import { TokenService } from '../shared/services/token.service';
@@ -18,7 +21,9 @@ import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.com
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-
+  deleteTweetClickEventSubscription: Subscription;
+  increaseReplyCountClickEventSubscription: Subscription;
+  
   tweets: TweetDTO[] = []
   followUsersForModal:DetailsUserDTO[] = []
   modalHeader:string = ''
@@ -37,11 +42,12 @@ export class UserProfileComponent implements OnInit {
     private _router: Router,
     private route: ActivatedRoute,
     public postTweetService: PostTweetService,
-    private _tokenService:TokenService,
     private _followingService: FollowingService,
     private _likeService: LikeService,
     private _bookmarkService: BookmarkService,
-    private _accountService: AccountService,) { }
+    private _accountService: AccountService,
+    private _deleteTweetSharedService: DeleteTweetSharedService,
+    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService) { }
 
 
 
@@ -63,6 +69,18 @@ export class UserProfileComponent implements OnInit {
     this._accountService.getCurrentUser().subscribe(
       (data)=>{
         this.currentUser = data;
+    });
+
+    this.deleteTweetClickEventSubscription = this._deleteTweetSharedService
+    .getClickEvent()
+    .subscribe(() => {
+      this.changeSuccessful();
+    });
+
+    this.increaseReplyCountClickEventSubscription = this._increaseReplyCountSharedService
+    .getClickEvent()
+    .subscribe(() => {
+      this.increaseCount();
     });
   }
 
@@ -128,8 +146,10 @@ export class UserProfileComponent implements OnInit {
     })
   }
 
-  openPostTweetWindow(id?: number) {
-    this.postTweetComponent.TweetId = id;
+  openPostTweetWindow(obj) {
+    console.log(obj);
+    this.postTweetComponent.TweetId = +obj?.id;
+    this.postTweetComponent.action = obj?.action;
     this.modalWrapper.classList.add('modal-wrapper-display');
     this.postTweetComponent.openPostTweetWindow();
   }
@@ -204,24 +224,49 @@ export class UserProfileComponent implements OnInit {
     document.querySelector('#no-more-users-text')?.classList.toggle('d-none')
   }
 
-  follow(user: DetailsUserDTO) {
-    this._followingService.follow(user.id).subscribe(
+  follow(userId: string) {
+    this._followingService.follow(userId).subscribe(
       (data) => {
-        user.isFollowedByCurrentUser === !user.isFollowedByCurrentUser
+        this.currentOpenedUserProfile.followingCount++;
       },
       (error) => {
         //  this.errorMsg = error;
       }
     );
+    this.updateIsFollowedValue(userId);
   }
 
-  unfollow(user: DetailsUserDTO) {
-    this._followingService.unfollow(user.id).subscribe(
+  private updateIsFollowedValue(userId: string) {
+    this.followUsersForModal.forEach((user) => {
+      if(user.id == userId) {
+        user.isFollowedByCurrentUser = !user.isFollowedByCurrentUser;
+      }
+    })
+  }
+
+  unfollow(userId: string) {
+    this._followingService.unfollow(userId).subscribe(
       (data) => {
-        user.isFollowedByCurrentUser === !user.isFollowedByCurrentUser},
+        this.currentOpenedUserProfile.followingCount--;
+      },
       (error) => {
         //  this.errorMsg = error;
       }
     );
+    this.updateIsFollowedValue(userId);
+  }
+
+  changeSuccessful(){
+    this.currentPageNumber = 1;
+    this.tweets = [];
+    this.getTweetsForSelectedTab();
+  }
+
+  increaseCount() {
+    this.tweets.forEach((tweet) => {
+      if(tweet.id == this._increaseReplyCountSharedService.TweetId) {
+        tweet.replyCount++;
+      }
+    })
   }
 }
