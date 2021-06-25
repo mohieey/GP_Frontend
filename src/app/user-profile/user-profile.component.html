@@ -28,16 +28,16 @@
 
                                         <div class="modal-header">
                                             <h5 class="modal-title fw-bold h3 light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{this.modalHeader}}</h5>
-                                            <button class="ms-auto btn btn-lg fw-bold light-text" [ngClass]="{'light' : isDarkModeEnabled()}"data-bs-dismiss="modal">X</button>
+                                            <button class="ms-auto btn btn-lg fw-bold light-text" [ngClass]="{'light' : isDarkModeEnabled()}" data-bs-dismiss="modal" #closeButton>X</button>
                                         </div>
 
                                         <div class="modal-body">
                                             <div class="d-flex flex-column" *ngIf="followUsersForModal.length > 0; else elseTemplate">
                                                 <div *ngFor="let user of followUsersForModal" class="d-flex align-items-center mb-3">
-                                                    <div class="user-avatar" routerLink="/profile/{{user.username}}">
-                                                        <img [src]="createResourcesPath('Resources/Images/' + user.userPic)">
+                                                    <div class="user-avatar" routerLink="/profile/{{user.userName}}">
+                                                        <img [src]="createResourcesPath('Resources/Images/' + user.userPic)" (click)='closeButton.click()'>
                                                     </div>
-                                                    <div class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{user.username}}" style="cursor: pointer">
+                                                    <div class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{user.userName}}" style="cursor: pointer" (click)='closeButton.click()'>
                                                         <h2 class="fw-bold">{{user.firstName}} {{user.lastName}}</h2>
                                                         <h5>@{{user.userName}}</h5>
                                                     </div>
@@ -93,8 +93,12 @@
                         </ul>
                     </div>
                     <div class="border no-tweets-div dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngIf="tweets.length === 0">
-                        <h1 class="user-select-none">No Tweets Here</h1>
-                        <p class="user-select-none">Follow more people</p>
+                        <app-loader class="loader"></app-loader>
+                        <div class="d-none" id="no-tweets">
+                            <h1 class="user-select-none">No Tweets Here</h1>
+                            <p class="user-select-none">Follow more people</p>
+                        </div>
+
                     </div>
                     <app-tweet [tweetList]="tweets" (onReply)="openPostTweetWindow($event)">
                     </app-tweet>

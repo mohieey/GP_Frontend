@@ -1,7 +1,5 @@
 /* footer */
 .main-page-footer {
-	grid-column: 1 / -1;
-	grid-row: 2 / -1;
 	background-color: #f5f4f4;
 	padding: 1.5rem;
 	border-top: 0.1rem solid #ddd;
@@ -21,3 +19,15 @@
 	font-weight: 300;
 }
 /* end of footer */
+/* responsive */
+@media (max-width: 1300px) {
+	/* main page */
+	.main-page-footer ul {
+		flex-wrap: wrap;
+	}
+
+	.main-page-footer li {
+		margin-bottom: 1rem;
+	}
+}
+/* end of responsive */

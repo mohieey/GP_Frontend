@@ -111,6 +111,7 @@ export class UserProfileComponent implements OnInit {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     });
@@ -121,6 +122,7 @@ export class UserProfileComponent implements OnInit {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     });
@@ -131,6 +133,7 @@ export class UserProfileComponent implements OnInit {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     })
@@ -141,6 +144,7 @@ export class UserProfileComponent implements OnInit {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     })
@@ -170,6 +174,7 @@ export class UserProfileComponent implements OnInit {
     this.tweets = []
     this.getTweetsForSelectedTab()
     this.hideOrShowLoadMoreButton()
+    this.showLoader()
   }
 
   changeActiveTabUI(tabHeader:string) {
@@ -193,6 +198,18 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  hideLoader() {
+    setTimeout(() => {
+      document.querySelector(".loader")?.classList.add("d-none");
+      document.querySelector("#no-tweets")?.classList.remove("d-none");
+    },700)
+  }
+
+  showLoader() {
+    document.querySelector(".loader")?.classList.remove("d-none");
+    document.querySelector("#no-tweets")?.classList.add("d-none");
+  }
+
   getFollowersOrFollowing() {
     switch (this.modalHeader) {
       case 'Following': this.getFollowing(); break;
@@ -205,7 +222,6 @@ export class UserProfileComponent implements OnInit {
     this.currentModalNumber = 1
     this.followUsersForModal = []
 
-    console.log(element.id);
     if(element.id === 'followings') {
       this.modalHeader = 'Following'
     } else {

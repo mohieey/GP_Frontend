@@ -6,6 +6,11 @@
     {{ currentUser.username == item.author.userName ? 'You' : item.author.firstName + " " + item.author.lastName }} Retweeted
   </div>
 
+  <div *ngIf="item.isReply" class="retweet-text">
+    <i class="far fa-comment"></i>
+    {{ currentUser.username == item.author.userName ? 'You' : item.author.firstName + " " + item.author.lastName }} Replied
+  </div>
+
   <div class="d-flex">
 
     <a class="user-avatar" routerLink="/profile/{{ item.author.userName }}">
@@ -33,11 +38,6 @@
             </span>
           </div>
 
-          <div *ngIf="item.isReply" class="float-right text-info h3">
-            This Tweet is Reply
-            <!-- {{item.tweet | json}} This is the parent tweet -->
-          </div>
-
           <div class="dropdown">
             <button class="btn dropdown light-text" [ngClass]="{ light: isDarkModeEnabled() }" type="button"
               id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,7 +51,7 @@
               aria-labelledby="dropdownMenuButton1">
               <li>
                 <a class="dropdown-item h4 light-text" [ngClass]="{ light: isDarkModeEnabled() }"
-                  routerLink="/home/{{ item.id }}">
+                  routerLink="/tweet/{{ item.id }}">
                   Details
                 </a>
               </li>
@@ -142,7 +142,7 @@
                       aria-labelledby="dropdownMenuButton1">
                       <li>
                         <a class="dropdown-item h4 light-text" [ngClass]="{ light: isDarkModeEnabled() }"
-                          routerLink="/home/{{ item.tweet.id }}">
+                          routerLink="/tweet/{{ item.tweet.id }}">
                           Details
                         </a>
                       </li>

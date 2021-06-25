@@ -1,14 +1,15 @@
-<div class="modal dark-mode-1" style="overflow: hidden">
-    <div class="modal-header border">
+<div class="modal dark-mode-1" [ngClass]="{'dark-1' : isDarkModeEnabled()}" style="overflow: hidden">
+    <div class="modal-header border" [ngClass]="{'border-color' : isDarkModeEnabled()}">
         <i class="fas fa-times" (click)="closePostTweetWindow()"></i>
     </div>
-    <div style="overflow: hidden" class="border">
+    <div style="overflow: hidden" class="border" [ngClass]="{'border-color' : isDarkModeEnabled()}">
         <div class="modal-body">
             <div class="modal-img">
                 <img *ngIf="currentUser != undefined" [src]="createResourcesPath('Resources/Images/' + currentUser.userPic)" />
             </div>
             <textarea style="resize: none; clear: both" type="text" placeholder="What's happening?"
-                class="modal-input dark-mode-2 light-text border tweet-text" maxlength="280" rows="6"></textarea>
+                class="modal-input dark-mode-2 light-text border tweet-text" [ngClass]="{'dark-2 light border-color' : isDarkModeEnabled()}" 
+                maxlength="280" rows="6"></textarea>
         </div>
         <div style="width: 70%; margin: auto; padding-bottom: 10px;" *ngIf="progressBarWidth != '100%' && IsUploading">
             <label style="font-size: 10px;">Uploading...</label>
@@ -32,7 +33,7 @@
         <div class="d-flex flex-wrap justify-content-center ml-5 video-list">
         </div>
     </div>
-    <div class="modal-footer py-3 border">
+    <div class="modal-footer py-3 border" [ngClass]="{'border-color' : isDarkModeEnabled()}">
         <div class="mr-auto">
             <div class="modal-icons">
                 <div class="file-input">
