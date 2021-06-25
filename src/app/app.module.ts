@@ -22,6 +22,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NavComponent } from './nav/nav.component';
 import { SidePanelComponent } from './side-panel/side-panel.component';
 import { TweetRepliesComponent } from './TweetComponents/tweet-replies/tweet-replies.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TweetRepliesComponent } from './TweetComponents/tweet-replies/tweet-rep
     NavComponent,
     SidePanelComponent,
     TweetRepliesComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,

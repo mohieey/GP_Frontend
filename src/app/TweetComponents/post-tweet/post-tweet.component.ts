@@ -228,10 +228,9 @@ export class PostTweetComponent implements OnInit {
       creationDate: new Date()
     };
 
-    if (this.TweetId == undefined) {
+    if (this.action == undefined) {
       this._tweetService.addTweet(tweet).subscribe(
         (data) => {
-          console.log(data);
           this.onPost.emit(data);
         },
         (error) => {
@@ -242,7 +241,6 @@ export class PostTweetComponent implements OnInit {
       if (this.action == 'reply') {
         this._tweetService.addReply(this.TweetId, tweet).subscribe(
           (data) => {
-            console.log(data);
             this._increaseReplyCountSharedService.TweetId = this.TweetId;
             this._increaseReplyCountSharedService.sendClickEvent();
           },
@@ -254,7 +252,6 @@ export class PostTweetComponent implements OnInit {
         let obj: AddRetweetDTO = { reTweetId: this.TweetId, qouteTweet: tweet }
         this._retweetService.addRetweet(obj).subscribe(
           (data) => {
-            console.log(data);
             this._deleteTweetSharedService.sendClickEvent();
           },
           (error) => {

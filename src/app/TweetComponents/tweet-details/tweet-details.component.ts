@@ -27,7 +27,7 @@ export class TweetDetailsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['page'];
+    this.id = this.route.snapshot.params['id'];
     this.tweetService.getTweet(this.id).subscribe(
       res => { this.tweet = res },
       err => console.log(err));

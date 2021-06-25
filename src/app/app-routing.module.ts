@@ -16,11 +16,11 @@ const routes: Routes = [
   { path: 'resetpassword', component: ResetPasswordComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'tweets/:id', component: TweetDetailsComponent },
+  { path: 'tweet/:id', component: TweetDetailsComponent },
   { path: 'profile/:username', component: UserProfileComponent },
   { path: '', component: StartComponent },
   {
-    path: 'home/:page', component: HomeComponent
+    path: 'home', component: HomeComponent
     // , children: [
     // {
     //   path: 'post', // child route path

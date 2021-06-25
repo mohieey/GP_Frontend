@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         this.tokenService.saveUser(response.body);
         console.log(response.body)
         this.invalidEmailOrPassword = false;
-        this.router.navigate(['/home/feed'])
+        this.router.navigate(['/home'])
 
       }
       , err => {

@@ -45,9 +45,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getTweets(this.pageSize, this.currentPageNumber);
     this.modalWrapper = document.querySelector('.modal-wrapper');
-    this.route.paramMap.subscribe((params) => {
-      this.page = params.get('page');
-    });
     this._accountService.getCurrentUser().subscribe((data) => {
       this.currentUser = data;
     });
@@ -83,7 +80,7 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  openPostTweetWindow(obj) {
+  openPostTweetWindow(obj?) {
     this.postTweetComponent.TweetId = +obj?.id;
     this.postTweetComponent.action = obj?.action;
     this.modalWrapper.classList.add('modal-wrapper-display');
