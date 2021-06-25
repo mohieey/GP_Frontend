@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { AccountService } from '../shared/services/account.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 import { IncreaseReplyCountServiceService } from '../shared/services/increase-reply-count-service.service';
+import { SignalRService } from '../shared/services/signal-r.service';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +38,8 @@ export class HomeComponent implements OnInit {
     public postTweetService: PostTweetService,
     private _accountService: AccountService,
     private _deleteTweetSharedService: DeleteTweetSharedService,
-    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService
+    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService,
+    public signalRService: SignalRService
   ) {}
 
   ngOnInit(): void {
@@ -104,5 +106,9 @@ export class HomeComponent implements OnInit {
         tweet.replyCount++;
       }
     })
+    this.signalRService.broadcastData(
+      this.homePageTweets.find((t) => t.id == this._increaseReplyCountSharedService.TweetId),
+      this.currentUser['username']
+    );
   }
 }
