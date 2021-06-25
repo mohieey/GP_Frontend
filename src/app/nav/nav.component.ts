@@ -44,6 +44,8 @@ export class NavComponent implements OnInit {
   }
 
   search(event) {
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this._router.onSameUrlNavigation = 'reload';
     this._router.navigate(['/search'], {
       queryParams: { key: event.target.value },
     });
