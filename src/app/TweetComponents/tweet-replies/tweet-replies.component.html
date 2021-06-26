@@ -54,11 +54,11 @@
             </video>
         </div>
         <div class="post-icons">
-            <span><i class="far fa-comment"></i>
+            <span><i class="far fa-comment" (click)="addReply(item.id)"></i>
                 <span class="light-text user-select-none" [ngClass]="{ light: isDarkModeEnabled() }">{{ item.replyCount }}
                 </span>
             </span>
-            <span><i class="fas fa-retweet"></i></span>
+            <span><i class="fas fa-retweet" (click)="addRetweet(item.id)"></i></span>
 
             <span [ngClass]="{ 'user-like': item.isLiked === true }" (click)="likeOrDislike(item.id, item.isLiked)">
                 <i class="fas fa-heart mr-1" [ngClass]="{ 'user-like': item.isLiked === true }"></i>
@@ -68,3 +68,5 @@
         </div>
     </div>
 </div>
+<!-- <app-post-tweet style="z-index: 2;" class="modal-wrapper" (onClose)="closePostTweetWindow()"
+    (onRetweet)="changeSuccessful()" (onReply)="changeSuccessful()"></app-post-tweet> -->

@@ -34,7 +34,7 @@
                                 </div>
 
                                 <nav aria-label="..." class="" *ngIf="hasUsers">
-                                    <div class="d-inline-block">
+                                    <div class="d-inline-blocks">
                                         <ul class="pagination">
                                             <li class="page-item" [ngClass]="{disabled:currentPageNumber <=1, cursorNotAllowed:currentPageNumber <=1}">
                                                 <button class="page-link" [disabled]="currentPageNumber <=1" (click)="getSelectedPage(currentPageNumber-1)">Previous</button>

@@ -35,6 +35,9 @@ export class PostTweetComponent implements OnInit {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
+  @Output() onRetweet: EventEmitter<any> = new EventEmitter();
+  @Output() onReply: EventEmitter<any> = new EventEmitter();
+
   constructor(private _tweetService: TweetService, 
     private _accountService: AccountService,
     private _retweetService: RetweetService,
@@ -243,6 +246,7 @@ export class PostTweetComponent implements OnInit {
           (data) => {
             this._increaseReplyCountSharedService.TweetId = this.TweetId;
             this._increaseReplyCountSharedService.sendClickEvent();
+            //this.onReply.emit();
           },
           (error) => {
             console.log(error);
@@ -252,7 +256,8 @@ export class PostTweetComponent implements OnInit {
         let obj: AddRetweetDTO = { reTweetId: this.TweetId, qouteTweet: tweet }
         this._retweetService.addRetweet(obj).subscribe(
           (data) => {
-            this._deleteTweetSharedService.sendClickEvent();
+            //this._deleteTweetSharedService.sendClickEvent();
+            //this.onRetweet.emit();
           },
           (error) => {
             console.log(error);

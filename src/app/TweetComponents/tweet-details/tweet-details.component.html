@@ -99,7 +99,7 @@
                     
                             <div class="post-icons d-flex justify-content-around bottom-border">
                                 <span><i class="far fa-comment"></i></span>
-                                <span><i class="fas fa-retweet"></i></span>
+                                <span><i class="fas fa-retweet" (click)="openPostTweet(tweet.id)"></i></span>
                                 <span [ngClass]="{'user-like': tweet.isLiked === true }" (click)="likeOrDislike(tweet.id, tweet.isLiked)"><i
                                         class="fas fa-heart mr-1" [ngClass]="{'user-like': tweet.isLiked === true }"></i>
                                 </span>
@@ -167,7 +167,7 @@
                     <div class="seperator dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}"></div>
                     
                     <div *ngIf="replies != null">
-                        <app-tweet-replies [replies]="replies"></app-tweet-replies>
+                        <app-tweet-replies [replies]="replies" (onReply)="openPostTweetWindow($event)"></app-tweet-replies>
                     </div>
                     <div class="text-center py-5">
                         <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold load-more-btn" (click)="getReplies(pageSize,currentPageNumber + 1)">Load More</button>
@@ -176,6 +176,8 @@
                 </div>
             </div>
         </div>
+        <app-post-tweet style="z-index: 2;" class="modal-wrapper" (onClose)="closePostTweetWindow()"></app-post-tweet>
+        <!-- (onRetweet)="changeSuccessful()" (onReply)="changeSuccessful()" -->
         <div class="mx-0 col-lg-4 d-none d-lg-block">
             <app-side-panel></app-side-panel>
         </div>

@@ -15,6 +15,8 @@ import { IncreaseReplyCountServiceService } from 'src/app/shared/services/increa
 import { DeleteTweetSharedService } from 'src/app/shared/services/delete-tweet-shared.service';
 import { TweetDTO } from 'src/app/shared/_interfaces/tweetDTO';
 import { BookmarkService } from 'src/app/shared/services/bookmark.service';
+import { PostTweetComponent } from '../post-tweet/post-tweet.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tweet-details',
@@ -46,6 +48,11 @@ export class TweetDetailsComponent implements OnInit {
   currentPageNumber: number = 1;
   pageSize: number = 2;
 
+  @ViewChild(PostTweetComponent) postTweetComponent: PostTweetComponent;
+  modalWrapper: HTMLElement;
+
+  deleteTweetClickEventSubscription: Subscription;
+
   constructor(
     private tweetService: TweetService,
     private route: ActivatedRoute,
@@ -58,6 +65,7 @@ export class TweetDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.modalWrapper = document.querySelector('.modal-wrapper');
     this.id = this.route.snapshot.params['id'];
     this.tweetService.getTweet(this.id).subscribe(
       (res) => {
@@ -74,7 +82,36 @@ export class TweetDetailsComponent implements OnInit {
       (err) => console.log(err)
     );
 
+    this.deleteTweetClickEventSubscription = this._deleteTweetSharedService
+    .getClickEvent()
+    .subscribe(() => {
+      this.decreaseCount();
+    });
+
     this.currentUser = this._tokenService.getUser();
+  }
+
+  decreaseCount() {
+    this.tweet.replyCount--;
+  }
+
+  // changeSuccessful() {
+  //   console.log("change successful");
+  //   this.tweet.retweetCount++;
+  // }
+
+  openPostTweetWindow(obj?) {
+    this.postTweetComponent.TweetId = +obj?.id;
+    this.postTweetComponent.action = obj?.action;
+    this.modalWrapper.classList.add('modal-wrapper-display');
+    this.postTweetComponent.openPostTweetWindow();
+  }
+
+  openPostTweet(tweetId: number) {
+    this.postTweetComponent.TweetId = tweetId;
+    this.postTweetComponent.action = "retweet";
+    this.modalWrapper.classList.add('modal-wrapper-display');
+    this.postTweetComponent.openPostTweetWindow();
   }
 
   getReplies(pageSize: number, pageNumber: number) {
@@ -541,4 +578,6 @@ export class TweetDetailsComponent implements OnInit {
       ? this.tweet.bookmarkCount - 1
       : this.tweet.bookmarkCount + 1;
   }
+
+  
 }
