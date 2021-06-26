@@ -1,26 +1,26 @@
 <div class="follow">
     <h3 class="follow-heading light-text border dark-mode-1" [ngClass]="{'light dark-1 border-color' : isDarkModeEnabled()}">Who to follow</h3>
     <div class="follow-user border dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" *ngFor="let user of suggestedUsers">
-        <div class="follow-user-img">
+        <div style="cursor: pointer;" class="follow-user-img" routerLink="/profile/{{user.userName}}">
             <img [src]="createResourcesPath('Resources/Images/' + user.userPic)" />
         </div>
-        <div class="follow-user-info light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
-            <h4>{{user.firstName}} {{user.lastName}}</h4>
+        <div style="cursor: pointer;" class="follow-user-info light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{user.userName}}">
+            <h4 class="fw-bold">{{user.firstName}} {{user.lastName}}</h4>
             <p>@{{user.userName}}</p>
         </div>
         <button type="button" *ngIf="!user.isFollowedByCurrentUser" (click)="follow(user.id)" class="follow-btn dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">Follow</button>
-        <button style="color: #dc3545; border-color: #dc3545;" type="button" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)" class="follow-btn dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">Un Follow</button>
+        <button style="color: #dc3545; border-color: #dc3545;" type="button" *ngIf="user.isFollowedByCurrentUser" (click)="unfollow(user.id)" class="follow-btn dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">Unfollow</button>
     </div>
-    <div class="follow-link dark-mode-1 border" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
-      <a>Show more</a>
+    <div class="follow-link dark-mode-1 border p-4" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
+      <!-- <a>Show more</a> -->
     </div>
     <footer class="follow-footer">
         <ul>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Privacy policy</a></li>
-            <li><a href="#">Cookies</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">More</a></li>
+            <li><a>Terms</a></li>
+            <li><a>Privacy policy</a></li>
+            <li><a>Cookies</a></li>
+            <li><a>About</a></li>
+            <li><a>More</a></li>
         </ul>
     </footer>
 </div>

@@ -4,10 +4,10 @@
     <nav class="login-page-nav dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
         <ul>
             <li class="brand">
-                <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" href="#"><i class="fas fa-dove"></i> Home</a>
+                <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/"><i class="fas fa-dove"></i> Home</a>
             </li>
-            <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">About</a></li>
-            <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">Language: English</a></li>
+            <!-- <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">About</a></li>
+            <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">Language: English</a></li> -->
         </ul>
     </nav>
     <!-- end of login page nav -->
@@ -55,13 +55,14 @@
                 </form>
             </div>
             <hr class="border">
-            <footer class="login-footer">
+            <footer class="login-footer mb-5">
                 <p class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">New to Twitter? <a routerLink="/signup">Sign up now</a></p>
-                <p class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
+                <!-- <p class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
                     Already using Twitter via text message?
                     <br>
                     <a href="#">Activate your account</a>
-                </p>
+                </p> -->
+
             </footer>
         </div>
     </div>

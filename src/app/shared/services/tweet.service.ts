@@ -48,6 +48,24 @@ export class TweetService {
       );
   }
 
+  getReplies(
+    tweetId: number,
+    pageSize: number,
+    pageNumber: number
+  ): Observable<TweetDTO[]> {
+    return this.httpClient
+      .get<TweetDTO[]>(
+        `${tweetApi}/TweetReplies/${tweetId}/${pageSize}/${pageNumber}`
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(
+            err.message || 'Internal Server error contact site adminstarator'
+          );
+        })
+      );
+  }
+
   getRetweetsAndReplies(
     username: string,
     pageSize: number,
@@ -66,8 +84,8 @@ export class TweetService {
       );
   }
 
-  getTweet(id: number): Observable<TweetWithRepliesDTO> {
-    return this.httpClient.get<TweetWithRepliesDTO>(tweetApi + '/' + id);
+  getTweet(id: number): Observable<TweetDTO> {
+    return this.httpClient.get<TweetDTO>(tweetApi + '/' + id);
   }
 
   uploadTweetImage(formData: FormData): Observable<any> {

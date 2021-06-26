@@ -6,7 +6,6 @@ import { FollowingService } from '../shared/services/following.service';
 import { SharedService } from '../shared/services/shared.service';
 import { TokenService } from '../shared/services/token.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
-import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteractionDetailsDTO.model';
 
 @Component({
   selector: 'app-nav',
@@ -15,8 +14,6 @@ import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteraction
 })
 export class NavComponent implements OnInit {
   currentUser: DetailsUserDTO;
-  // followingUsers:UserInteractionDetailsDTO[] = []
-  // followerUsers:UserInteractionDetailsDTO[] = []
   
   constructor(
     private _router: Router,
@@ -47,6 +44,8 @@ export class NavComponent implements OnInit {
   }
 
   search(event) {
+    this._router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this._router.onSameUrlNavigation = 'reload';
     this._router.navigate(['/search'], {
       queryParams: { key: event.target.value },
     });

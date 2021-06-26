@@ -9,7 +9,8 @@ import { DeleteTweetSharedService } from '../shared/services/delete-tweet-shared
 import { Subscription } from 'rxjs';
 import { AccountService } from '../shared/services/account.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
-
+import { IncreaseReplyCountServiceService } from '../shared/services/increase-reply-count-service.service';
+import { SignalRService } from '../shared/services/signal-r.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 })
 export class HomeComponent implements OnInit {
   deleteTweetClickEventSubscription: Subscription;
+  increaseReplyCountClickEventSubscription: Subscription;
   homePageTweets: TweetDTO[] = [];
   modal: HTMLElement;
   modalWrapper: HTMLElement;
@@ -35,19 +37,17 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     public postTweetService: PostTweetService,
     private _accountService: AccountService,
-    private _deleteTweetSharedService: DeleteTweetSharedService) { }
-
+    private _deleteTweetSharedService: DeleteTweetSharedService,
+    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService,
+    public signalRService: SignalRService
+  ) {}
 
   ngOnInit(): void {
     this.getTweets(this.pageSize, this.currentPageNumber);
     this.modalWrapper = document.querySelector('.modal-wrapper');
-    this.route.paramMap.subscribe(params => {
-      this.page = params.get('page');
-    })
-    this._accountService.getCurrentUser().subscribe(
-      (data) => {
-        this.currentUser = data;
-      });
+    this._accountService.getCurrentUser().subscribe((data) => {
+      this.currentUser = data;
+    });
 
     this.deleteTweetClickEventSubscription = this._deleteTweetSharedService
       .getClickEvent()
@@ -55,23 +55,39 @@ export class HomeComponent implements OnInit {
         this.changeSuccessful();
       });
 
+    this.increaseReplyCountClickEventSubscription = this._increaseReplyCountSharedService
+      .getClickEvent()
+      .subscribe(() => {
+        this.increaseCount();
+      });
   }
 
-  isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
 
   getTweets(pageSize: number, pageNumber: number) {
     this.currentPageNumber = pageNumber;
-    this._tweetService.getHomePageTweets(pageSize, pageNumber).subscribe((res) => {
-      if (res.length > 0) {
-        this.homePageTweets.push(...res);
-      } else {
-        document.querySelector('.load-more-btn').classList.add('d-none')
-        document.querySelector('#all-caught-up-text').classList.remove('d-none')
-      }
-    });
+    if(pageNumber == 1)
+    {
+      document.querySelector('.load-more-btn').classList.remove('d-none');
+      document
+        .querySelector('#all-caught-up-text')
+        .classList.add('d-none');
+    }
+    this._tweetService
+      .getHomePageTweets(pageSize, pageNumber)
+      .subscribe((res) => {
+        if (res.length > 0) {
+          this.homePageTweets.push(...res);
+        } else {
+          document.querySelector('.load-more-btn').classList.add('d-none');
+          document
+            .querySelector('#all-caught-up-text')
+            .classList.remove('d-none');
+        }
+      });
   }
 
-  openPostTweetWindow(obj) {
+  openPostTweetWindow(obj?) {
     this.postTweetComponent.TweetId = +obj?.id;
     this.postTweetComponent.action = obj?.action;
     this.modalWrapper.classList.add('modal-wrapper-display');
@@ -89,5 +105,17 @@ export class HomeComponent implements OnInit {
   changeSuccessful() {
     this.homePageTweets = [];
     this.getTweets(this.pageSize, 1);
+  }
+
+  increaseCount() {
+    this.homePageTweets.forEach((tweet) => {
+      if(tweet.id == this._increaseReplyCountSharedService.TweetId) {
+        tweet.replyCount++;
+      }
+    })
+    this.signalRService.broadcastData(
+      this.homePageTweets.find((t) => t.id == this._increaseReplyCountSharedService.TweetId),
+      this.currentUser['username']
+    );
   }
 }

@@ -10,30 +10,19 @@ import { SettingsComponent } from './settings/settings.component';
 import { StartComponent } from './start/start.component';
 import { TweetDetailsComponent } from './TweetComponents/tweet-details/tweet-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { AuthGuard } from './shared/_helpers/auth.guard';
 
 const routes: Routes = [
-  { path: 'forgotpassword', component: ForgotPasswordComponent },
-  { path: 'resetpassword', component: ResetPasswordComponent },
+  { path: 'forgotpassword', component: ForgotPasswordComponent},
+  { path: 'resetpassword', component: ResetPasswordComponent},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'tweets/:id', component: TweetDetailsComponent },
-  { path: 'profile/:username', component: UserProfileComponent },
-  { path: '', component: StartComponent },
-  {
-    path: 'home/:page', component: HomeComponent
-    // , children: [
-    // {
-    //   path: 'post', // child route path
-    //   component: PostTweetComponent, // child route component that the router renders
-    // },
-    // {
-    //   path: '', // child route path
-    //   component: TweetComponent, // child route component that the router renders
-    // }
-    // ]
-  },
-  { path: 'setting', component: SettingsComponent },
-  { path: 'search', component: SearchResultComponent },
+  { path: 'tweet/:id', component: TweetDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:username', component: UserProfileComponent, canActivate: [AuthGuard] },
+  //{ path: '', component: StartComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard],},
+  { path: 'setting', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'search', component: SearchResultComponent, canActivate: [AuthGuard] },
   { path: '**', component: StartComponent }
 ];
 

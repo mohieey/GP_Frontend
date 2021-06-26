@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private _authService: AuthenticationService, private tokenService: TokenService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    window.localStorage.setItem('darkmode','light');
   }
 
 
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.tokenService.saveUser(response.body);
         console.log(response.body)
         this.invalidEmailOrPassword = false;
-        this.router.navigate(['/home/feed'])
+        this.router.navigate(['/home'])
 
       }
       , err => {

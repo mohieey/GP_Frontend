@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { TweetService } from '../../shared/services/tweet.service';
 import { ImageDTO } from '../../shared/_interfaces/imageDTO';
 import { VideoDTO } from '../../shared/_interfaces/videoDTO';
+import { DeleteTweetSharedService } from 'src/app/shared/services/delete-tweet-shared.service';
+import { IncreaseReplyCountServiceService } from 'src/app/shared/services/increase-reply-count-service.service';
 
 @Component({
   selector: 'app-post-tweet',
@@ -33,7 +35,14 @@ export class PostTweetComponent implements OnInit {
 
   @Output() onClose: EventEmitter<any> = new EventEmitter();
   @Output() onPost: EventEmitter<any> = new EventEmitter();
-  constructor(private _tweetService: TweetService, private _accountService: AccountService, private _retweetService: RetweetService) { }
+  @Output() onRetweet: EventEmitter<any> = new EventEmitter();
+  @Output() onReply: EventEmitter<any> = new EventEmitter();
+
+  constructor(private _tweetService: TweetService, 
+    private _accountService: AccountService,
+    private _retweetService: RetweetService,
+    private _deleteTweetSharedService: DeleteTweetSharedService,
+    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService) { }
 
   progressBarWidth: string = "";
   IsUploading = false;
@@ -222,10 +231,9 @@ export class PostTweetComponent implements OnInit {
       creationDate: new Date()
     };
 
-    if (this.TweetId == undefined) {
+    if (this.action == undefined) {
       this._tweetService.addTweet(tweet).subscribe(
         (data) => {
-          console.log(data);
           this.onPost.emit(data);
         },
         (error) => {
@@ -236,7 +244,9 @@ export class PostTweetComponent implements OnInit {
       if (this.action == 'reply') {
         this._tweetService.addReply(this.TweetId, tweet).subscribe(
           (data) => {
-            console.log(data);
+            this._increaseReplyCountSharedService.TweetId = this.TweetId;
+            this._increaseReplyCountSharedService.sendClickEvent();
+            //this.onReply.emit();
           },
           (error) => {
             console.log(error);
@@ -246,7 +256,8 @@ export class PostTweetComponent implements OnInit {
         let obj: AddRetweetDTO = { reTweetId: this.TweetId, qouteTweet: tweet }
         this._retweetService.addRetweet(obj).subscribe(
           (data) => {
-            console.log(data);
+            //this._deleteTweetSharedService.sendClickEvent();
+            //this.onRetweet.emit();
           },
           (error) => {
             console.log(error);

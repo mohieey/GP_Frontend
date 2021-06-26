@@ -1,16 +1,18 @@
-import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../shared/services/account.service';
 import { BookmarkService } from '../shared/services/bookmark.service';
+import { DeleteTweetSharedService } from '../shared/services/delete-tweet-shared.service';
 import { FollowingService } from '../shared/services/following.service';
+import { IncreaseReplyCountServiceService } from '../shared/services/increase-reply-count-service.service';
 import { LikeService } from '../shared/services/like.service';
 import { PostTweetService } from '../shared/services/post-tweet.service';
 import { TokenService } from '../shared/services/token.service';
 import { TweetService } from '../shared/services/tweet.service';
 import { DetailsUserDTO } from '../shared/_interfaces/detailsUserDTO.model';
 import { TweetDTO } from '../shared/_interfaces/tweetDTO';
-import { UserInteractionDetailsDTO } from '../shared/_interfaces/userInteractionDetailsDTO.model';
 import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.component';
 
 @Component({
@@ -19,9 +21,11 @@ import { PostTweetComponent } from '../TweetComponents/post-tweet/post-tweet.com
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-
+  deleteTweetClickEventSubscription: Subscription;
+  increaseReplyCountClickEventSubscription: Subscription;
+  
   tweets: TweetDTO[] = []
-  followUsersForModal:UserInteractionDetailsDTO[] = []
+  followUsersForModal:DetailsUserDTO[] = []
   modalHeader:string = ''
   currentSelectedTabHeader:string
   currentPageNumber: number = 1;
@@ -38,11 +42,12 @@ export class UserProfileComponent implements OnInit {
     private _router: Router,
     private route: ActivatedRoute,
     public postTweetService: PostTweetService,
-    private _tokenService:TokenService,
     private _followingService: FollowingService,
     private _likeService: LikeService,
     private _bookmarkService: BookmarkService,
-    private _accountService: AccountService,) { }
+    private _accountService: AccountService,
+    private _deleteTweetSharedService: DeleteTweetSharedService,
+    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService) { }
 
 
 
@@ -51,6 +56,9 @@ export class UserProfileComponent implements OnInit {
       const usernameProfile = params.get('username');
       this._accountService.getUserByUsername(usernameProfile).subscribe(
         (data)=>{
+          this.tweets = [];
+          this.currentPageNumber = 1;
+          this.currentModalNumber = 1;
           this.currentSelectedTabHeader = 'tweets';
           this.changeActiveTabUI(this.currentSelectedTabHeader)
           this.currentOpenedUserProfile = data;
@@ -65,6 +73,18 @@ export class UserProfileComponent implements OnInit {
       (data)=>{
         this.currentUser = data;
     });
+
+    this.deleteTweetClickEventSubscription = this._deleteTweetSharedService
+    .getClickEvent()
+    .subscribe(() => {
+      this.changeSuccessful();
+    });
+
+    this.increaseReplyCountClickEventSubscription = this._increaseReplyCountSharedService
+    .getClickEvent()
+    .subscribe(() => {
+      this.increaseCount();
+    });
   }
 
   isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
@@ -72,7 +92,7 @@ export class UserProfileComponent implements OnInit {
   getFollowing() {
     this._followingService.getFollowingByPage(this.currentOpenedUserProfile?.userName, this.pageSize, this.currentModalNumber++).subscribe((res) => {
       if(res.length > 0) {
-        this.followUsersForModal.push(...res);
+        this.followUsersForModal.push(...res);        
       } else {
         this.hideOrShowLoadMoreUsersButton()
       }
@@ -90,10 +110,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   getTweets () {
+    console.log(this.currentOpenedUserProfile?.userName);
     this._tweetService.getTweets(this.currentOpenedUserProfile?.userName, this.pageSize, this.currentPageNumber++).subscribe((res) => {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     });
@@ -104,6 +126,7 @@ export class UserProfileComponent implements OnInit {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     });
@@ -114,6 +137,7 @@ export class UserProfileComponent implements OnInit {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     })
@@ -124,13 +148,16 @@ export class UserProfileComponent implements OnInit {
       if(res.length > 0) {
         this.tweets.push(...res);
       } else {
+        this.hideLoader()
         this.hideOrShowLoadMoreButton()
       }
     })
   }
 
-  openPostTweetWindow(id?: number) {
-    this.postTweetComponent.TweetId = id;
+  openPostTweetWindow(obj) {
+    console.log(obj);
+    this.postTweetComponent.TweetId = +obj?.id;
+    this.postTweetComponent.action = obj?.action;
     this.modalWrapper.classList.add('modal-wrapper-display');
     this.postTweetComponent.openPostTweetWindow();
   }
@@ -151,9 +178,11 @@ export class UserProfileComponent implements OnInit {
     this.tweets = []
     this.getTweetsForSelectedTab()
     this.hideOrShowLoadMoreButton()
+    this.showLoader()
   }
 
   changeActiveTabUI(tabHeader:string) {
+    // this.tweets = [];
     const liElements = document.getElementById('tweet-tabs').children
     
     for (let element of Array.from(liElements)) {
@@ -174,6 +203,18 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  hideLoader() {
+    setTimeout(() => {
+      document.querySelector(".loader")?.classList.add("d-none");
+      document.querySelector("#no-tweets")?.classList.remove("d-none");
+    },700)
+  }
+
+  showLoader() {
+    document.querySelector(".loader")?.classList.remove("d-none");
+    document.querySelector("#no-tweets")?.classList.add("d-none");
+  }
+
   getFollowersOrFollowing() {
     switch (this.modalHeader) {
       case 'Following': this.getFollowing(); break;
@@ -186,7 +227,6 @@ export class UserProfileComponent implements OnInit {
     this.currentModalNumber = 1
     this.followUsersForModal = []
 
-    console.log(element.id);
     if(element.id === 'followings') {
       this.modalHeader = 'Following'
     } else {
@@ -203,5 +243,51 @@ export class UserProfileComponent implements OnInit {
   hideOrShowLoadMoreUsersButton() {
     document.querySelector('.load-more-users-btn')?.classList.toggle('d-none')
     document.querySelector('#no-more-users-text')?.classList.toggle('d-none')
+  }
+
+  follow(userId: string) {
+    this._followingService.follow(userId).subscribe(
+      (data) => {
+        this.currentOpenedUserProfile.followingCount++;
+      },
+      (error) => {
+        //  this.errorMsg = error;
+      }
+    );
+    this.updateIsFollowedValue(userId);
+  }
+
+  private updateIsFollowedValue(userId: string) {
+    this.followUsersForModal.forEach((user) => {
+      if(user.id == userId) {
+        user.isFollowedByCurrentUser = !user.isFollowedByCurrentUser;
+      }
+    })
+  }
+
+  unfollow(userId: string) {
+    this._followingService.unfollow(userId).subscribe(
+      (data) => {
+        this.currentOpenedUserProfile.followingCount--;
+      },
+      (error) => {
+        //  this.errorMsg = error;
+      }
+    );
+    this.updateIsFollowedValue(userId);
+  }
+
+  changeSuccessful(){
+    this.currentPageNumber = 1;
+    this.tweets = [];
+    this.getTweetsForSelectedTab();
+  }
+
+  increaseCount() {
+    this.tweets.forEach((tweet) => {
+      if(tweet.id == this._increaseReplyCountSharedService.TweetId) {
+        tweet.replyCount++;
+      }
+    })
   }
 }

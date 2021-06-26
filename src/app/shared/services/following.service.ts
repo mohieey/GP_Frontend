@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { DetailsUserDTO } from '../_interfaces/detailsUserDTO.model';
-import { UserInteractionDetailsDTO } from '../_interfaces/userInteractionDetailsDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +38,9 @@ export class FollowingService {
     username: string,
     pageSize: number,
     pageNumber: number
-  ): Observable<UserInteractionDetailsDTO[]> {
+  ): Observable<DetailsUserDTO[]> {
     let url = `${environment.apiUrl}/user/following/${username}/${pageSize}/${pageNumber}`;
-    return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
+    return this._http.get<DetailsUserDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(
           err.message || 'Internal Server error contact site adminstarator'
@@ -54,9 +53,9 @@ export class FollowingService {
     username: string,
     pageSize: number,
     pageNumber: number
-  ): Observable<UserInteractionDetailsDTO[]> {
+  ): Observable<DetailsUserDTO[]> {
     let url = `${environment.apiUrl}/user/followers/${username}/${pageSize}/${pageNumber}`;
-    return this._http.get<UserInteractionDetailsDTO[]>(url).pipe(
+    return this._http.get<DetailsUserDTO[]>(url).pipe(
       catchError((err) => {
         return throwError(
           err.message || 'Internal Server error contact site adminstarator'

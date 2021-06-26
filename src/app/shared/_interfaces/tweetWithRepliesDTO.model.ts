@@ -13,6 +13,6 @@ export interface TweetWithRepliesDTO {
   bookmarkCount: number;
   isLiked: boolean;
   isBookmarked: boolean;
-  replies: TweetDTO;
+  replies: TweetDTO[];
   author: DetailsUserDTO;
 }
