@@ -9,11 +9,6 @@
             <div class="col-11 mx-auto">
                 <div class="feeds-content">
 
-                    
-
-
-
-
                     <div class="post border dark-mode-1" *ngIf="tweet" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}" >
                         <div class="post-header">
                             <div class="user-avatar" routerLink="/profile/{{tweet.author.userName}}">
@@ -41,8 +36,19 @@
                                                         d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                                                 </svg>
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a style="font-size: 15px;" class="dropdown-item" (click)="deleteTweet(tweet.id)">Delete</a>
+                                            <ul class="dropdown-menu dark-mode-1" [ngClass]="{ 'dark-1 border-color': isDarkModeEnabled() }" aria-labelledby="dropdownMenuButton1">
+                                                <li><a style="font-size: 15px;" class="dropdown-item" (click)="deleteTweet(tweet.id)" [ngClass]="{ light: isDarkModeEnabled() }">Delete</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item h4 light-text" [ngClass]="{
+                                                        'user-bookmark': tweet.isBookmarked === true,
+                                                        light: isDarkModeEnabled()
+                                                      }" (click)="bookmarkOrRemoveBookmark(tweet.id, tweet.isBookmarked)">
+                                                      Bookmark
+                                                      <span class="h6" *ngIf="currentUser.email == tweet.author.email">
+                                                        ({{ tweet.bookmarkCount }})
+                                                      </span>
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -81,10 +87,10 @@
                     
                             <div class="d-flex bottom-border">
                                 <div class="tweet-statistics">
-                                    <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">100</span> <span class="tweet-statistics-text">Retweets</span>
+                                    <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ tweet.retweetCount }}</span> <span class="tweet-statistics-text">Retweets</span>
                                 </div>
                                 <div class="tweet-statistics">
-                                    <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">100</span> <span class="tweet-statistics-text">Quote Tweets</span>
+                                    <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ tweet.replyCount }}</span> <span class="tweet-statistics-text">Replies</span>
                                 </div>
                                 <div class="tweet-statistics">
                                     <span class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">{{ tweet.likeCount }}</span> <span class="tweet-statistics-text">Likes</span>
@@ -160,22 +166,16 @@
                     
                     <div class="seperator dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}"></div>
                     
-                    
-                    
-                    <div *ngIf="tweet?.replies">
-                        <app-tweet-replies [replies]="tweet.replies"></app-tweet-replies>
+                    <div *ngIf="replies != null">
+                        <app-tweet-replies [replies]="replies"></app-tweet-replies>
                     </div>
-
-
-
-                    
-
-
-
+                    <div class="text-center py-5">
+                        <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold load-more-btn" (click)="getReplies(pageSize,currentPageNumber + 1)">Load More</button>
+                        <h3 class="light-text d-none" id='all-caught-up-text' [ngClass]="{'light' : isDarkModeEnabled()}">You are all caught up</h3>
+                    </div>
                 </div>
             </div>
         </div>
-
         <div class="mx-0 col-lg-4 d-none d-lg-block">
             <app-side-panel></app-side-panel>
         </div>

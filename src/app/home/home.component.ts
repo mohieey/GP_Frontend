@@ -66,6 +66,13 @@ export class HomeComponent implements OnInit {
 
   getTweets(pageSize: number, pageNumber: number) {
     this.currentPageNumber = pageNumber;
+    if(pageNumber == 1)
+    {
+      document.querySelector('.load-more-btn').classList.remove('d-none');
+      document
+        .querySelector('#all-caught-up-text')
+        .classList.add('d-none');
+    }
     this._tweetService
       .getHomePageTweets(pageSize, pageNumber)
       .subscribe((res) => {

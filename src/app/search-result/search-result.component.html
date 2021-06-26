@@ -16,10 +16,10 @@
                                 <hr class="border m-0">
                                 <div class="p-5 border" [ngClass]="{'border-color' : isDarkModeEnabled()}" *ngFor="let user of allUsers;let i=index">
                                     <div class="d-flex align-items-center">
-                                        <div class="user-avatar">
+                                        <div class="user-avatar" routerLink="/profile/{{ user.userName }}">
                                             <img [src]="createResourcesPath('Resources/Images/' + user.userPic)" />
                                         </div>
-                                        <div class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}">
+                                        <div style="cursor: pointer;" class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/profile/{{ user.userName }}">
                                             <h2 class="fw-bold">{{user.firstName}} {{user.lastName}}</h2>
                                             <h5>@{{user.userName}}</h5>
                                         </div>

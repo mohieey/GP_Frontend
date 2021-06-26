@@ -56,6 +56,9 @@ export class UserProfileComponent implements OnInit {
       const usernameProfile = params.get('username');
       this._accountService.getUserByUsername(usernameProfile).subscribe(
         (data)=>{
+          this.tweets = [];
+          this.currentPageNumber = 1;
+          this.currentModalNumber = 1;
           this.currentSelectedTabHeader = 'tweets';
           this.changeActiveTabUI(this.currentSelectedTabHeader)
           this.currentOpenedUserProfile = data;
@@ -107,6 +110,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getTweets () {
+    console.log(this.currentOpenedUserProfile?.userName);
     this._tweetService.getTweets(this.currentOpenedUserProfile?.userName, this.pageSize, this.currentPageNumber++).subscribe((res) => {
       if(res.length > 0) {
         this.tweets.push(...res);
@@ -178,6 +182,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   changeActiveTabUI(tabHeader:string) {
+    // this.tweets = [];
     const liElements = document.getElementById('tweet-tabs').children
     
     for (let element of Array.from(liElements)) {

@@ -9,6 +9,7 @@ export interface TweetDTO {
   creationDate: Date;
   likeCount: number;
   replyCount: number;
+  retweetCount: number;
   bookmarkCount: number;
   author: DetailsUserDTO;
   isLiked: boolean;

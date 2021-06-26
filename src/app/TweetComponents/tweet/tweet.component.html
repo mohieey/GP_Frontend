@@ -8,8 +8,12 @@
 
   <div *ngIf="item.isReply" class="retweet-text">
     <i class="far fa-comment"></i>
-    {{ currentUser.username == item.author.userName ? 'You' : item.author.firstName + " " + item.author.lastName }} Replied
+    {{ currentUser.username == item.author.userName ? 'You' : item.author.firstName + " " + item.author.lastName }} Replied To 
+    <a routerLink="/profile/{{ item.tweet.author.userName }}">@{{item.tweet.author.userName}}</a> 's 
+    <a routerLink="/tweet/{{ item.tweet.id }}">tweet</a>
   </div>
+<!-- 
+  {{item | json}} -->
 
   <div class="d-flex">
 

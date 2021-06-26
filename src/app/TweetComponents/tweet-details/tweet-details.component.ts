@@ -13,17 +13,19 @@ import { AddTweetDTO } from 'src/app/shared/_interfaces/addTweetDTO';
 import { HttpEventType } from '@angular/common/http';
 import { IncreaseReplyCountServiceService } from 'src/app/shared/services/increase-reply-count-service.service';
 import { DeleteTweetSharedService } from 'src/app/shared/services/delete-tweet-shared.service';
+import { TweetDTO } from 'src/app/shared/_interfaces/tweetDTO';
+import { BookmarkService } from 'src/app/shared/services/bookmark.service';
 
 @Component({
   selector: 'app-tweet-details',
   templateUrl: './tweet-details.component.html',
-  styleUrls: ['./tweet-details.component.css']
+  styleUrls: ['./tweet-details.component.css'],
 })
 export class TweetDetailsComponent implements OnInit {
-  
   @ViewChild('closebutton') closebutton;
 
-  tweet: TweetWithRepliesDTO;
+  tweet: TweetDTO;
+  replies: TweetDTO[];
   id: number;
   currentUser: any;
   imagesNames: ImageDTO[] = [];
@@ -34,41 +36,79 @@ export class TweetDetailsComponent implements OnInit {
   videoUrls = new String();
   videoFile: File = null;
 
-  progressBarWidth: string = "";
+  progressBarWidth: string = '';
   IsUploading = false;
   UploadingProgress = 0;
 
   TweetId: number;
   action: string;
-  
+
+  currentPageNumber: number = 1;
+  pageSize: number = 2;
+
   constructor(
-    private tweetService: TweetService, 
-    private route: ActivatedRoute, 
+    private tweetService: TweetService,
+    private route: ActivatedRoute,
     private _tweetService: TweetService,
     private _tokenService: TokenService,
     private _deleteTweetSharedService: DeleteTweetSharedService,
-    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService) { }
+    private _increaseReplyCountSharedService: IncreaseReplyCountServiceService,
+    private _likeService:LikeService,
+    private _bookmarkService: BookmarkService
+  ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.tweetService.getTweet(this.id).subscribe(
-      res => { 
-        this.tweet = res 
+      (res) => {
+        this.tweet = res;
         this.TweetId = this.tweet.id;
+        this.tweetService
+          .getReplies(this.tweet.id, this.pageSize, this.currentPageNumber)
+          .subscribe((res) => {
+            //res = this.replies;
+            this.replies = res;
+            console.log(res);
+          });
       },
-      err => console.log(err));
-      
+      (err) => console.log(err)
+    );
+
     this.currentUser = this._tokenService.getUser();
   }
 
+  getReplies(pageSize: number, pageNumber: number) {
+    this.currentPageNumber = pageNumber;
+    if(pageNumber == 1)
+    { 
+      console.log("Page 1");
+      document.querySelector('.load-more-btn').classList.remove('d-none');
+      document
+        .querySelector('#all-caught-up-text')
+        .classList.add('d-none');
+    }
+    this._tweetService
+      .getReplies(this.tweet.id, pageSize, pageNumber)
+      .subscribe((res) => {
+        if (res.length > 0) {
+          this.replies.push(...res);
+        } else {
+          document.querySelector('.load-more-btn').classList.add('d-none');
+          document
+            .querySelector('#all-caught-up-text')
+            .classList.remove('d-none');
+        }
+      });
+  }
+
   // private wasInside = false;
-  
+
   // @HostListener('click')
   // clickInsid() {
   //   console.log("clicked inside")
   //   this.wasInside = true;
   // }
-  
+
   // @HostListener('document:click')
   // clickout() {
   //   if (!this.wasInside) {
@@ -78,122 +118,128 @@ export class TweetDetailsComponent implements OnInit {
   // }
 
   @HostListener('document:click', ['$event'])
-  clickout(event) {  
-    let element = event.target
-    while (element.parentElement && element.parentElement.getAttribute('id') !== 'replyDiv') {
-      element = element.parentElement
+  clickout(event) {
+    let element = event.target;
+    while (
+      element.parentElement &&
+      element.parentElement.getAttribute('id') !== 'replyDiv'
+    ) {
+      element = element.parentElement;
     }
-    
-    if(!element.parentElement) {
+
+    if (!element.parentElement) {
       // console.log(document.readyState);
 
-    //   document.addEventListener('DOMContentLoaded', () => {
-    // });
+      //   document.addEventListener('DOMContentLoaded', () => {
+      // });
       this.hideReplyUIChange(event);
-    
     }
   }
 
   public createResourcesPath = (serverPath: string) => {
     return `${environment.apiUrl}/${serverPath}`;
-  }
+  };
 
-  isDarkModeEnabled = () => (window.localStorage.getItem('darkmode') == 'dark');
+  isDarkModeEnabled = () => window.localStorage.getItem('darkmode') == 'dark';
 
   deleteTweet(id: number) {
-    console.log(id);
-    this._tweetService.deleteTweet(id).subscribe((res) => {});
+    this._tweetService.deleteTweet(id).subscribe((res) => {
+      this.tweet.replyCount--;
+    });
   }
 
-  getDate(date: Date){
+  getDate(date: Date) {
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
     let momentOfNow = moment();
-    var difference = momentOfNow.diff(momentOfPost, "days");
-    if(difference == 0)
-    {
+    var difference = momentOfNow.diff(momentOfPost, 'days');
+    if (difference == 0) {
       //within few hours
-      return momentOfPost.format("h:mma");
-    }
-    else {
-      if(momentOfNow.year() - momentOfPost.year() >= 1)
-      {
-        return momentOfPost.format("MMM D, YYYY")
+      return momentOfPost.format('h:mma');
+    } else {
+      if (momentOfNow.year() - momentOfPost.year() >= 1) {
+        return momentOfPost.format('MMM D, YYYY');
       }
-      return momentOfPost.format("MMM D"); // within the same year
+      return momentOfPost.format('MMM D'); // within the same year
     }
   }
 
-  getDateOfToolTip(date: Date){
+  getDateOfToolTip(date: Date) {
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
-    return momentOfPost.format("h:mm A . MMM D, YYYY");
+    return momentOfPost.format('h:mm A . MMM D, YYYY');
   }
 
-  getFullDate(date: Date){
+  getFullDate(date: Date) {
     let d = new Date(date);
     let momentOfPost = moment(date).add(-d.getTimezoneOffset(), 'minutes');
-    return `${momentOfPost.format("h:mm A · MMM D, YYYY · ")}Twitter for Browser`;
+    return `${momentOfPost.format(
+      'h:mm A · MMM D, YYYY · '
+    )}Twitter for Browser`;
   }
 
   showReplyUIChange(event) {
     // const elements = document.querySelectorAll('.reply-at-text, .reply-input-icons, #replyButtonNextToInput');
-    
+
     // Array.from(elements).map((element) => {
     //   element.classList.toggle('d-flex')
     //   element.classList.toggle('d-none')
     // });
 
-    document.querySelector("#mt5Class")?.classList.remove('mt-5')
+    document.querySelector('#mt5Class')?.classList.remove('mt-5');
 
-    document.querySelector(".reply-at-text")?.classList.remove('d-none')
-    document.querySelector(".reply-at-text")?.classList.add('d-flex')
-    
-    document.querySelector(".reply-input-icons")?.classList.remove('d-none')
-    document.querySelector(".reply-input-icons")?.classList.add('d-flex')    
+    document.querySelector('.reply-at-text')?.classList.remove('d-none');
+    document.querySelector('.reply-at-text')?.classList.add('d-flex');
 
-    document.querySelector("#replyButtonNextToInput")?.classList.remove('d-flex')
-    document.querySelector("#replyButtonNextToInput")?.classList.add('d-none')
+    document.querySelector('.reply-input-icons')?.classList.remove('d-none');
+    document.querySelector('.reply-input-icons')?.classList.add('d-flex');
+
+    document
+      .querySelector('#replyButtonNextToInput')
+      ?.classList.remove('d-flex');
+    document.querySelector('#replyButtonNextToInput')?.classList.add('d-none');
   }
 
   hideReplyUIChange(event) {
-    document.querySelector("#mt5Class")?.classList.add('mt-5')
+    document.querySelector('#mt5Class')?.classList.add('mt-5');
 
-    document.querySelector(".reply-at-text")?.classList.add('d-none')
-    document.querySelector(".reply-at-text")?.classList.remove('d-flex')
-    
-    document.querySelector(".reply-input-icons")?.classList.add('d-none')
-    document.querySelector(".reply-input-icons")?.classList.remove('d-flex')    
+    document.querySelector('.reply-at-text')?.classList.add('d-none');
+    document.querySelector('.reply-at-text')?.classList.remove('d-flex');
 
-    document.querySelector("#replyButtonNextToInput")?.classList.add('d-flex')
-    document.querySelector("#replyButtonNextToInput")?.classList.remove('d-none')
+    document.querySelector('.reply-input-icons')?.classList.add('d-none');
+    document.querySelector('.reply-input-icons')?.classList.remove('d-flex');
+
+    document.querySelector('#replyButtonNextToInput')?.classList.add('d-flex');
+    document
+      .querySelector('#replyButtonNextToInput')
+      ?.classList.remove('d-none');
   }
 
   getImageClasses(imgCount: number) {
-    if(imgCount === 1) {
-      return 'img-count-1'
-    } 
+    if (imgCount === 1) {
+      return 'img-count-1';
+    }
 
-    if(imgCount === 2) {
-      return 'img-count-2'
-    } 
+    if (imgCount === 2) {
+      return 'img-count-2';
+    }
 
-    if(imgCount === 3) {      
-      return 'img-count-3'
-    } 
+    if (imgCount === 3) {
+      return 'img-count-3';
+    }
 
-    if(imgCount === 4) {      
-      return 'img-count-4'
-    } 
+    if (imgCount === 4) {
+      return 'img-count-4';
+    }
   }
 
-  private imgSourceToDisplayInModal:string = ''
+  private imgSourceToDisplayInModal: string = '';
   setImgResource(imgSource: string) {
-    this.imgSourceToDisplayInModal = imgSource
+    this.imgSourceToDisplayInModal = imgSource;
   }
 
-  getImageResource(){
-    return this.imgSourceToDisplayInModal
+  getImageResource() {
+    return this.imgSourceToDisplayInModal;
   }
 
   closeModal() {
@@ -201,8 +247,10 @@ export class TweetDetailsComponent implements OnInit {
   }
 
   closePostTweetWindow() {
-    var postText: HTMLSpanElement = document.querySelector(".dark-mode-1.light-text.reply-text-input");
-    postText.innerText = "";
+    var postText: HTMLSpanElement = document.querySelector(
+      '.dark-mode-1.light-text.reply-text-input'
+    );
+    postText.innerText = '';
     this.imageUrls = [];
     this.videoUrls = '';
     this.imageFiles = [];
@@ -233,16 +281,16 @@ export class TweetDetailsComponent implements OnInit {
 
         reader.onloadstart = (e) => {
           this.IsUploading = true;
-        }
+        };
         reader.onprogress = (e) => {
           this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
-        }
+        };
         reader.onloadend = (e) => {
           setTimeout(() => {
             this.IsUploading = false;
             this.imageFiles.push(file);
           }, 1000);
-        }
+        };
 
         reader.readAsDataURL(file);
       }
@@ -301,17 +349,17 @@ export class TweetDetailsComponent implements OnInit {
 
         reader.onloadstart = (e) => {
           this.IsUploading = true;
-        }
+        };
         reader.onprogress = (e) => {
           this.UploadingProgress = Math.round((e.loaded * 100) / e.total);
-        }
+        };
         reader.onloadend = (e) => {
           setTimeout(() => {
             this.IsUploading = false;
             this.videoFile = file;
             console.log(this.videoFile);
           }, 3000);
-        }
+        };
 
         reader.readAsDataURL(file);
       }
@@ -319,8 +367,15 @@ export class TweetDetailsComponent implements OnInit {
   }
 
   deletImageFromTweet(event) {
-    this.imageUrls.splice(this.imageUrls.indexOf(event.target.parentElement.previousSibling.getAttribute("src")), 1);
-    this.imageFiles.splice(event.target.parentElement.previousSibling.getAttribute("data-index"));
+    this.imageUrls.splice(
+      this.imageUrls.indexOf(
+        event.target.parentElement.previousSibling.getAttribute('src')
+      ),
+      1
+    );
+    this.imageFiles.splice(
+      event.target.parentElement.previousSibling.getAttribute('data-index')
+    );
   }
 
   deletVideoFromTweet() {
@@ -331,11 +386,16 @@ export class TweetDetailsComponent implements OnInit {
   }
 
   checkBeforeUploading() {
-    var postText: HTMLSpanElement = document.querySelector(".dark-mode-1.light-text.reply-text-input");
-    if (postText.innerText == '' && this.videoUrls == "" && this.imageUrls.length == 0) {
+    var postText: HTMLSpanElement = document.querySelector(
+      '.dark-mode-1.light-text.reply-text-input'
+    );
+    if (
+      postText.innerText == '' &&
+      this.videoUrls == '' &&
+      this.imageUrls.length == 0
+    ) {
       return;
-    }
-    else {
+    } else {
       this.startUploading();
     }
   }
@@ -346,23 +406,30 @@ export class TweetDetailsComponent implements OnInit {
   }
 
   postTweet() {
-    var postText: HTMLSpanElement = document.querySelector(".dark-mode-1.light-text.reply-text-input");
+    var postText: HTMLSpanElement = document.querySelector(
+      '.dark-mode-1.light-text.reply-text-input'
+    );
     var tweet: AddTweetDTO = {
       body: postText.innerText,
       images: this.imagesNames,
       video: this.videoName,
-      creationDate: new Date()
+      creationDate: new Date(),
     };
     this._tweetService.addReply(this.TweetId, tweet).subscribe(
       (data) => {
+        this.tweet.replyCount++;
         this._increaseReplyCountSharedService.TweetId = this.TweetId;
         this._increaseReplyCountSharedService.sendClickEvent();
-        this.tweetService.getTweet(this.id).subscribe(
-          res => { 
-            this.tweet = res 
-            this.TweetId = this.tweet.id;
-          },
-          err => console.log(err));
+        // this.tweetService.getReplies(this.tweet.id, this.pageSize, 1).subscribe(
+        //   (res) => {
+        //     // this.tweet = res;
+        //     // this.TweetId = this.tweet.id;
+        //     this.replies = res;
+        //   },
+        //   (err) => console.log(err)
+        // );
+        this.replies = [];
+        this.getReplies(this.pageSize, 1);
       },
       (error) => {
         console.log(error);
@@ -379,22 +446,22 @@ export class TweetDetailsComponent implements OnInit {
       return;
     }
 
-    var image = this.imageFiles[index]
+    var image = this.imageFiles[index];
     const formDate = new FormData();
     formDate.append('file', image, image.name);
     this._tweetService.uploadTweetImage(formDate).subscribe(
-      event => {
+      (event) => {
         if (event.type === HttpEventType.UploadProgress) {
-          this.UploadingProgress = Math.round(100 * event.loaded / event.total);
-        }
-        else if (event.type === HttpEventType.Response) {
-
+          this.UploadingProgress = Math.round(
+            (100 * event.loaded) / event.total
+          );
+        } else if (event.type === HttpEventType.Response) {
           this.imagesNames.push({ imageName: event.body.fileName });
           this.uploadImage(++index);
         }
       },
-      error => {
-        alert("error");
+      (error) => {
+        alert('error');
       }
     );
   }
@@ -406,28 +473,72 @@ export class TweetDetailsComponent implements OnInit {
     }
 
     const formDate = new FormData();
-    formDate.append("file", video, video.name);
+    formDate.append('file', video, video.name);
     this.IsUploading = true;
     this._tweetService.uploadTweetVideo(formDate).subscribe(
-      event => {
+      (event) => {
         if (event.type === HttpEventType.UploadProgress) {
-          this.UploadingProgress = Math.round(100 * event.loaded / event.total);
-        }
-        else if (event.type === HttpEventType.Response) {
+          this.UploadingProgress = Math.round(
+            (100 * event.loaded) / event.total
+          );
+        } else if (event.type === HttpEventType.Response) {
           setTimeout(() => {
             this.IsUploading = false;
           }, 1000);
 
           this.videoName = {
-            videoName: event.body.fileName
-          }
+            videoName: event.body.fileName,
+          };
           this.postTweet();
         }
       },
-      error => {
-        alert("error");
+      (error) => {
+        alert('error');
       }
     );
   }
+  likeOrDislike(tweetId: number, isLiked: boolean) {
+    if (!isLiked) {
+      isLiked = false;
+      this._likeService.like(tweetId).subscribe(
+        (data) => { },
+        (error) => {
+          //  this.errorMsg = error;
+        }
+      );
+    } else {
+      isLiked = true;
+      this._likeService.dislike(tweetId).subscribe(
+        (data) => { },
+        (error) => {
+          //  this.errorMsg = error;
+        }
+      );
+    }
+    this.tweet.isLiked = !this.tweet.isLiked;
+    this.tweet.likeCount = isLiked ? this.tweet.likeCount - 1 : this.tweet.likeCount + 1;
+  }
+  bookmarkOrRemoveBookmark(tweetId: number, isBookmarked: boolean) {
+    if (!isBookmarked) {
+      isBookmarked = false;
+      this._bookmarkService.bookmark(tweetId).subscribe(
+        (data) => { },
+        (error) => {
+          //  this.errorMsg = error;
+        }
+      );
+    } else {
+      isBookmarked = true;
+      this._bookmarkService.removeBookmark(tweetId).subscribe(
+        (data) => { },
+        (error) => {
+          //  this.errorMsg = error;
+        }
+      );
+    }
+    this.tweet.isBookmarked = !this.tweet.isBookmarked;
+    this.tweet.bookmarkCount = isBookmarked
+      ? this.tweet.bookmarkCount - 1
+      : this.tweet.bookmarkCount + 1;
+  }
 }
-
