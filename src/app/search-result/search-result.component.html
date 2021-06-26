@@ -33,8 +33,8 @@
                                     </div>
                                 </div>
 
-                                <nav aria-label="..." class="" *ngIf="hasUsers">
-                                    <div class="d-inline-blocks">
+                                <nav aria-label="..." class="text-center" *ngIf="hasUsers">
+                                    <div class="d-flex justify-content-center pt-3">
                                         <ul class="pagination">
                                             <li class="page-item" [ngClass]="{disabled:currentPageNumber <=1, cursorNotAllowed:currentPageNumber <=1}">
                                                 <button class="page-link" [disabled]="currentPageNumber <=1" (click)="getSelectedPage(currentPageNumber-1)">Previous</button>

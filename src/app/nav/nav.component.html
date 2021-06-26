@@ -1,9 +1,9 @@
 <nav class="feeds-nav dark-mode-1" style="z-index: 2;" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
-  <div class="icons">
+  <div class="icons w-50">
     <a routerLink="/home" class="active"><i class="fas fa-home"></i></a>
-    <a href="#"><i class="fas fa-hashtag"></i></a>
+    <!-- <a href="#"><i class="fas fa-hashtag"></i></a>
     <a href="#"><i class="far fa-bell"></i></a>
-    <a href="#"><i class="far fa-envelope"></i></a>
+    <a href="#"><i class="far fa-envelope"></i></a> -->
   </div>
   <div class="search-bar">
     <i class="fas fa-search"></i>
@@ -46,18 +46,18 @@
         <li>
           <a routerLink="/profile/{{currentUser?.userName}}" (click)="Dismiss()"> <i class="fas fa-user"></i> Profile </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="#"> <i class="far fa-list-alt"></i> Lists </a>
         </li>
         <li>
           <a href="#"> <i class="far fa-bookmark"></i> Bookmarks </a>
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="sidebar-list-2">
       <ul>
-        <li><a href="#">Settings and Privacy</a></li>
-        <li><a href="#">Help Center</a></li>
+        <li><a routerLink="/setting">Settings and Privacy</a></li>
+        <!-- <li><a href="#">Help Center</a></li> -->
         <li><a (click)="logout()" routerLink="">Log Out</a></li>
       </ul>
     </div>

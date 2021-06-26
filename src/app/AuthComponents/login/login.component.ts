@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private _authService: AuthenticationService, private tokenService: TokenService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    window.localStorage.setItem('darkmode','light');
   }
 
 
