@@ -1,104 +1,175 @@
 <!-- login page -->
-<section class="login-page dark-mode-2" [ngClass]="{'dark-2 border-color' : isDarkModeEnabled()}">
-  <!-- login page nav -->
-  <nav class="login-page-nav dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
-    <ul>
-        <li class="brand">
-            <a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" routerLink="/"><i class="fas fa-dove"></i> Home</a>
-        </li>
-        <!-- <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">About</a></li>
-        <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">Language: English</a></li> -->
-    </ul>
-</nav>
-  <!-- end of login page nav -->
-  <!-- login -->
-  <div class="container-fluid">
-    <div class="login d-flex mx-auto justify-content-center flex-column mt-4 col-10">
-      <div class="login-content container px-5 mx-auto dark-mode-1" [ngClass]="{'dark-1 border-color' : isDarkModeEnabled()}">
-        <h2 class="text-center fw-bold light-text" [ngClass]="{'light' : isDarkModeEnabled()}">Register To Twitter</h2>
-        <form class="login-form d-flex flex-column" [formGroup]="signupform" (ngSubmit)="onSubmit()">
+<section class="login-page dark-mode-2" [ngClass]="{ 'dark-2 border-color': isDarkModeEnabled() }">
+    <!-- login page nav -->
+    <nav class="login-page-nav dark-mode-1" [ngClass]="{ 'dark-1 border-color': isDarkModeEnabled() }">
+        <ul>
+            <li class="brand">
+                <a class="light-text" [ngClass]="{ light: isDarkModeEnabled() }" routerLink="/"><i class="fas fa-dove"></i> Home</a
+        >
+      </li>
+      <!-- <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}"  href="#">About</a></li>
+            <li><a class="light-text" [ngClass]="{'light' : isDarkModeEnabled()}" href="#">Language: English</a></li> -->
+        </ul>
+    </nav>
+    <!-- end of login page nav -->
+    <!-- login -->
+    <div class="container-fluid">
+        <div class="
+        login
+        d-flex
+        mx-auto
+        justify-content-center
+        flex-column
+        mt-4
+        col-10
+      ">
+            <div class="login-content container px-5 mx-auto dark-mode-1" [ngClass]="{ 'dark-1 border-color': isDarkModeEnabled() }">
+                <h2 class="text-center fw-bold light-text" [ngClass]="{ light: isDarkModeEnabled() }">
+                    Register To Twitter
+                </h2>
+                <div *ngIf="showError" class="alert alert-danger" role="alert">
+                    <span [innerHTML]="errorMessage"></span>
+                </div>
+                <form class="login-form d-flex flex-column" [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+              <input
+                type="text"
+                id="firstName"
+                formControlName="firstName"
+                class="form-control"
+                placeholder="First Name"
+              />
 
-          <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
-            <span>
-              <input type="text" [class.is-invalid]="firstname.invalid && firstname.touched" formControlName="firstname"
-                class="form-control login-user-info mb-2" placeholder="First name" />
-              <span *ngIf="firstname.errors && firstname.invalid && firstname.touched">
-                <small class="text-danger error" *ngIf="firstname.errors?.required">&nbsp; First name is
-                  required</small>
-              </span>
+              <em
+                *ngIf="
+                  validateControl('firstName') &&
+                  hasError('firstName', 'required')
+                "
+                >FirstName is required</em
+              >
             </span>
-          </div>
+                    </div>
 
-          <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
-            <span>
-              <input type="text" [class.is-invalid]="lastname.invalid && lastname.touched" formControlName="lastname"
-                class="form-control login-user-info mb-2" placeholder="Last name" />
-              <span *ngIf="lastname.errors && lastname.invalid && lastname.touched">
-                <small class="text-danger error" *ngIf="lastname.errors?.required">
-                  &nbsp; Last name is required
-                </small>
-              </span>
-            </span>
-          </div>
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+              <input
+                type="text"
+                id="lastName"
+                formControlName="lastName"
+                class="form-control"
+                placeholder="Last tName"
+              />
 
-          <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
-            <span>
-              <input type="text" [class.is-invalid]="username.invalid && username.touched" formControlName="username"
-                class="form-control login-user-info mb-2" placeholder="Username" />
-              <span *ngIf="username.errors && username.invalid && username.touched">
-                <small class="text-danger error" *ngIf="email.errors?.required">
-                  &nbsp; Username is required
-                </small>
-              </span>
+              <em
+                *ngIf="
+                  validateControl('lastName') &&
+                  hasError('lastName', 'required')
+                "
+                >LastName is required</em
+              >
             </span>
-          </div>
+                    </div>
 
-          <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
-            <span>
-              <input type="email" [class.is-invalid]="email.invalid && email.touched" formControlName="email"
-                class="form-control login-user-info mb-2" placeholder="Email" />
-              <span *ngIf="email.errors && email.invalid && email.touched">
-                <small class="text-danger error" *ngIf="email.errors?.required">
-                  &nbsp; Email is required
-                </small>
-                <small class="text-danger error" *ngIf="!email.errors?.required && email.errors?.badPattern">
-                  &nbsp; Email is not valid
-                </small>
-              </span>
-            </span>
-          </div>
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+              <input
+                type="text"
+                id="userName"
+                formControlName="userName"
+                class="form-control"
+                placeholder="User Name"
+              />
 
-          <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
-            <span>
-              <input type="password" name="password" formControlName="password"
-                [class.is-invalid]="password.invalid && password.touched" class="form-control login-password"
-                placeholder="Password" />
-              <span>
-                <small class="text-danger error" *ngIf="password.touched && password.errors?.required">
-                  &nbsp; Password is required
-                </small>
-                <small class="text-danger error" *ngIf="invalidEmailOrPassword">
-                  &nbsp; Invalid email or password
-                </small>
-              </span>
+              <em
+                *ngIf="
+                  validateControl('userName') &&
+                  hasError('userName', 'required')
+                "
+                >UserName is required</em
+              >
             </span>
-          </div>
-          <button type="submit" class="btn-top mx-auto my-5" value="Submit Form" [disabled]="signupform.invalid">
+                    </div>
+
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="form-control"
+                placeholder="Email"
+              />
+
+              <em *ngIf="validateControl('email') && hasError('email', 'email')"
+                >Please provide a valid email</em
+              >
+              <em
+                *ngIf="
+                  validateControl('email') && hasError('email', 'required')
+                "
+                >Email is required</em
+              >
+            </span>
+                    </div>
+
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                placeholder="Password"
+              />
+
+              <em
+                *ngIf="
+                  validateControl('password') &&
+                  hasError('password', 'required')
+                "
+                >Password is required</em
+              >
+            </span>
+                    </div>
+
+                    <div class="form-group d-flex flex-column align-items-center" style="height: 5rem">
+                        <span>
+              <input
+                type="password"
+                id="confirm"
+                formControlName="confirm"
+                class="form-control"
+                placeholder="Confirm Password"
+              />
+
+              <em
+                *ngIf="
+                  validateControl('confirm') && hasError('confirm', 'required')
+                "
+                >Confirmation is required</em
+              >
+              <em *ngIf="hasError('confirm', 'mustMatch')"
+                >Passwords must match</em
+              >
+            </span>
+                    </div>
+
+                    <button type="submit" class="btn-top mx-auto my-5" value="Submit Form" [disabled]="!registerForm.valid">
             Sign up
           </button>
-        </form>
-      </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- end of login -->
-  <!-- login modal -->
-  <div class="login-modal">
-    <i class="fas fa-times"></i>
-    <p>
-      The username and password you entered did not match our records. Please
-      double check and try again
-    </p>
-  </div>
-  <!-- end of login modal -->
+    <!-- end of login -->
+    <!-- login modal -->
+    <div class="login-modal">
+        <i class="fas fa-times"></i>
+        <p>
+            The username and password you entered did not match our records. Please double check and try again
+        </p>
+    </div>
+    <!-- end of login modal -->
 </section>
 <!-- end of login page -->
